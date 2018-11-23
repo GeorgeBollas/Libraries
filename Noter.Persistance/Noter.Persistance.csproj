@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20181111093713_initial.cs" />
+    <Compile Remove="Migrations\20181111093838_initial.cs" />
+    <Compile Remove="Migrations\20181112075417_initial.cs" />
+    <Compile Remove="Migrations\20181112080930_initial2.cs" />
+    <Compile Remove="Migrations\20181112091741_initial.cs" />
+    <Compile Remove="Migrations\20181112092957_initial.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.0-preview3-35497" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0-preview3-35497" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.0-preview3-35497" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="2.2.0-preview3-35497" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0-preview3-35497" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Noter.Domain\Noter.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
