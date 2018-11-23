@@ -23,9 +23,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Noter.Application.Tests", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{663382D9-68D8-4DBE-B3D8-0DAB9677DEBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForMigrations", "ForMigrations\ForMigrations.csproj", "{427854EF-E05B-43DF-8C31-7E48420A8741}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ForMigrations", "ForMigrations\ForMigrations.csproj", "{427854EF-E05B-43DF-8C31-7E48420A8741}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Noter.WebUI", "Noter.WebUI\Noter.WebUI.csproj", "{3FD298D2-3D7C-4C89-B88E-165D58C5258B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{192E4522-0CDE-4BB6-8537-D9CC5E6B2A96}"
+	ProjectSection(SolutionItems) = preProject
+		.filenesting.json = .filenesting.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
