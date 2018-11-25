@@ -10,7 +10,7 @@ namespace Noter.Domain.Entities
     {
         public Document()
         {
-            Tags = new HashSet<DocumentTag>();
+            DocumentTags = new HashSet<DocumentTag>();
         }
 
         public int Id { get; set; }
@@ -19,15 +19,15 @@ namespace Noter.Domain.Entities
         public string Title { get; set; }
         public string Notes { get; set; }
 
-        public int CategoryId { get; set; }
+        public int LibraryId { get; set; }
 
         public DocumentType Type { get; set; }
 
         public string Context { get; set; }
 
-        public Library Category { get; set; }
+        public Library Library { get; set; }
 
-        public ICollection<DocumentTag> Tags { get; set; }
+        public ICollection<DocumentTag> DocumentTags { get; set; }
 
     }
 }

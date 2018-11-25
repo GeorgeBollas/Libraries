@@ -109,8 +109,8 @@ namespace Noter.Persistance
 
             var documents = new[]
             {
-                new Document() {Guid = Guid.NewGuid(), CategoryId = ProgrammingCategoryId , EntityStatus = EntityStatus.Active, Created = now, Modified = now,
-                    Tags = new DocumentTag[]
+                new Document() {Guid = Guid.NewGuid(), LibraryId = ProgrammingCategoryId , EntityStatus = EntityStatus.Active, Created = now, Modified = now,
+                    DocumentTags = new DocumentTag[]
                     {
                         new DocumentTag() { TagId = DotNetCoreId }
                     }

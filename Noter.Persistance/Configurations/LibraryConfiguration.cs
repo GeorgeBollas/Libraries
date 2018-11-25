@@ -27,7 +27,9 @@ namespace Noter.Persistance.Configurations
                 .IsRequired()
                 .HasColumnType("datetime");
 
-            builder.HasMany(l => l.Tags).WithOne(t => t.Library);
+            builder.HasMany(l => l.Tags).WithOne(t => t.Library).OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(l => l.Documents).WithOne(d => d.Library).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

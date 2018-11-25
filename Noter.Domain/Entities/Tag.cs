@@ -20,5 +20,7 @@ namespace Noter.Domain.Entities
 
 
         public Library Library { get; set; }
+
+        public ICollection<DocumentTag> DocumentTags { get; set; }
     }
 }

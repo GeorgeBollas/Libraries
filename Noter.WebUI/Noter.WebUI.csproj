@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Noter.Application\Noter.Application.csproj" />
+    <ProjectReference Include="..\Noter.Infrastructure\Noter.Infrastructure.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

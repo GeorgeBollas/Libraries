@@ -4,19 +4,19 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace Noter.Application.Libraries.Queries
+namespace Noter.Application.Libraries.Queries.GetLibraryList
 {
-    public class LibraryDto
+    public class LibraryListDto
     {
         public int LibraryId { get; set; }
         public string Name { get; set; }
         public bool IsActive { get; set; }
 
-        public static Expression<Func<Library, LibraryDto>> Projection
+        public static Expression<Func<Library, LibraryListDto>> Projection
         {
             get
             {
-                return l => new LibraryDto
+                return l => new LibraryListDto
                 {
                     LibraryId = l.Id,
                     Name = l.Name,
@@ -25,7 +25,7 @@ namespace Noter.Application.Libraries.Queries
             }
         }
 
-        public static LibraryDto Create(Library library)
+        public static LibraryListDto Create(Library library)
         {
             return Projection.Compile().Invoke(library);
         }

@@ -20,8 +20,8 @@ namespace Noter.Persistance.Configurations
             builder.Property(e => e.TagId)
                 .IsRequired();
 
-            builder.HasOne(dt => dt.Document);
-            builder.HasOne(dt => dt.Tag);
+            builder.HasOne(dt => dt.Tag).WithMany(t => t.DocumentTags).HasForeignKey(dt => dt.TagId);
+            builder.HasOne(dt => dt.Document).WithMany(t => t.DocumentTags).HasForeignKey(dt => dt.DocumentId);
         }
     }
 }

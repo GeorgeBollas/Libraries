@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Noter.Application.Libraries.Queries
+namespace Noter.Application.Libraries.Queries.GetLibraryList
 {
     public class GetLibraryListQueryHandler : IRequestHandler<GetLibraryListQuery, LibraryListViewModel>
     {
@@ -24,7 +24,7 @@ namespace Noter.Application.Libraries.Queries
             var model = new LibraryListViewModel
             {
                 Libraries = await _context.Libraries
-                    .Select(LibraryDto.Projection)
+                    .Select(LibraryListDto.Projection)
                     .OrderBy(p => p.Name)
                     .ToListAsync(cancellationToken)
             };
