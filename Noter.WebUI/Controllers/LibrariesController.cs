@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace Noter.WebUI.Controllers
 {
+    [Route("api/[controller]")]
+
     public class LibrariesController : BaseController
     {
         // GET api/libraries

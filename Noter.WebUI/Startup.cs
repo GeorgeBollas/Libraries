@@ -81,6 +81,7 @@ namespace Noter.WebUI
                 if (env.IsDevelopment())
                 {
                     spa.UseAngularCliServer(npmScript: "start");
+                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:58226");
                 }
             });
         }
