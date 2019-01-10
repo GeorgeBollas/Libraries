@@ -10,14 +10,16 @@ namespace Noter.Application.Libraries.Queries.GetLibraryDetails
         }
         
         public int LibraryId { get; set; }
+
         public string Name { get; set; }
+
         public string Notes { get; set; }
 
         public IEnumerable<LibraryDetailsTagDto> Tags { get; set; }
 
-        public int DocumentCount { get; set; }
+        public int ItemCount { get; set; }
 
-        public IEnumerable<LibraryDetailsDocumentDto> RecentDocuments { get; set; }
+        public IEnumerable<LibraryDetailsItemDto> RecentItems { get; set; }
 
         public bool IsEditable { get; set; }
     }

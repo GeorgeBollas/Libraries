@@ -29,7 +29,7 @@ namespace Noter.Persistance.Configurations
             builder.Property(e => e.LibraryId)
                 .IsRequired();
 
-            builder.HasMany(t => t.DocumentTags).WithOne(dt => dt.Tag).OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(t => t.ItemTags).WithOne(dt => dt.Tag).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

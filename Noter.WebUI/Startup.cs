@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Noter.Application.Infrastructure;
 using Noter.Application.Libraries.Commands.CreateLibrary;
 using Noter.Persistance;
+using NSwag.AspNetCore;
 using System.Reflection;
 
 namespace Noter.WebUI
@@ -35,6 +36,7 @@ namespace Noter.WebUI
             services.AddDbContext<NoterDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("NoterDatabase")));
 
+            services.AddSwaggerDocument(); // registers a Swagger v2.0 document with the name "v1" (default)
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateLibraryCommandValidator>());
@@ -64,7 +66,7 @@ namespace Noter.WebUI
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
-            app.UseMvc(routes =>
+              app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
@@ -84,6 +86,9 @@ namespace Noter.WebUI
                     //spa.UseProxyToSpaDevelopmentServer("http://localhost:58226");
                 }
             });
+
+            app.UseSwagger(); // registers the two documents in separate routes
+            app.UseSwaggerUi3(); // registers a single Swagger UI (v3) with the two documents
         }
     }
 }

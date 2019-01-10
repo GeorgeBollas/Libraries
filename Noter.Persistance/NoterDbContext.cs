@@ -14,8 +14,8 @@ namespace Noter.Persistance
           
         }
 
-        public DbSet<Document> Documents { get; set; }
-        public DbSet<DocumentTag> DocumentTags { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<ItemTag> ItemTags { get; set; }
 
         public DbSet<Library> Libraries { get; set; }
         public DbSet<Note> Notes { get; set; }

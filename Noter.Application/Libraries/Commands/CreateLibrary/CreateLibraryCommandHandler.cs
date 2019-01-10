@@ -13,6 +13,8 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
     {
         private readonly NoterDbContext _context;
 
+        private Library _library;
+
         public CreateLibraryCommandHandler(NoterDbContext context)
         {
             _context = context;
@@ -21,7 +23,40 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
 
         public async Task<Unit> Handle(CreateLibraryCommand request, CancellationToken cancellationToken)
         {
-            var library = new Library
+            // rewrite and push to domain model
+
+            CreateLibrary(request);
+
+            CreateTags(request);
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return Unit.Value;
+        }
+
+        private void CreateTags(CreateLibraryCommand request)
+        {
+            foreach (var tagName in request.Tags)
+            {
+                var tag = new Tag()
+                {
+                    Name = tagName,
+                    Guid = Guid.NewGuid(),
+                    EntityStatus = Domain.Enumerations.EntityStatus.Active,
+                    Created = DateTime.Now,
+                    Modified = DateTime.Now,
+
+                    Library = _library
+                };
+
+                _context.Tags.Add(tag);
+            }
+            throw new NotImplementedException();
+        }
+
+        private void CreateLibrary(CreateLibraryCommand request)
+        {
+            _library = new Library
             {
                 Guid = Guid.NewGuid(),
                 Name = request.Name,
@@ -31,11 +66,7 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
                 Modified = DateTime.Now
             };
 
-            _context.Libraries.Add(library);
-
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return Unit.Value;
+            _context.Libraries.Add(_library);
         }
     }
 }

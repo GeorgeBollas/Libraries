@@ -24,7 +24,7 @@ namespace Noter.Persistance.Infrastructure
         private TContext Create(string basePath, string environmentName)
         {
             var configuration = new ConfigurationBuilder()
-                .SetBasePath(basePath + "\\..\\Noter.WebUI")
+                .SetBasePath(basePath + "\\..\\Noter.Web.Api")
                 .AddJsonFile("appsettings.json")
                 .AddJsonFile($"appsettings.Local.json", optional: true)
                 .AddJsonFile($"appsettings.{environmentName}.json", optional: true)

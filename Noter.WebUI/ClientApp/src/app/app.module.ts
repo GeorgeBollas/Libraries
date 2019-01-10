@@ -10,6 +10,11 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { NotesComponent } from './notes/notes.component';
+import { LibrariesComponent } from './libraries/libraries.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule, MatCheckboxModule, MatSidenavModule, } from '@angular/material';
+
+import { LibrariesClient } from './noter-api';
 
 @NgModule({
   declarations: [
@@ -18,9 +23,14 @@ import { NotesComponent } from './notes/notes.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    NotesComponent
+    NotesComponent,
+    LibrariesComponent
   ],
   imports: [
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatSidenavModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
@@ -28,9 +38,10 @@ import { NotesComponent } from './notes/notes.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'libraries', component: LibrariesComponent },
     ])
   ],
-  providers: [],
+  providers: [LibrariesClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

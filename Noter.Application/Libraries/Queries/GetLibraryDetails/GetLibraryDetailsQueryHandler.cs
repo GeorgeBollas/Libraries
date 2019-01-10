@@ -41,20 +41,20 @@ namespace Noter.Application.Libraries.Queries.GetLibraryDetails
 
             //todo: format tags
 
-            //todo: get recent documents if selected
-            if (request.IncludeRecentDocuments)
-                lib.RecentDocuments = GetRecentDocuments(request.LibraryId, request.MaxDocumentCount);
+            //todo: get recent items if selected
+            if (request.IncludeRecentItems)
+                lib.RecentItems = GetItemsItemss(request.LibraryId, request.MaxItemCount);
 
             return lib;
         }
 
-        private IEnumerable<LibraryDetailsDocumentDto> GetRecentDocuments(int libraryId, int maxDocumentCount)
+        private IEnumerable<LibraryDetailsItemDto> GetItemsItemss(int libraryId, int maxItemCount)
         {
-            return _context.Documents
+            return _context.Items
                 .Where(d => d.LibraryId == libraryId)
                 .OrderByDescending(d => d.Modified)
-                .Select(d => new LibraryDetailsDocumentDto() {  DocumentId = d.Id, Title = d.Title})
-                .Take(maxDocumentCount)
+                .Select(d => new LibraryDetailsItemDto() {  ItemId = d.Id, Title = d.Title})
+                .Take(maxItemCount)
                 .ToList();
         }
     }

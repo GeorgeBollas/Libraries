@@ -15,7 +15,7 @@ namespace Noter.Persistance.Configurations
                 .IsRequired()
                 .HasColumnType("uniqueidentifier");
 
-            builder.Property(e => e.DocumentId)
+            builder.Property(e => e.ItemId)
                 .IsRequired();
 
             builder.Property(e => e.WorkspaceId)
@@ -29,7 +29,7 @@ namespace Noter.Persistance.Configurations
                 .IsRequired()
                 .HasColumnType("datetime");
 
-            builder.HasOne(e => e.Document);
+            builder.HasOne(e => e.Item);
         }
     }
 }

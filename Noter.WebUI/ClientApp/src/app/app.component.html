@@ -1,6 +1,11 @@
 <body>
-  <app-nav-menu></app-nav-menu>
-  <div class="container">
-    <router-outlet></router-outlet>
-  </div>
+<!--  <app-nav-menu></app-nav-menu>-->
+
+  <mat-sidenav-container class="example-container" > <!--*ngIf="shouldRun">-->
+    <mat-sidenav opened mode="side">Shortcuts</mat-sidenav>
+    <mat-sidenav opened mode="side" position="end">Workspaces</mat-sidenav>
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-container>
 </body>

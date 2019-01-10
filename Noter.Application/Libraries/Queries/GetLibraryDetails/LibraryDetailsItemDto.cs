@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Noter.Application.Libraries.Queries.GetLibraryDetails
 {
-    public class LibraryDetailsDocumentDto
+    public class LibraryDetailsItemDto
     {
-        public int DocumentId { get; set; }
+        public int ItemId { get; set; }
         public string Title { get; set; }
 
     }

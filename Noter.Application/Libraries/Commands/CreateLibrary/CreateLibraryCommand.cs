@@ -11,8 +11,11 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
         {
             Tags = new List<string>();
         }
+
         public string Name { get; set; }
+
         public string Notes { get; set; }
+
         public ICollection<string> Tags { get; set; }
     }
 }

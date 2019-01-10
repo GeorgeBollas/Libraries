@@ -12,7 +12,7 @@ namespace Noter.Persistance
         private readonly Dictionary<int, Library> Libraries = new Dictionary<int, Library>();
         private int ProgrammingCategoryId;
 
-        private readonly Dictionary<int, Document> Documents = new Dictionary<int, Document>();
+        private readonly Dictionary<int, Item> Items = new Dictionary<int, Item>();
 
         private readonly Dictionary<int, Tag> Tags = new Dictionary<int, Tag>();
         private int DotNetCoreId;
@@ -35,7 +35,7 @@ namespace Noter.Persistance
             SeedNotes(context);
             SeedCategories(context);
             SeedTags(context);
-            SeedDocuments(context);
+            SeedItems(context);
             SeedWorkspaces(context);
 
         }
@@ -103,21 +103,21 @@ namespace Noter.Persistance
         }
 
 
-        private void SeedDocuments(NoterDbContext context)
+        private void SeedItems(NoterDbContext context)
         {
             var now = DateTime.Now;
 
-            var documents = new[]
+            var items = new[]
             {
-                new Document() {Guid = Guid.NewGuid(), LibraryId = ProgrammingCategoryId , EntityStatus = EntityStatus.Active, Created = now, Modified = now,
-                    DocumentTags = new DocumentTag[]
+                new Item() {Guid = Guid.NewGuid(), LibraryId = ProgrammingCategoryId , EntityStatus = EntityStatus.Active, Created = now, Modified = now,
+                    ItemTags = new ItemTag[]
                     {
-                        new DocumentTag() { TagId = DotNetCoreId }
+                        new ItemTag() { TagId = DotNetCoreId }
                     }
                 }
             };
 
-            context.Documents.AddRange(documents);
+            context.Items.AddRange(items);
         }
 
         private void SeedWorkspaces(NoterDbContext context)
@@ -131,7 +131,7 @@ namespace Noter.Persistance
                     Guid = Guid.NewGuid(), Title = "Welcome to notter", EntityStatus = EntityStatus.Active, Created = now, Modified = now,
                     Items = new []
                     {
-                        new WorkspaceItem(){ Guid = Guid.NewGuid(), DocumentId = Documents[1].Id, EntityStatus = EntityStatus.Active, Created = now, Modified = now }
+                        new WorkspaceItem(){ Guid = Guid.NewGuid(), ItemId = Items[1].Id, EntityStatus = EntityStatus.Active, Created = now, Modified = now }
                     }
                 }
             };

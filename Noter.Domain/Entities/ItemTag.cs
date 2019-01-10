@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Noter.Domain.Entities
 {
-    public class DocumentTag
+    public class ItemTag
     {
-        public int DocumentId { get; set; }
+        public int ItemId { get; set; }
         public int TagId { get; set; }
 
-        public Document Document { get; set; }
+        public Item Item { get; set; }
         public Tag Tag { get; set; }
     }
 }

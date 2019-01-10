@@ -6,13 +6,13 @@ using System.Text;
 
 namespace Noter.Domain.ValueObjects
 {
-    public class DocumentType : ValueObject
+    public class ItemType : ValueObject
     {
-        private DocumentType()
+        private ItemType()
         {
         }
 
-        public DocumentType(string value)
+        public ItemType(string value)
         {
             try
             {
@@ -22,7 +22,7 @@ namespace Noter.Domain.ValueObjects
             }
             catch (Exception ex)
             {
-                throw new InvalidDocumentTypeException(value, ex);
+                throw new InvalidItemTypeException(value, ex);
             }
         }
 
@@ -30,14 +30,14 @@ namespace Noter.Domain.ValueObjects
 
         public string Version { get; private set; }
 
-        public static implicit operator string(DocumentType documentType)
+        public static implicit operator string(ItemType itemType)
         {
-            return documentType.ToString();
+            return itemType.ToString();
         }
 
-        public static explicit operator DocumentType(string value)
+        public static explicit operator ItemType(string value)
         {
-            return new DocumentType(value);
+            return new ItemType(value);
         }
 
         public override string ToString()

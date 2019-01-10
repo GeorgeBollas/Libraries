@@ -32,12 +32,12 @@ namespace Noter.Application.Libraries.Commands.DeleteLibrary
                 throw new NotFoundException(nameof(Library), request.LibraryId);
             }
 
-            if (!request.DeleteDocuments)
+            if (!request.DeleteItems)
             {
-                var hasDocuments = _context.Documents.Any(d => d.LibraryId == request.LibraryId);
-                if (hasDocuments)
+                var hasItems = _context.Items.Any(d => d.LibraryId == request.LibraryId);
+                if (hasItems)
                 {
-                    throw new DeleteFailureException(nameof(Library), request.LibraryId, "There are existing documents in this library");
+                    throw new DeleteFailureException(nameof(Library), request.LibraryId, "There are existing item in this library");
                 }
             }
 

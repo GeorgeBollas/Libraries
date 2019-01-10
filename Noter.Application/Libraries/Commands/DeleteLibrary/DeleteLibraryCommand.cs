@@ -8,7 +8,7 @@ namespace Noter.Application.Libraries.Commands.DeleteLibrary
     public class DeleteLibraryCommand: IRequest
     {
         public int LibraryId { get; set; }
-        public bool DeleteDocuments { get; set; }
+        public bool DeleteItems { get; set; }
 
     }
 }

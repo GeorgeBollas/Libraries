@@ -11,11 +11,11 @@ namespace Noter.Domain.Entities
 
         public int WorkspaceId { get; set; }
 
-        public int DocumentId { get; set; }
+        public int ItemId { get; set; }
         public int Sequence { get; set; }
 
 
-        public Document Document { get; set; }
+        public Item Item { get; set; }
 
         public Workspace Workspace { get; set; }
     }

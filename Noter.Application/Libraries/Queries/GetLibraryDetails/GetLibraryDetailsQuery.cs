@@ -9,8 +9,9 @@ namespace Noter.Application.Libraries.Queries.GetLibraryDetails
     {
         public int LibraryId { get; set; }
 
-        public bool IncludeRecentDocuments { get; set; }
-        public int MaxDocumentCount { get; set; }
+        public bool IncludeRecentItems { get; set; }
+
+        public int MaxItemCount { get; set; }
 
     }
 }

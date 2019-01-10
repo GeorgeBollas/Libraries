@@ -14,7 +14,7 @@ namespace Noter.Domain.Entities
 
         public ICollection<Tag> Tags { get; set; } = new HashSet<Tag>();
 
-        public ICollection<Document> Documents { get; set; }
+        public ICollection<Item> Documents { get; set; }
 
     }
 }

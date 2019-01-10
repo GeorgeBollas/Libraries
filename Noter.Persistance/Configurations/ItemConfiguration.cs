@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Noter.Persistance.Configurations
 {
-    public class DocumentConfiguration : IEntityTypeConfiguration<Document>
+    public class ItemConfiguration : IEntityTypeConfiguration<Item>
     {
-        public void Configure(EntityTypeBuilder<Document> builder)
+        public void Configure(EntityTypeBuilder<Item> builder)
         {
             builder.Property(e => e.Guid)
                 .IsRequired()
@@ -32,7 +32,7 @@ namespace Noter.Persistance.Configurations
                 .IsRequired()
                 .HasColumnType("datetime");
 
-            builder.HasMany(d => d.DocumentTags).WithOne(dt => dt.Document).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(d => d.ItemTags).WithOne(dt => dt.Item).OnDelete(DeleteBehavior.Cascade);
 
         }
     }
