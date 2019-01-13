@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Noter.WebUI.React.Controllers
+namespace Noter.Api.React.Controllers
 {
     [Route("api/[controller]")]
     public class SampleDataController : Controller

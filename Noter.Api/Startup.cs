@@ -14,7 +14,7 @@ using Noter.Persistance;
 
 using System.Reflection;
 
-namespace Noter.WebUI
+namespace Noter.Api
 {
     public class Startup
     {
@@ -30,7 +30,11 @@ namespace Noter.WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
+            services.AddCors(options => options.AddPolicy("AllowAllOrigins",
+                                                            builder =>
+                                                            {
+                                                                builder.AllowAnyOrigin();
+                                                            }));
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
             services.AddMediatR(typeof(CreateLibraryCommandHandler).GetTypeInfo().Assembly);  //point to the assemby to look for handlers

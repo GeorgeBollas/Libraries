@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Noter.WebUI.Infrastructure
+namespace Noter.Api.Infrastructure
 {
     public class AutofacModule : Module
     {
