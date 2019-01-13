@@ -5,13 +5,7 @@ export const LibraryList = props => {
     return (
         <div>
             {
-                props.libraries.map(library => {
-                    return (
-                        <LibraryItem
-                            library={library}
-                            key={library.id} />
-                    );
-                })
+                props.libraries.map(library => <LibraryItem library={library} key={library.libraryId} /> )
             }
         </div>
     );

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Noter.WebUI.Controllers
+namespace Noter.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

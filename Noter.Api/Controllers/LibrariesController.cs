@@ -8,7 +8,7 @@ using Noter.Application.Libraries.Queries.GetLibraryDetails;
 using Noter.Application.Libraries.Queries.GetLibraryList;
 using System.Threading.Tasks;
 
-namespace Noter.WebUI.Controllers
+namespace Noter.Api.Controllers
 {
     [Route("api/[controller]")]
 

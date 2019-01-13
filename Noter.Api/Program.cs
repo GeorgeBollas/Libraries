@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Noter.Persistance;
 
-namespace Noter.WebUI
+namespace Noter.Api
 {
     public class Program
     {

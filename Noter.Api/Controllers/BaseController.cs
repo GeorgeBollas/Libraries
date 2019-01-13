@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Noter.WebUI.Controllers
+namespace Noter.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]

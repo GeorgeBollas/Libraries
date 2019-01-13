@@ -9,7 +9,7 @@ using Noter.Application.Notes.Commands.DeleteNote;
 using Noter.Application.Notes.Commands.UpdateNote;
 using Noter.Application.Notes.Queries.GetNoteList;
 
-namespace Noter.WebUI.Controllers
+namespace Noter.Api.Controllers
 {
     public class NotesController : BaseController
     {

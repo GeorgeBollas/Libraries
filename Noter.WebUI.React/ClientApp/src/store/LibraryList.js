@@ -1,12 +1,12 @@
 ﻿import { REQUEST_LIBRARY_LIST, RECEIVE_LIBRARY_LIST } from '../constants/action-types';
          
-const initialState = { libraries: [], isLoading: false };
+const initialState = { libraries: [], isLoading: true};
 
 export const actionCreators = {
     requestLibraryList: () => async (dispatch, getState) => {
 
-        //TODO do we need this????
-
+        if (!getState().libraries.isLoading)
+            return;
         //if (startDateIndex === getState().weatherForecasts.startDateIndex) {
         //    // Don't issue a duplicate request (we already have or are loading the requested data)
         //    return;
@@ -16,9 +16,9 @@ export const actionCreators = {
 
         const url = `http://localhost:63315/api/Libraries`;
         const response = await fetch(url);
-        const libraries = await response.json();
+        const libVM = await response.json();
 
-        dispatch({ type: RECEIVE_LIBRARY_LIST, libraries });
+        dispatch({ type: RECEIVE_LIBRARY_LIST, libVM });
     }
 };
 
@@ -28,15 +28,15 @@ export const reducer = (state, action) => {
     if (action.type === REQUEST_LIBRARY_LIST) {
         return {
             ...state,
-            isLoading: true
+            isLoading: true,
         };
     }
 
     if (action.type === RECEIVE_LIBRARY_LIST) {
         return {
             ...state,
-            libraries: action.libraries,
-            isLoading: false
+            libraries: action.libVM.libraries, //todo fix this
+            isLoading: false,
         };
 
     };
