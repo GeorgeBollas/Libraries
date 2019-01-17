@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import axios from 'axios';
 
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 
@@ -19,7 +20,7 @@ const LibraryDialog = ({ library, updateLibrary, onClose }) => {
                 <Formik
                     initialValues={library /** { email, social } */}
                     onSubmit={(values, actions) => {
-                        MyImaginaryRestApiCall(library.libraryId, values).then(
+                        axios.post(library.libraryId, values).then(
                             updatedLibrary => {
                                 actions.setSubmitting(false);
                                 updateLibrary(updatedLibrary);
