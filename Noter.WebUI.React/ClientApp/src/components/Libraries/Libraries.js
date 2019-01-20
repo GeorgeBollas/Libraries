@@ -2,8 +2,8 @@
 import { bindActionCreators } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { actionCreators } from '../../store/LibraryList';
-import { LibraryList } from '../../components/LibraryList/LibraryList';
+import { actionCreators } from '../../actions/Libraries';
+import LibraryList from './LibraryList';
 import LibraryDialog from './LibraryDialog';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
@@ -25,7 +25,8 @@ class Libraries extends Component {
         this.handleCancelNewLibrary = this.handleCancelNewLibrary.bind(this);
 
         this.state = {
-            isOpen: false
+            isOpen: false,
+            loading: false
         };
     }
 
@@ -49,22 +50,25 @@ class Libraries extends Component {
 
     componentDidUpdate() {
         // This method is called when the route parameters change
-        this.ensureDataFetched();
+        //this.ensureDataFetched();
     }
 
     ensureDataFetched() {
-        this.props.requestLibraryList();
+        this.props.fetchLibraries();
     }
 
     render() {
         return (
             <div>
-                <h1>Libraries</h1>
+                <h1>Libraries {this.props.isLoading}</h1>
                 <Fab color='primary' className={this.props.classes.fab} onClick={this.handleAddLibraryClick}>
                     <AddIcon />
                 </Fab>
-                <LibraryList libraries={this.props.libraries} />
+                <LibraryList
+                    libraries={this.props.libraries}
+                    loading={this.props.isLoading}/>
                 <LibraryDialog
+                    onClose={() => { this.setState({ isOpen: false }) }}
                     isOpen={this.state.isOpen}
                     library={{ name: 'new library' }}
                     handleCancel={this.handleCancelNewLibrary}
@@ -78,6 +82,6 @@ class Libraries extends Component {
 
 export default
     connect(
-    state => state.libraries,
-    dispatch => bindActionCreators(actionCreators, dispatch)
+        state => ({ libraries: state.libraries, isLoading: state.isLoading }),
+        dispatch => bindActionCreators(actionCreators, dispatch)
     )(withStyles(styles, { withTheme: true })(Libraries));
