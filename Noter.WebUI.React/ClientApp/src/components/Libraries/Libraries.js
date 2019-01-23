@@ -1,12 +1,14 @@
 ﻿import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { actionCreators } from '../../actions/Libraries';
-import LibraryList from './LibraryList';
-import LibraryDialog from './LibraryDialog';
+
+import { withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+
+import { actionCreators } from '../../actions/Libraries';
+import LibraryList from './LibraryList';
+import CreateLibrary from './CreateLibrary';
 
 const styles = theme => ({
     fab: {
@@ -67,12 +69,7 @@ class Libraries extends Component {
                 <LibraryList
                     libraries={this.props.libraries}
                     loading={this.props.isLoading}/>
-                <LibraryDialog
-                    onClose={() => { this.setState({ isOpen: false }) }}
-                    isOpen={this.state.isOpen}
-                    library={{ name: 'new library' }}
-                    handleCancel={this.handleCancelNewLibrary}
-                    handleSave={this.handleSaveNewLibrary} />
+                <CreateLibrary isOpen={this.state.isOpen} />
             </div>
         );
     }
