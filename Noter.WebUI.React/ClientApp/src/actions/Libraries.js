@@ -28,21 +28,28 @@ export const actionCreators = {
         }
 
     },
+    requestCreateLibrary: (name, tags) => {
+        alert('create ' + name);
+        return { type: FETCH_LIBRARIES };
+    },
+
     createLibrary: (name, tags) => {
+        return (dispatch) => {
+            dispatch(actionCreators.requestCreateLibrary(name, tags));
+            //dispatch({ type: CREATE_LIBRARY });
 
-        //dispatch({ type: CREATE_LIBRARY });
+            //const library = {
+            //    name,
+            //    tags
+            //};
 
-        //const library = {
-        //    name,
-        //    tags
-        //};
+            //axios.post(`http://localhost:63315/api/Libraries`, { library })
+            //    .then(res => {
+            //        var libVM = res.library
+            //        dispatch({ type: CREATE_LIBRARY_SUCCESS, libVM });
+            //        //todo decide what to really do here
+            //    })
 
-        //axios.post(`http://localhost:63315/api/Libraries`, { library })
-        //    .then(res => {
-        //        var libVM = res.library
-        //        dispatch({ type: CREATE_LIBRARY_SUCCESS, libVM });
-        //        //todo decide what to really do here
-        //    })
-
+        }
     }
 };

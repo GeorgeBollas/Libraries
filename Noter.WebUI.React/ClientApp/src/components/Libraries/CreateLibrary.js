@@ -25,22 +25,15 @@ class CreateLibrary extends React.Component {
     }
 
     render() {
-        let input;
+        var local = this.props;
+
         return (
             <Dialog onClose={this.onClose} open={this.props.isOpen}> 
                 <DialogTitle id="form-dialog-title">Add a new library</DialogTitle>
                 <DialogContent>
                     <Formik ref={this.formikRef}
-                        //initialValues={library:{name:'', tags:' } }
                         onSubmit={(e) => {
-                            //e.preventDefault();
-                            alert('you submitted');
-                            //if (!input.value.trim()) {
-                            //    return
-                            //}
-                            //this.props.createLibrary(input.value);
-                            //input.value = ''
-                            //// close
+                            local.createLibrary(e.name, e.tags);
                         }}
                         render={({ errors, status, touched, isSubmitting }) => (
                             <Form>
@@ -63,7 +56,6 @@ class CreateLibrary extends React.Component {
         alert('close');
     }
      onSave() {
-         alert('save');
          this.formikRef.current.submitForm();
 
     }
