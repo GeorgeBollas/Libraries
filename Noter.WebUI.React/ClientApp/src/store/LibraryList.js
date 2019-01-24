@@ -1,6 +1,12 @@
-﻿import { FETCH_LIBRARIES, FETCH_LIBRARIES_SUCCESS, CREATE_LIBRARY, CREATE_LIBRARY_SUCCESS } from '../actions/Libraries';
+﻿import {
+    FETCH_LIBRARIES,
+    FETCH_LIBRARIES_SUCCESS,
+    CREATE_LIBRARY,
+    CREATE_LIBRARY_SUCCESS,
+    CREATE_LIBRARY_CANCEL
+} from '../actions/Libraries';
 
-const initialState = { libraries: [], isLoading: false, isListValid: false};
+const initialState = { libraries: [], isLoading: false, isListValid: false, isOpen: false };
 
 
 export const reducer = (state, action) => {
@@ -32,6 +38,7 @@ export const reducer = (state, action) => {
     if (action.type === CREATE_LIBRARY) {
         return {
             ...state,
+            isCreatingLibrary: true,
             creatingLibrary: true, //to show spinner
         };
     };
@@ -39,9 +46,19 @@ export const reducer = (state, action) => {
     if (action.type === CREATE_LIBRARY_SUCCESS) {
         return {
             ...state,
+            isCreatingLibrary: false,
             creatingLibrary: false, //to show spinner
         };
     };
+
+    if (action.type === CREATE_LIBRARY_CANCEL) {
+        return {
+            ...state,
+            isCreatingLibrary: false,
+            creatingLibrary: false, //to show spinner
+        };
+    };
+
 
     return state;
 }

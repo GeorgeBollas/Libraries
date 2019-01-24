@@ -8,14 +8,18 @@ export const FETCH_LIBRARIES_FAILURE = 'FETCH_LIBRARIES_FAILURE';
 export const CREATE_LIBRARY = 'CREATE_LIBRARY';
 export const CREATE_LIBRARY_SUCCESS = 'CREATE_LIBRARY_SUCCESS';
 export const CREATE_LIBRARY_FAILURE = 'CREATE_LIBRARY_FAILURE';
+export const CREATE_LIBRARY_CANCEL = 'CREATE_LIBRARY_CANCEL';
 
 export const actionCreators = {
+
     requestLibraries: () => {
         return { type: FETCH_LIBRARIES };
     },
+
     requestLibrariesSucceded: (libraries) => {
         return { type: FETCH_LIBRARIES_SUCCESS, libVM: libraries };
     },
+
     fetchLibraries: () => {
         return (dispatch) => {
             dispatch(actionCreators.requestLibraries());
@@ -28,14 +32,18 @@ export const actionCreators = {
         }
 
     },
-    requestCreateLibrary: (name, tags) => {
-        alert('create ' + name);
-        return { type: FETCH_LIBRARIES };
-    },
 
     createLibrary: (name, tags) => {
+        return { type: CREATE_LIBRARY };
+    },
+
+    cancelCreateLibrary: () => {
+        return { type: CREATE_LIBRARY_CANCEL };
+    },
+
+    requestCreateLibrary: (name, tags) => {
         return (dispatch) => {
-            dispatch(actionCreators.requestCreateLibrary(name, tags));
+            //dispatch(actionCreators.requestCreateLibrary(name, tags));
             //dispatch({ type: CREATE_LIBRARY });
 
             //const library = {

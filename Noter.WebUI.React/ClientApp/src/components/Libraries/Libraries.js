@@ -26,23 +26,21 @@ class Libraries extends Component {
         this.handleSaveNewLibrary = this.handleSaveNewLibrary.bind(this);
         this.handleCancelNewLibrary = this.handleCancelNewLibrary.bind(this);
 
-        this.state = {
-            isOpen: false,
-            loading: false
-        };
+        //this.state = {
+        //    isOpen: false,
+        //    loading: false
+        //};
     }
 
     handleAddLibraryClick() {
-        this.setState({ isOpen: true });
+        this.props.createLibrary();
     }
 
     handleSaveNewLibrary(library) {
         alert(library.name);
-        this.setState({ isOpen: false });
     }
 
     handleCancelNewLibrary() {
-        this.setState({ isOpen: false });
 
     }
     componentDidMount() {
@@ -68,8 +66,8 @@ class Libraries extends Component {
                 </Fab>
                 <LibraryList
                     libraries={this.props.libraries}
-                    loading={this.props.isLoading}/>
-                <CreateLibrary isOpen={this.state.isOpen} />
+                    loading={this.props.isLoading} />
+                <CreateLibrary isOpen={this.props.isCreatingLibray} />
             </div>
         );
     }
@@ -79,6 +77,6 @@ class Libraries extends Component {
 
 export default
     connect(
-        state => ({ libraries: state.libraries, isLoading: state.isLoading }),
+        state => state.libraries,
         dispatch => bindActionCreators(actionCreators, dispatch)
     )(withStyles(styles, { withTheme: true })(Libraries));

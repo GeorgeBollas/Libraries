@@ -27,13 +27,14 @@ class LibraryList extends Component {
     }
 
     render() {
-        const { libraries, loading, error } = this.props.libraries;
+        const { libraries, loading } = this.props;
 
         if (loading) {
             return <div className="container"><h3>Loading...</h3></div>
-        } else if (error) {
-            return <div className="alert alert-danger">Error: {error.message}</div>
         }
+        //else if (error) {
+        //    return <div className="alert alert-danger">Error: {error.message}</div>
+        //}
 
         return (
             <div className="container">

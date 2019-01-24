@@ -21,6 +21,7 @@ class CreateLibrary extends React.Component {
         this.formikRef = React.createRef();
 
         this.onSave = this.onSave.bind(this);
+        this.onClose = this.onClose.bind(this);
 
     }
 
@@ -28,7 +29,7 @@ class CreateLibrary extends React.Component {
         var local = this.props;
 
         return (
-            <Dialog onClose={this.onClose} open={this.props.isOpen}> 
+            <Dialog onClose={this.onClose} open={this.props.isCreatingLibrary}>
                 <DialogTitle id="form-dialog-title">Add a new library</DialogTitle>
                 <DialogContent>
                     <Formik ref={this.formikRef}
@@ -46,22 +47,25 @@ class CreateLibrary extends React.Component {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.onClose} color="primary">Cancel</Button>
-                    <Button onClick={this.onSave}  color="primary">Save</Button>
+                    <Button onClick={this.onSave} color="primary">Save</Button>
                 </DialogActions>
             </Dialog>
         );
     };
 
     onClose() {
-        alert('close');
+        this.props.cancelCreateLibrary()
     }
-     onSave() {
-         this.formikRef.current.submitForm();
+
+    onSave() {
+        this.formikRef.current.submitForm();
 
     }
 };
 
 
-export default connect(dispatch => bindActionCreators(actionCreators, dispatch))(CreateLibrary)
+export default connect(
+    state => state.libraries,
+    dispatch => bindActionCreators(actionCreators, dispatch))(CreateLibrary)
 
 
