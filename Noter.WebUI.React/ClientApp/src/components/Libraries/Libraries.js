@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
-import { actionCreators } from '../../actions/Libraries';
+import * as librariesActionCreators from '../../actions/Libraries';
 import LibraryList from './LibraryList';
 import CreateLibrary from './CreateLibrary';
 
@@ -67,7 +67,7 @@ class Libraries extends Component {
                 <LibraryList
                     libraries={this.props.libraries}
                     loading={this.props.isLoading} />
-                <CreateLibrary isOpen={this.props.isCreatingLibray} />
+                <CreateLibrary />
             </div>
         );
     }
@@ -78,5 +78,5 @@ class Libraries extends Component {
 export default
     connect(
         state => state.libraries,
-        dispatch => bindActionCreators(actionCreators, dispatch)
+        dispatch => bindActionCreators(librariesActionCreators, dispatch)
     )(withStyles(styles, { withTheme: true })(Libraries));

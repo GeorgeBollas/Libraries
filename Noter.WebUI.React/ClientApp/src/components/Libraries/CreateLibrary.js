@@ -13,7 +13,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import { actionCreators } from '../../actions/Libraries';
+import * as librariesActionCreators from '../../actions/Libraries';
 
 class CreateLibrary extends React.Component {
     constructor(props) {
@@ -29,7 +29,7 @@ class CreateLibrary extends React.Component {
         var local = this.props;
 
         return (
-            <Dialog onClose={this.onClose} open={this.props.isCreatingLibrary}>
+            <Dialog onClose={this.onClose} open={local.isCreatingLibrary}>
                 <DialogTitle id="form-dialog-title">Add a new library</DialogTitle>
                 <DialogContent>
                     <Formik ref={this.formikRef}
@@ -66,6 +66,6 @@ class CreateLibrary extends React.Component {
 
 export default connect(
     state => state.libraries,
-    dispatch => bindActionCreators(actionCreators, dispatch))(CreateLibrary)
+    dispatch => bindActionCreators(librariesActionCreators, dispatch))(CreateLibrary)
 
 

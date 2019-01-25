@@ -1,63 +1,68 @@
 ﻿import axios from 'axios';
 
 //import { REQUEST_LIBRARY_LIST, RECEIVE_LIBRARY_LIST, REQUEST_CREATE_LIBRARY, RECEIVE_CREATE_LIBRARY } from '../constants/action-types';
-export const FETCH_LIBRARIES = 'FETCH_LIBRARIES';
+export const FETCH_LIBRARIES_REQUEST = 'FETCH_LIBRARIES_REQUEST';
 export const FETCH_LIBRARIES_SUCCESS = 'FETCH_LIBRARIES_SUCCESS';
 export const FETCH_LIBRARIES_FAILURE = 'FETCH_LIBRARIES_FAILURE';
 
-export const CREATE_LIBRARY = 'CREATE_LIBRARY';
+export const CREATE_LIBRARY_DIALOG_OPEN = 'CREATE_LIBRARY_DIALOG_OPEN';
+export const CREATE_LIBRARY_DIALOG_SAVE = 'CREATE_LIBRARY_DIALOG_SAVE';
+export const CREATE_LIBRARY_DIALOG_CANCEL = 'CREATE_LIBRARY_DIALOG_CANCEL';
+
+export const CREATE_LIBRARY_REQUEST = 'CREATE_LIBRARY_REQUEST';
 export const CREATE_LIBRARY_SUCCESS = 'CREATE_LIBRARY_SUCCESS';
 export const CREATE_LIBRARY_FAILURE = 'CREATE_LIBRARY_FAILURE';
-export const CREATE_LIBRARY_CANCEL = 'CREATE_LIBRARY_CANCEL';
 
-export const actionCreators = {
 
-    requestLibraries: () => {
-        return { type: FETCH_LIBRARIES };
-    },
+export const requestLibraries = () => {
+    return { type: FETCH_LIBRARIES_REQUEST };
+}
 
-    requestLibrariesSucceded: (libraries) => {
-        return { type: FETCH_LIBRARIES_SUCCESS, libVM: libraries };
-    },
+export const requestLibrariesSucceded = (libraries) => {
+    return { type: FETCH_LIBRARIES_SUCCESS, libVM: libraries };
+}
 
-    fetchLibraries: () => {
-        return (dispatch) => {
-            dispatch(actionCreators.requestLibraries());
-            //dispatch({ type: FETCH_LIBRARIES });
-            return axios.get(`http://localhost:63315/api/Libraries`)
-                .then(response => {
-                    dispatch(actionCreators.requestLibrariesSucceded(response.data));
-                })
-                .catch(error => { throw (error) });
-        }
-
-    },
-
-    createLibrary: (name, tags) => {
-        return { type: CREATE_LIBRARY };
-    },
-
-    cancelCreateLibrary: () => {
-        return { type: CREATE_LIBRARY_CANCEL };
-    },
-
-    requestCreateLibrary: (name, tags) => {
-        return (dispatch) => {
-            //dispatch(actionCreators.requestCreateLibrary(name, tags));
-            //dispatch({ type: CREATE_LIBRARY });
-
-            //const library = {
-            //    name,
-            //    tags
-            //};
-
-            //axios.post(`http://localhost:63315/api/Libraries`, { library })
-            //    .then(res => {
-            //        var libVM = res.library
-            //        dispatch({ type: CREATE_LIBRARY_SUCCESS, libVM });
-            //        //todo decide what to really do here
-            //    })
-
-        }
+export const fetchLibraries = () => {
+    return (dispatch) => {
+        dispatch(requestLibraries());
+        //dispatch({ type: FETCH_LIBRARIES });
+        return axios.get(`http://localhost:63315/api/Libraries`)
+            .then(response => {
+                dispatch(requestLibrariesSucceded(response.data));
+            })
+            .catch(error => { throw (error) });
     }
-};
+
+}
+
+export const createLibraryDialogOpen = (name, tags) => {
+    return { type: CREATE_LIBRARY_DIALOG_OPEN };
+}
+
+export const createLibraryDialogCancel = () => {
+    return { type: CREATE_LIBRARY_DIALOG_CANCEL };
+}
+
+export const createLibraryRequest = () => {
+    return { type: CREATE_LIBRARY_REQUEST };
+}
+
+export const requestCreateLibrary = (name, tags) => {
+    return (dispatch) => {
+        //dispatch(actionCreators.requestCreateLibrary(name, tags));
+        //dispatch({ type: CREATE_LIBRARY });
+
+        //const library = {
+        //    name,
+        //    tags
+        //};
+
+        //axios.post(`http://localhost:63315/api/Libraries`, { library })
+        //    .then(res => {
+        //        var libVM = res.library
+        //        dispatch({ type: CREATE_LIBRARY_SUCCESS, libVM });
+        //        //todo decide what to really do here
+        //    })
+
+    }
+}
