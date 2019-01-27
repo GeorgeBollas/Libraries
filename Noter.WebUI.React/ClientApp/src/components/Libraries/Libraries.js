@@ -33,7 +33,7 @@ class Libraries extends Component {
     }
 
     handleAddLibraryClick() {
-        this.props.createLibrary();
+        this.props.createLibraryDialogOpen();
     }
 
     handleSaveNewLibrary(library) {

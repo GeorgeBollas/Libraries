@@ -7,7 +7,14 @@
     CREATE_LIBRARY_DIALOG_CANCEL
 } from '../actions/Libraries';
 
-const initialState = { libraries: [], isLoading: false, isListValid: false, isOpen: false, isCreatingLibrary:false };
+const initialState = {
+    libraries: [],
+    isLoading: false,
+    isListValid: false,
+    isOpen: false,
+    isCreatingLibrary: false,
+    isRequestedCreateLibrary : false
+};
 
 
 export const reducer = (state, action) => {
@@ -63,8 +70,7 @@ export const reducer = (state, action) => {
     if (action.type === CREATE_LIBRARY_REQUEST) {
         return {
             ...state,
-            isCreatingLibrary: false,
-            creatingLibrary: false, //to show spinner
+            isRequestedCreateLibrary: true,
         };
     };
 

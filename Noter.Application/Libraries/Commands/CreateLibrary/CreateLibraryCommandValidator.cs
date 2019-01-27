@@ -12,7 +12,8 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
         {
             RuleFor(n => n.Name).MaximumLength(100).NotEmpty();
 
-            RuleFor(l => l).Must(t => t.Tags.Count() == t.Tags.Distinct().Count()).WithMessage("Tags must be unique");
+            //todo split an check
+            //RuleFor(l => l).Must(t => t.Tags.Count() == t.Tags.Distinct().Count()).WithMessage("Tags must be unique");
         }
     }
 }

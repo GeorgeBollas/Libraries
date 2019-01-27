@@ -49,20 +49,20 @@ export const createLibraryRequest = () => {
 
 export const requestCreateLibrary = (name, tags) => {
     return (dispatch) => {
-        //dispatch(actionCreators.requestCreateLibrary(name, tags));
+        dispatch(createLibraryRequest());
         //dispatch({ type: CREATE_LIBRARY });
 
-        //const library = {
-        //    name,
-        //    tags
-        //};
+        const library = {
+            name,
+            tags
+        };
 
-        //axios.post(`http://localhost:63315/api/Libraries`, { library })
-        //    .then(res => {
-        //        var libVM = res.library
-        //        dispatch({ type: CREATE_LIBRARY_SUCCESS, libVM });
-        //        //todo decide what to really do here
-        //    })
+        axios.post(`http://localhost:63315/api/Libraries`, { library })
+            .then(res => {
+                var libVM = res.library
+                dispatch({ type: CREATE_LIBRARY_SUCCESS, libVM });
+                //todo decide what to really do here
+            })
 
     }
 }

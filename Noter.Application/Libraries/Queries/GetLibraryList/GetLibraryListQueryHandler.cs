@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Noter.Persistance;
 using System;
 using System.Collections.Generic;
@@ -13,13 +14,18 @@ namespace Noter.Application.Libraries.Queries.GetLibraryList
     public class GetLibraryListQueryHandler : IRequestHandler<GetLibraryListQuery, LibraryListViewModel>
     {
         private readonly NoterDbContext _context;
-        public GetLibraryListQueryHandler(NoterDbContext context)
+        private readonly ILogger<GetLibraryListQueryHandler> logger;
+
+        public GetLibraryListQueryHandler(NoterDbContext context, ILogger<GetLibraryListQueryHandler> logger)
         {
             _context = context;
+            this.logger = logger;
         }
 
         public async Task<LibraryListViewModel> Handle(GetLibraryListQuery request, CancellationToken cancellationToken)
         {
+            logger.LogDebug("GetLibraryListQuery {0}", request);
+
             // TODO: Set view model state based on user permissions.
             var model = new LibraryListViewModel
             {

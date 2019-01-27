@@ -1,72 +1,95 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Logging;
 using Noter.Domain.Entities;
 using Noter.Persistance;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Noter.Application.Libraries.Commands.CreateLibrary
 {
-    public class CreateLibraryCommandHandler : IRequestHandler<CreateLibraryCommand>
+    public class CreateLibraryCommandHandler : IRequestHandler<CreateLibraryCommand, CreateLibraryCommandResult>
     {
-        private readonly NoterDbContext _context;
+        private readonly NoterDbContext context;
+        private readonly ILogger logger;
+        private Library library;
 
-        private Library _library;
-
-        public CreateLibraryCommandHandler(NoterDbContext context)
+        public CreateLibraryCommandHandler(NoterDbContext context, ILogger<CreateLibraryCommandHandler> logger)
         {
-            _context = context;
+            this.context = context;
+            this.logger = logger;
         }
 
 
-        public async Task<Unit> Handle(CreateLibraryCommand request, CancellationToken cancellationToken)
+        public async Task<CreateLibraryCommandResult> Handle(CreateLibraryCommand request, CancellationToken cancellationToken)
         {
-            // rewrite and push to domain model
-
-            CreateLibrary(request);
-
-            CreateTags(request);
-
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return Unit.Value;
-        }
-
-        private void CreateTags(CreateLibraryCommand request)
-        {
-            foreach (var tagName in request.Tags)
+            logger.LogDebug("CreateLibraryCommand {0}", request);
+            try
             {
-                var tag = new Tag()
-                {
-                    Name = tagName,
-                    Guid = Guid.NewGuid(),
-                    EntityStatus = Domain.Enumerations.EntityStatus.Active,
-                    Created = DateTime.Now,
-                    Modified = DateTime.Now,
 
-                    Library = _library
-                };
+                CreateLibrary(request);
 
-                _context.Tags.Add(tag);
+                CreateTags(request.Tags);
+
+                await context.SaveChangesAsync(cancellationToken);
             }
-            throw new NotImplementedException();
+            catch (Exception ex)
+            {
+                var guid = Guid.NewGuid();
+                logger.LogError(ex, "CreateLibraryCommandHandler:{0}", guid);
+                return new CreateLibraryCommandResult()
+                {
+                    LibraryId = library.Id,
+                    Messages = new List<string>() { $"Create Library failed with unknown error\n Reference '{guid}" }
+                };
+            }
+
+            return new CreateLibraryCommandResult() { LibraryId = library.Id };
         }
 
         private void CreateLibrary(CreateLibraryCommand request)
         {
-            _library = new Library
+            TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
+
+            library = new Library
             {
                 Guid = Guid.NewGuid(),
-                Name = request.Name,
+                Name = textInfo.ToTitleCase(request.Name.Trim()),
                 Notes = request.Notes,
                 EntityStatus = Domain.Enumerations.EntityStatus.Active,
                 Created = DateTime.Now,
                 Modified = DateTime.Now
             };
 
-            _context.Libraries.Add(_library);
+            context.Libraries.Add(library);
+        }
+        private void CreateTags(string tags, string separator = "|")
+        {
+            TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
+
+            var tagsArray = tags.Split(separator);
+
+            foreach (var tagName in tagsArray)
+            {
+
+                var name = textInfo.ToTitleCase(tagName.ToLower());
+
+                var tag = new Tag()
+                {
+                    Name = name,
+                    Guid = Guid.NewGuid(),
+                    EntityStatus = Domain.Enumerations.EntityStatus.Active,
+                    Created = DateTime.Now,
+                    Modified = DateTime.Now,
+
+                    Library = library
+                };
+
+                context.Tags.Add(tag);
+            }
         }
     }
 }
