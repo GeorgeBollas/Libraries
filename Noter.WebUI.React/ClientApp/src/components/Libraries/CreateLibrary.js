@@ -52,7 +52,7 @@ class CreateLibrary extends React.Component {
                 <DialogContent>
                     <Formik ref={this.formikRef}
                         onSubmit={(e) => {
-                            local.requestCreateLibrary(e.name, e.tags && );
+                            local.requestCreateLibrary(e.name || '', e.tags || '' );
                         }}
                         render={({ errors, status, touched, isSubmitting }) => (
                             <Form>

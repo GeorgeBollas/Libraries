@@ -29,6 +29,7 @@ namespace Noter.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             //services.AddCors(options => options.AddPolicy("AllowAllOrigins",
             //                                                builder =>
             //                                                {
@@ -49,10 +50,6 @@ namespace Noter.Api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateLibraryCommandValidator>());
 
-            services.AddLogging(loggingBuilder =>
-            {
-                loggingBuilder.AddSeq(Configuration.GetSection("Seq"));
-            });
             //// In production, the Angular files will be served from this directory
             //services.AddSpaStaticFiles(configuration =>
             //{
@@ -73,12 +70,13 @@ namespace Noter.Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
-            // Shows UseCors with CorsPolicyBuilder.
             app.UseCors(builder =>
-               builder.WithOrigins("http://localhost:55651")
-               .AllowAnyHeader()
-               .AllowAnyOrigin()); // React project (http)
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            // Shows UseCors with CorsPolicyBuilder.
+            //app.UseCors(builder =>
+            //   builder.WithOrigins("http://localhost:55651")
+            //   .AllowAnyHeader()
+            //   .AllowAnyOrigin()); // React project (http)
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
