@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Noter.Application.Libraries.Commands.CreateLibrary;
 using Noter.Application.Libraries.Commands.DeleteLibrary;
 using Noter.Application.Libraries.Commands.UpdateLibrary;
@@ -11,7 +10,6 @@ using System.Threading.Tasks;
 namespace Noter.Api.Controllers
 {
     [Route("api/[controller]")]
-
     public class LibrariesController : BaseController
     {
         // GET api/libraries

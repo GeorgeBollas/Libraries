@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Noter.Application.Infrastructure;
 using Noter.Application.Libraries.Commands.CreateLibrary;
 using Noter.Persistance;
@@ -21,8 +22,6 @@ namespace Noter.Api
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
-
         }
 
         public IConfiguration Configuration { get; }
@@ -30,11 +29,13 @@ namespace Noter.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options => options.AddPolicy("AllowAllOrigins",
-                                                            builder =>
-                                                            {
-                                                                builder.AllowAnyOrigin();
-                                                            }));
+            //services.AddCors(options => options.AddPolicy("AllowAllOrigins",
+            //                                                builder =>
+            //                                                {
+            //                                                    builder.AllowAnyOrigin();
+            //                                                    builder.AllowAnyMethod();
+            //                                                })
+            //                                    );
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
             services.AddMediatR(typeof(CreateLibraryCommandHandler).GetTypeInfo().Assembly);  //point to the assemby to look for handlers
@@ -48,6 +49,10 @@ namespace Noter.Api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateLibraryCommandValidator>());
 
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.AddSeq(Configuration.GetSection("Seq"));
+            });
             //// In production, the Angular files will be served from this directory
             //services.AddSpaStaticFiles(configuration =>
             //{
@@ -71,7 +76,9 @@ namespace Noter.Api
 
             // Shows UseCors with CorsPolicyBuilder.
             app.UseCors(builder =>
-               builder.WithOrigins("http://localhost:55651")); // React project (http)
+               builder.WithOrigins("http://localhost:55651")
+               .AllowAnyHeader()
+               .AllowAnyOrigin()); // React project (http)
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

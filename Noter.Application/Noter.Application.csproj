@@ -14,10 +14,13 @@
 
   <ItemGroup>
     <Compile Remove="Bookmarks\**" />
+    <Compile Remove="CommandLogging\**" />
     <Compile Remove="Workspaces\**" />
     <EmbeddedResource Remove="Bookmarks\**" />
+    <EmbeddedResource Remove="CommandLogging\**" />
     <EmbeddedResource Remove="Workspaces\**" />
     <None Remove="Bookmarks\**" />
+    <None Remove="CommandLogging\**" />
     <None Remove="Workspaces\**" />
   </ItemGroup>
 
@@ -29,10 +32,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Noter.Persistance\Noter.Persistance.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="CommandLogging\" />
   </ItemGroup>
 
 </Project>

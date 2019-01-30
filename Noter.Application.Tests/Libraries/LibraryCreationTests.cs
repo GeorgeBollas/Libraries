@@ -19,7 +19,7 @@ namespace Noter.Application.Tests.Libraries
         public LibraryCreationTests()
         {
             _context = InitAndGetDbContext();
-            _commandHandler = new CreateLibraryCommandHandler(_context);
+            _commandHandler = new CreateLibraryCommandHandler(_context, null);
         }
 
         [Fact]
@@ -30,7 +30,7 @@ namespace Noter.Application.Tests.Libraries
             {
                 Name = "new library",
                 Notes = "notes for new library",
-                Tags = new List<string>() { "tag1", "tag2", "tag1" }
+                Tags = "tag1|tag2|tag3"
             };
 
             // Act + Assert

@@ -50,14 +50,8 @@ export const createLibraryRequest = () => {
 export const requestCreateLibrary = (name, tags) => {
     return (dispatch) => {
         dispatch(createLibraryRequest());
-        //dispatch({ type: CREATE_LIBRARY });
 
-        const library = {
-            name,
-            tags
-        };
-
-        axios.post(`http://localhost:63315/api/Libraries`, { library })
+        axios.post(`http://localhost:63315/api/Libraries`, { name, tags: tags && '' })
             .then(res => {
                 var libVM = res.library
                 dispatch({ type: CREATE_LIBRARY_SUCCESS, libVM });
