@@ -55,7 +55,7 @@ export const requestCreateLibrary = (name, tags) => {
             .then(res => {
                 var libVM = res.library
                 dispatch({ type: CREATE_LIBRARY_SUCCESS, libVM });
-                //todo decide what to really do here
+                dispatch(fetchLibraries());
             })
 
     }

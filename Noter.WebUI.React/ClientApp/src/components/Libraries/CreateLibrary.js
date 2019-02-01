@@ -1,8 +1,9 @@
-﻿import React, { Fragment } from 'react';
+﻿import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { Formik, Form, } from 'formik';
+import Yup from 'yup';
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -11,7 +12,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import green from '@material-ui/core/colors/green';
+import TextField from '@material-ui/core/TextField';
+
 
 import * as librariesActionCreators from '../../actions/Libraries';
 
@@ -26,10 +28,9 @@ const styles = theme => ({
         left: '50%',
     },
     wrapper: {
-        margin: theme.spacing.unit *2,
-        padding: theme.spacing.unit * 2,
+        margin: theme.spacing.unit,
+        padding: theme.spacing.unit,
         position: 'relative',
-        backgroundColor: green[500],
     },
 });
 
@@ -44,7 +45,7 @@ class CreateLibrary extends React.Component {
     }
 
     render() {
-        var local = this.props;
+        let local = this.props;
 
         return (
             <Dialog onClose={this.onClose} open={local.isCreatingLibrary} className={local.classes.root}>
@@ -52,21 +53,16 @@ class CreateLibrary extends React.Component {
                 <DialogContent>
                     <Formik ref={this.formikRef}
                         onSubmit={(e) => {
-                            local.requestCreateLibrary(e.name || '', e.tags || '' );
+                            local.requestCreateLibrary(e.name || '', e.tags || '');
                         }}
-                        render={({ errors, status, touched, isSubmitting }) => (
-                            <Form>
-                                <div className={local.classes.wrapper} >
-                                    {local.isRequestedCreateLibrary && <CircularProgress className={local.classes.progress} />}
-                                    <div>
-                                        <Field type="text" name="name" />
-                                        <ErrorMessage name="name" component="div" />
-                                        <Field type="text" name="tags" />
-                                        <ErrorMessage name="tags" component="div" />
-                                    </div>
-                                </div>
-                            </Form>
-                        )}
+                        component={this.form}
+                        validationSchema={Yup.object().shape({
+                            name: Yup.string() //Client side validation for field "title"
+                                .min(3, 'Name must be at least 3 characters long.')
+                                .required('Name is required.'),
+                            tags: Yup.string() //todo need to write custom validator?? or Regex??
+                                .required("Tags is required"),
+                        })}
                     />
                 </DialogContent>
                 <DialogActions>
@@ -77,6 +73,40 @@ class CreateLibrary extends React.Component {
         );
     };
 
+    form = ({ handleSubmit, handleChange, handleBlur, values, errors}) => {
+        return (
+            <Form>
+                <div className={this.props.classes.wrapper} >
+                    {this.props.isRequestedCreateLibrary && <CircularProgress className={this.props.classes.progress} />}
+                    <div>
+                        <div>
+                            <TextField
+                                hintText="name of the new library"
+                                floatingLabelText="Name"
+                                name="name"
+                                onChange={handleChange} //By default client side validation is done onChange
+                                onBlur={handleBlur} //By default client side validation is also done onBlur
+                                value={values.title}
+                                errorText={errors.title} //Error display
+                                />
+                        </div>
+                        <div>
+                            <TextField
+                                hintText="Tags"
+                                floatingLabelText="Tags"
+                                name="tags"
+                                onChange={handleChange} //By default client side validation is done onChange
+                                onBlur={handleBlur} //By default client side validation is also done onBlur
+                                value={values.title}
+                                errorText={errors.title} //Error display
+                            />
+                        </div>
+                    </div>
+                </div>
+            </Form>);
+    }
+
+
     onClose() {
         this.props.createLibraryDialogCancel()
     }
@@ -86,7 +116,6 @@ class CreateLibrary extends React.Component {
 
     }
 };
-
 
 export default connect(
     state => state.libraries,

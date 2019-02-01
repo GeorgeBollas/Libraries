@@ -3,6 +3,7 @@
     FETCH_LIBRARIES_SUCCESS,
     CREATE_LIBRARY_DIALOG_OPEN,
     CREATE_LIBRARY_REQUEST,
+    CREATE_LIBRARY_SUCCESS,
     CREATE_LIBRARY_DIALOG_SAVE,
     CREATE_LIBRARY_DIALOG_CANCEL
 } from '../actions/Libraries';
@@ -47,7 +48,7 @@ export const reducer = (state, action) => {
         return {
             ...state,
             isCreatingLibrary: true,
-            creatingLibrary: true, //to show spinner
+            creatingLibrary: true,
         };
     };
 
@@ -55,7 +56,7 @@ export const reducer = (state, action) => {
         return {
             ...state,
             isCreatingLibrary: false,
-            creatingLibrary: false, //to show spinner
+            creatingLibrary: false,
         };
     };
 
@@ -63,7 +64,7 @@ export const reducer = (state, action) => {
         return {
             ...state,
             isCreatingLibrary: false,
-            creatingLibrary: false, //to show spinner
+            creatingLibrary: false,
         };
     };
 
@@ -74,6 +75,15 @@ export const reducer = (state, action) => {
         };
     };
 
-    
+    if (action.type === CREATE_LIBRARY_SUCCESS) {
+        return {
+            ...state,
+            isRequestedCreateLibrary: false,
+            isCreatingLibrary: false,
+            creatingLibrary: false,
+        };
+    };
+
+
     return state;
 }

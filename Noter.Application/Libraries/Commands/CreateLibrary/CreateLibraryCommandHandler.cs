@@ -29,6 +29,7 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
             logger.LogDebug("CreateLibraryCommand {0}", request);
             try
             {
+                //todo validate and set errors -- or done in CreateLibraryCommandValidator ?????
 
                 CreateLibrary(request);
 
@@ -43,7 +44,7 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
                 return new CreateLibraryCommandResult()
                 {
                     LibraryId = library.Id,
-                    Messages = new List<string>() { $"Create Library failed with unknown error\n Reference '{guid}" }
+                    Errors = new List<string>() { $"Create Library failed with unknown error\n Reference '{guid}" }
                 };
             }
 

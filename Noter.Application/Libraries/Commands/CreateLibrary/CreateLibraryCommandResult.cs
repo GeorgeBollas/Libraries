@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Noter.Application.Infrastructure.Validation;
+using System.Collections.Generic;
 
 namespace Noter.Application.Libraries.Commands.CreateLibrary
 {
@@ -6,10 +7,12 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
     {
         public CreateLibraryCommandResult()
         {
-            Messages = new List<string>();
+            FieldErrors = new List<FieldError>();
+            Errors = new List<string>();
         }
         public int LibraryId { get; set; }
 
-        public IEnumerable<string> Messages { get; set; }
+        public IEnumerable<string> Errors { get; set; }
+        public IEnumerable<FieldError> FieldErrors { get; set; }
     }
 }

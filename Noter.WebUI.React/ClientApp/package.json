@@ -19,7 +19,8 @@
     "reactstrap": "^6.5.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.3.0",
-    "rimraf": "^2.6.3"
+    "rimraf": "^2.6.3",
+    "yup": "^0.26.10"
   },
   "devDependencies": {
     "ajv": "^6.6.2",
