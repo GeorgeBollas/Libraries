@@ -15,6 +15,9 @@ namespace Noter.Persistance.Configurations
                 .IsRequired()
                 .HasColumnType("uniqueidentifier");
 
+            builder.Property(e => e.Command)
+                .IsRequired();
+
             builder.Property(e => e.Request)
                 .IsRequired();
 

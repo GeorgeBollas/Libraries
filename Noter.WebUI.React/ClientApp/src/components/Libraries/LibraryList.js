@@ -1,6 +1,6 @@
-﻿import React, { Component } from 'react';
+﻿import React, { Component, Fragment } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import LibraryItem from './LibraryItem';
 
@@ -14,10 +14,6 @@ const styles = theme => ({
 
 class LibraryList extends Component {
 
-    componentWillMount() {
-        //this.props.fetchLibraries();
-    }
-
     renderLibraries(libraries) {
         return libraries.map((l) => {
             return (
@@ -30,7 +26,11 @@ class LibraryList extends Component {
         const { libraries, loading } = this.props;
 
         if (loading) {
-            return <div className="container"><h3>Loading...</h3></div>
+            
+            return <Fragment>
+                        <div className="container"><h3>Loading...</h3></div>
+                        <LinearProgress />
+                    </Fragment>
         }
         //else if (error) {
         //    return <div className="alert alert-danger">Error: {error.message}</div>

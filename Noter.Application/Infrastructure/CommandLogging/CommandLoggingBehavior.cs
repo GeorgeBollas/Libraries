@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Noter.Application.Infrastructure.CommandLogging
 {
-    public class CommandLoggingPipeline<TRequest, TResponse> : IRequestPostProcessor<TRequest, TResponse> where TRequest: ILoggedRequest
+    public class CommandLoggingPipeline<TRequest, TResponse> : IRequestPostProcessor<TRequest, TResponse>
     {
         private readonly NoterDbContext context;
         private readonly ILogger logger;
@@ -33,7 +33,8 @@ namespace Noter.Application.Infrastructure.CommandLogging
             {
                 var cl = new CommandLog()
                 {
-                    Guid = request.RequestGuid,
+                    Guid = ((ILoggedRequest)request).RequestGuid,
+                    Command = request.GetType().ToString(),
                     Request = JsonConvert.SerializeObject(request),
                     Response = JsonConvert.SerializeObject(response)
                 };

@@ -7,6 +7,7 @@ namespace Noter.Domain.Entities
     public class CommandLog: Auditable
     {
         public int Id { get; set; }
+        public string Command { get; set; }
         public string Request { get; set; }
         public string Response { get; set; }
 

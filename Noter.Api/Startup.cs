@@ -35,7 +35,7 @@ namespace Noter.Api
         {
             services.AddCors();
  
-            services.AddTransient(typeof(IRequestPostProcessor<,>), typeof(CommandLoggingPipeline<,>));
+            //services.AddTransient(typeof(IRequestPostProcessor<,>), typeof(CommandLoggingPipeline<,>));
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationPipeline<,>));
 
