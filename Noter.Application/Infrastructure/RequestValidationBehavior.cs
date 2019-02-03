@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Noter.Application.Infrastructure
 {
-    public class RequestValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    public class RequestValidationPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 
-        public RequestValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
+        public RequestValidationPipeline(IEnumerable<IValidator<TRequest>> validators)
         {
             _validators = validators;
         }

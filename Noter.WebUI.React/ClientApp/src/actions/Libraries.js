@@ -1,4 +1,5 @@
 ﻿import axios from 'axios';
+import uuid1 from 'uuid/v1';
 
 //import { REQUEST_LIBRARY_LIST, RECEIVE_LIBRARY_LIST, REQUEST_CREATE_LIBRARY, RECEIVE_CREATE_LIBRARY } from '../constants/action-types';
 export const FETCH_LIBRARIES_REQUEST = 'FETCH_LIBRARIES_REQUEST';
@@ -51,7 +52,9 @@ export const requestCreateLibrary = (name, tags) => {
     return (dispatch) => {
         dispatch(createLibraryRequest());
 
-        axios.post('http://localhost:63315/api/Libraries', { name, tags: tags || '' })
+        //todo handle uuid better
+
+        axios.post('http://localhost:63315/api/Libraries', { requestGuid: uuid1(), name, tags: tags || '' })
             .then(res => {
                 var libVM = res.data
                 dispatch({ type: CREATE_LIBRARY_SUCCESS, libVM });

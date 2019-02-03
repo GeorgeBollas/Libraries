@@ -24,7 +24,7 @@ namespace Noter.Application.Libraries.Queries.GetLibraryList
 
         public async Task<LibraryListViewModel> Handle(GetLibraryListQuery request, CancellationToken cancellationToken)
         {
-            logger.LogDebug("GetLibraryListQuery {0}", request);
+            logger.LogDebug("GetLibraryListQuery {@value1}", request);
 
             // TODO: Set view model state based on user permissions.
             var model = new LibraryListViewModel

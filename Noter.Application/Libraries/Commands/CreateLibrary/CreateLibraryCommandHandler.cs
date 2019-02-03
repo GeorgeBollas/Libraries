@@ -26,7 +26,7 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
 
         public async Task<CreateLibraryCommandResult> Handle(CreateLibraryCommand request, CancellationToken cancellationToken)
         {
-            logger.LogDebug("CreateLibraryCommand {0}", request);
+            logger.LogDebug("CreateLibraryCommand {@value1}", request);
             try
             {
                 //todo validate and set errors -- or done in CreateLibraryCommandValidator ?????
@@ -40,7 +40,7 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
             catch (Exception ex)
             {
                 var guid = Guid.NewGuid();
-                logger.LogError(ex, "CreateLibraryCommandHandler:{0}", guid);
+                logger.LogError(ex, "CreateLibraryCommandHandler:{@value1}", guid);
                 return new CreateLibraryCommandResult()
                 {
                     LibraryId = library.Id,
@@ -57,7 +57,7 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
 
             library = new Library
             {
-                Guid = Guid.NewGuid(),
+                Guid = request.RequestGuid,
                 Name = textInfo.ToTitleCase(request.Name.Trim()),
                 Notes = request.Notes,
                 EntityStatus = Domain.Enumerations.EntityStatus.Active,
@@ -81,7 +81,7 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
                 var tag = new Tag()
                 {
                     Name = name,
-                    Guid = Guid.NewGuid(),
+                    Guid = Guid.NewGuid(), //todo 
                     EntityStatus = Domain.Enumerations.EntityStatus.Active,
                     Created = DateTime.Now,
                     Modified = DateTime.Now,

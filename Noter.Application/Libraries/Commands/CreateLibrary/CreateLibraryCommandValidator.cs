@@ -10,6 +10,8 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
     {
         public CreateLibraryCommandValidator()
         {
+            RuleFor(n => n.RequestGuid).NotEmpty();
+
             RuleFor(n => n.Name).MaximumLength(100).NotEmpty();
 
             //todo split an check

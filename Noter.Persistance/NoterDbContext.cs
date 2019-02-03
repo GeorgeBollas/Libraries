@@ -14,6 +14,7 @@ namespace Noter.Persistance
           
         }
 
+
         public DbSet<Item> Items { get; set; }
         public DbSet<ItemTag> ItemTags { get; set; }
 
@@ -24,6 +25,8 @@ namespace Noter.Persistance
 
         public DbSet<Workspace> Workspaces { get; set; }
         public DbSet<WorkspaceItem> WorkspaceItems { get; set; }
+
+        public DbSet<CommandLog> CommandLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
