@@ -2,9 +2,10 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, FieldArray } from 'formik';
 
 import * as Yup from 'yup';
+
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -17,7 +18,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 //import TextField from '@material-ui/core/TextField';
 
 import { fieldToTextField, TextField, TextFieldProps } from 'formik-material-ui';
-
+import ChipInput from 'material-ui-chip-input'
 
 import * as librariesActionCreators from '../../actions/Libraries';
 
@@ -30,7 +31,7 @@ const createLibrarySchema = Yup.object().shape({
 
 interface Values {
     name: string;
-    tags: string;
+    tags: string[];
 }
 const styles = theme => ({
     root: {
@@ -67,9 +68,9 @@ class CreateLibrary extends Component {
                 <DialogTitle id="form-dialog-title">Add a new library</DialogTitle>
                 <DialogContent>
                     <Formik ref={this.formikRef}
-                        initialValues={{name:'', tags:''}}
+                        initialValues={{name:'', tags:[]}}
                         onSubmit={(e) => {
-                            local.requestCreateLibrary(e.name || '', e.tags || '');
+                            local.requestCreateLibrary(e.name || '', e.tags || []);
                         }}
                         component={this.form}
                         validationSchema={createLibrarySchema}
@@ -102,19 +103,21 @@ class CreateLibrary extends Component {
                                 />
                         </div>
                         <div>
-                            <Field
+                            <ChipInput
+                                {...this.props} // to pass down to TextField
                                 label="Tags"
-                                name="tags"
-                                onChange={handleChange} //By default client side validation is done onChange
-                                onBlur={handleBlur} //By default client side validation is also done onBlur
-                                value={values.title}
-                                error={errors.title} //Error display
-                                component={TextField}
+                                onChange={(chips) => this.handleChipChange(chips)}
                             />
                         </div>
                     </div>
                 </div>
             </Form>);
+    }
+
+    handleChipChange(chips) {
+        console.debug(chips.lenght);
+        //this.formikRef.current.state.values.tags = chips; //todo does this violate changing state directly??
+        this.formikRef.current.setFieldValue('tags', chips, false);
     }
 
 

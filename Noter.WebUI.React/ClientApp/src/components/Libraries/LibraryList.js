@@ -26,12 +26,9 @@ class LibraryList extends Component {
         const { libraries, loading } = this.props;
 
         if (loading) {
-            
-            return <Fragment>
-                        <div className="container"><h3>Loading...</h3></div>
-                        <LinearProgress />
-                    </Fragment>
+            return <LinearProgress />
         }
+
         //else if (error) {
         //    return <div className="alert alert-danger">Error: {error.message}</div>
         //}

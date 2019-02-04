@@ -67,13 +67,11 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
 
             context.Libraries.Add(library);
         }
-        private void CreateTags(string tags, string separator = "|")
+        private void CreateTags(string[] tags)
         {
             TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
 
-            var tagsArray = tags.Split(separator);
-
-            foreach (var tagName in tagsArray)
+            foreach (var tagName in tags)
             {
 
                 var name = textInfo.ToTitleCase(tagName.ToLower());

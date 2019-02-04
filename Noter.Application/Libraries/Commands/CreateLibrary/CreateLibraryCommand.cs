@@ -14,8 +14,7 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
 
         public string Notes { get; set; }
 
-        public string TagSeparator { get; set; }
 
-        public string Tags { get; set; }
+        public string[] Tags { get; set; }
     }
 }

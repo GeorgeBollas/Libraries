@@ -54,7 +54,7 @@ export const requestCreateLibrary = (name, tags) => {
 
         //todo handle uuid better
 
-        axios.post('http://localhost:63315/api/Libraries', { requestGuid: uuid1(), name, tags: tags || '' })
+        axios.post('http://localhost:63315/api/Libraries', { requestGuid: uuid1(), name, tags: tags || [] })
             .then(res => {
                 var libVM = res.data
                 dispatch({ type: CREATE_LIBRARY_SUCCESS, libVM });
