@@ -1,4 +1,5 @@
-﻿import axios from 'axios';
+﻿
+import axios from 'axios';
 import uuid1 from 'uuid/v1';
 
 //import { REQUEST_LIBRARY_LIST, RECEIVE_LIBRARY_LIST, REQUEST_CREATE_LIBRARY, RECEIVE_CREATE_LIBRARY } from '../constants/action-types';
@@ -9,6 +10,9 @@ export const FETCH_LIBRARIES_FAILURE = 'FETCH_LIBRARIES_FAILURE';
 export const CREATE_LIBRARY_DIALOG_OPEN = 'CREATE_LIBRARY_DIALOG_OPEN';
 export const CREATE_LIBRARY_DIALOG_SAVE = 'CREATE_LIBRARY_DIALOG_SAVE';
 export const CREATE_LIBRARY_DIALOG_CANCEL = 'CREATE_LIBRARY_DIALOG_CANCEL';
+
+export const EDIT_LIBRARY_OPEN = 'EDIT_LIBRARY_OPEN';
+
 
 export const CREATE_LIBRARY_REQUEST = 'CREATE_LIBRARY_REQUEST';
 export const CREATE_LIBRARY_SUCCESS = 'CREATE_LIBRARY_SUCCESS';
@@ -26,7 +30,8 @@ export const requestLibrariesSucceded = (libraries) => {
 export const fetchLibraries = () => {
     return (dispatch) => {
         dispatch(requestLibraries());
-        //dispatch({ type: FETCH_LIBRARIES });
+
+        //todo should the 'then' be moved to the component
         return axios.get(`http://localhost:63315/api/Libraries`)
             .then(response => {
                 dispatch(requestLibrariesSucceded(response.data));
@@ -36,7 +41,11 @@ export const fetchLibraries = () => {
 
 }
 
-export const createLibraryDialogOpen = (name, tags) => {
+export const editLibraryOpen = (id) => {
+    return { type: EDIT_LIBRARY_OPEN, libraryId: id };
+}
+
+export const createLibraryDialogOpen = () => {
     return { type: CREATE_LIBRARY_DIALOG_OPEN };
 }
 
@@ -44,22 +53,25 @@ export const createLibraryDialogCancel = () => {
     return { type: CREATE_LIBRARY_DIALOG_CANCEL };
 }
 
-export const createLibraryRequest = () => {
-    return { type: CREATE_LIBRARY_REQUEST };
+export const createLibrary = (name, tags) => {
+    //todo handle uuid better
+    return (dispatch) => {
+        dispatch(createLibraryRequest(name, tags))
+
+        return axios.post('http://localhost:63315/api/Libraries', { requestGuid: uuid1(), name, tags: tags || [] });
+    }
 }
 
-export const requestCreateLibrary = (name, tags) => {
-    return (dispatch) => {
-        dispatch(createLibraryRequest());
+export function createLibraryRequest(name, tags) {
+    return {
+        type: CREATE_LIBRARY_SUCCESS,
+        payload: { name, tags }
+    };
+}
 
-        //todo handle uuid better
-
-        axios.post('http://localhost:63315/api/Libraries', { requestGuid: uuid1(), name, tags: tags || [] })
-            .then(res => {
-                var libVM = res.data
-                dispatch({ type: CREATE_LIBRARY_SUCCESS, libVM });
-                dispatch(fetchLibraries());
-            })
-
-    }
+export function createLibrarySuccess(libraryId) {
+    return {
+        type: CREATE_LIBRARY_SUCCESS,
+        payload: libraryId
+    };
 }

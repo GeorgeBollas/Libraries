@@ -1,8 +1,11 @@
 ﻿import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
+import { withRouter } from "react-router";
 
-import { Formik, Form, Field, FieldArray } from 'formik';
+
+
+import { Formik, Form, Field } from 'formik';
 
 import * as Yup from 'yup';
 
@@ -61,7 +64,8 @@ class CreateLibrary extends Component {
     }
 
     render() {
-        let local = this.props;
+        const local = this.props;
+        const { history } = this.props
 
         return (
             <Dialog onClose={this.onClose} open={local.isCreatingLibrary} className={local.classes.root}>
@@ -70,7 +74,11 @@ class CreateLibrary extends Component {
                     <Formik ref={this.formikRef}
                         initialValues={{name:'', tags:[]}}
                         onSubmit={(e) => {
-                            local.requestCreateLibrary(e.name || '', e.tags || []);
+                            local.createLibrary(e.name, e.tags)
+                                .then((result) => {
+                                    history.push('library-editor');
+                                    local.createLibrarySuccess(result.data.libraryId);
+                                })
                         }}
                         component={this.form}
                         validationSchema={createLibrarySchema}
@@ -86,7 +94,7 @@ class CreateLibrary extends Component {
 
     form = ({ handleSubmit, handleChange, handleBlur, values, onSave, errors}) => {
         return (
-            <Form>
+            <Form >
                 <div className={this.props.classes.wrapper} >
                     {this.props.isRequestedCreateLibrary && <CircularProgress className={this.props.classes.progress} />}
                     <div>
@@ -134,6 +142,6 @@ class CreateLibrary extends Component {
 export default connect(
     state => state.libraries,
     dispatch => bindActionCreators(librariesActionCreators, dispatch)
-)(withStyles(styles, { withTheme: true })(CreateLibrary));
+)(withStyles(styles, { withTheme: true })(withRouter((CreateLibrary))));
 
 

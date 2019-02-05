@@ -25,11 +25,6 @@ class Libraries extends Component {
         this.handleAddLibraryClick = this.handleAddLibraryClick.bind(this);
         this.handleSaveNewLibrary = this.handleSaveNewLibrary.bind(this);
         this.handleCancelNewLibrary = this.handleCancelNewLibrary.bind(this);
-
-        //this.state = {
-        //    isOpen: false,
-        //    loading: false
-        //};
     }
 
     handleAddLibraryClick() {
@@ -43,13 +38,13 @@ class Libraries extends Component {
     handleCancelNewLibrary() {
 
     }
+
     componentDidMount() {
         // This method is called when the component is first added to the document
         this.ensureDataFetched(); 
     }
 
     componentDidUpdate() {
-        // This method is called when the route parameters change
         //this.ensureDataFetched();
     }
 
