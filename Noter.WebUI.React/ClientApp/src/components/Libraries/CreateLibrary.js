@@ -32,10 +32,7 @@ const createLibrarySchema = Yup.object().shape({
         .required('Required'),
 });
 
-interface Values {
-    name: string;
-    tags: string[];
-}
+
 const styles = theme => ({
     root: {
         display: 'flex',
@@ -68,7 +65,7 @@ class CreateLibrary extends Component {
         const { history } = this.props
 
         return (
-            <Dialog onClose={this.onClose} open={local.isCreatingLibrary} className={local.classes.root}>
+            <Dialog onClose={this.onClose} open={local.isCreateLibraryDialogOpen} className={local.classes.root}>
                 <DialogTitle id="form-dialog-title">Add a new library</DialogTitle>
                 <DialogContent>
                     <Formik ref={this.formikRef}
@@ -92,11 +89,12 @@ class CreateLibrary extends Component {
         );
     };
 
-    form = ({ handleSubmit, handleChange, handleBlur, values, onSave, errors}) => {
+    form = ({ handleSubmit, handleChange, handleBlur, values, onSave, errors }) => {
+        const { classes, headerIsHidden, ...other } = this.props;
         return (
             <Form >
                 <div className={this.props.classes.wrapper} >
-                    {this.props.isRequestedCreateLibrary && <CircularProgress className={this.props.classes.progress} />}
+                    {this.props.isCreateLibraryRequested && <CircularProgress className={this.props.classes.progress} />}
                     <div>
                         <div>
                             <Field
@@ -106,13 +104,12 @@ class CreateLibrary extends Component {
                                 onBlur={handleBlur} //By default client side validation is also done onBlur
                                 value={values.title}
                                 error={errors.title} //Error display
-                                onEnter={onSave}
                                 component={TextField}
                                 />
                         </div>
                         <div>
                             <ChipInput
-                                {...this.props} // to pass down to TextField
+                                {...other} // to pass down to TextField
                                 label="Tags"
                                 onChange={(chips) => this.handleChipChange(chips)}
                             />
@@ -140,7 +137,7 @@ class CreateLibrary extends Component {
 };
 
 export default connect(
-    state => state.libraries,
+    state => state.librariesModule,
     dispatch => bindActionCreators(librariesActionCreators, dispatch)
 )(withStyles(styles, { withTheme: true })(withRouter((CreateLibrary))));
 

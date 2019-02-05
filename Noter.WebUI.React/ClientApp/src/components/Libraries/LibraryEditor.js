@@ -41,6 +41,6 @@ class LibraryEditor extends Component {
 
 export default
     connect(
-        state => state.libraries,
+        state => state.librariesModule, //todo dont need this
         dispatch => bindActionCreators(librariesActionCreators, dispatch)
     )(withStyles(styles, { withTheme: true })(LibraryEditor));

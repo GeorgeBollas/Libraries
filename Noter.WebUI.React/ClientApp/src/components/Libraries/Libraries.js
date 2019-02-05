@@ -55,13 +55,14 @@ class Libraries extends Component {
     render() {
         return (
             <div>
-                <h1>Libraries {this.props.isLoading}</h1>
+                <h1>Libraries</h1>
                 <Fab color='primary' className={this.props.classes.fab} onClick={this.handleAddLibraryClick}>
                     <AddIcon />
                 </Fab>
+                { /*todo this should use redux should not have to pass down??*/ }
                 <LibraryList
                     libraries={this.props.libraries}
-                    loading={this.props.isLoading} />
+                    loading={this.props.isLibraryListLoading} />
                 <CreateLibrary />
             </div>
         );
@@ -72,6 +73,6 @@ class Libraries extends Component {
 
 export default
     connect(
-        state => state.libraries,
+        state => state.librariesModule,
         dispatch => bindActionCreators(librariesActionCreators, dispatch)
     )(withStyles(styles, { withTheme: true })(Libraries));

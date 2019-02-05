@@ -18,32 +18,31 @@ export const CREATE_LIBRARY_REQUEST = 'CREATE_LIBRARY_REQUEST';
 export const CREATE_LIBRARY_SUCCESS = 'CREATE_LIBRARY_SUCCESS';
 export const CREATE_LIBRARY_FAILURE = 'CREATE_LIBRARY_FAILURE';
 
+// Fetching Library Request
 
-export const requestLibraries = () => {
+export const fetchLibrariesRequest = () => {
     return { type: FETCH_LIBRARIES_REQUEST };
 }
 
-export const requestLibrariesSucceded = (libraries) => {
+export const requestLibrariesSuccess = (libraries) => {
     return { type: FETCH_LIBRARIES_SUCCESS, libVM: libraries };
 }
 
 export const fetchLibraries = () => {
     return (dispatch) => {
-        dispatch(requestLibraries());
+        dispatch(fetchLibrariesRequest());
 
         //todo should the 'then' be moved to the component
         return axios.get(`http://localhost:63315/api/Libraries`)
             .then(response => {
-                dispatch(requestLibrariesSucceded(response.data));
+                dispatch(requestLibrariesSuccess(response.data));
             })
             .catch(error => { throw (error) });
     }
 
 }
 
-export const editLibraryOpen = (id) => {
-    return { type: EDIT_LIBRARY_OPEN, libraryId: id };
-}
+// Create Library Dialog
 
 export const createLibraryDialogOpen = () => {
     return { type: CREATE_LIBRARY_DIALOG_OPEN };
@@ -61,6 +60,14 @@ export const createLibrary = (name, tags) => {
         return axios.post('http://localhost:63315/api/Libraries', { requestGuid: uuid1(), name, tags: tags || [] });
     }
 }
+
+// Edit Library 
+
+export const editLibraryOpen = (id) => {
+    return { type: EDIT_LIBRARY_OPEN, libraryId: id };
+}
+
+// Create Library Request
 
 export function createLibraryRequest(name, tags) {
     return {

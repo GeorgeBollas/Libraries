@@ -10,11 +10,10 @@
 
 const initialState = {
     libraries: [],
-    isLoading: false,
+    isLibraryListLoading: false,
     isListValid: false,
-    isOpen: false,
-    isCreatingLibrary: false,
-    isRequestedCreateLibrary : false
+    isCreateLibraryDialogOpen: false,
+    isCreateLibraryRequested : false
 };
 
 
@@ -29,7 +28,7 @@ export const reducer = (state, action) => {
             ...state,
             libraries: [],
             isListValid: false,
-            isLoading: true,
+            isLibraryListLoading: true,
         };
     }
 
@@ -38,49 +37,46 @@ export const reducer = (state, action) => {
             ...state,
             libraries: action.libVM.libraries, //todo fix this
             isListValid: true,
-            isLoading: false,
+            isLibraryListLoading: false,
         };
 
     };
 
+    //todo fetch libraries failed
 
     if (action.type === CREATE_LIBRARY_DIALOG_OPEN) {
         return {
             ...state,
-            isCreatingLibrary: true,
-            creatingLibrary: true,
+            isCreateLibraryDialogOpen: true,
         };
     };
 
     if (action.type === CREATE_LIBRARY_DIALOG_CANCEL) {
         return {
             ...state,
-            isCreatingLibrary: false,
-            creatingLibrary: false,
+            isCreateLibraryDialogOpen: false,
         };
     };
 
     if (action.type === CREATE_LIBRARY_DIALOG_SAVE) {
         return {
             ...state,
-            isCreatingLibrary: false,
-            creatingLibrary: false,
+            isCreateLibraryDialogOpen: false,
         };
     };
 
     if (action.type === CREATE_LIBRARY_REQUEST) {
         return {
             ...state,
-            isRequestedCreateLibrary: true,
+            isCreateLibraryRequested: true,
         };
     };
 
     if (action.type === CREATE_LIBRARY_SUCCESS) {
         return {
             ...state,
-            isRequestedCreateLibrary: false,
-            isCreatingLibrary: false,
-            creatingLibrary: false,
+            isCreateLibraryRequested: false,
+            isCreateLibraryDialogOpen: false,
         };
     };
 
