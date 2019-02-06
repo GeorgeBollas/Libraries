@@ -25,6 +25,8 @@ import ChipInput from 'material-ui-chip-input'
 
 import * as librariesActionCreators from '../../actions/Libraries';
 
+import './CreateLibrary.css';
+
 const createLibrarySchema = Yup.object().shape({
     name: Yup.string()
         .min(2, 'Too Short!')
@@ -44,9 +46,9 @@ const styles = theme => ({
         left: '50%',
     },
     wrapper: {
-        margin: theme.spacing.unit,
-        padding: theme.spacing.unit,
-        position: 'relative',
+        fullWidth: true,
+        maxWidth: 'lg',
+        //position: 'relative',
     },
 });
 
@@ -65,27 +67,30 @@ class CreateLibrary extends Component {
         const { history } = this.props
 
         return (
-            <Dialog onClose={this.onClose} open={local.isCreateLibraryDialogOpen} className={local.classes.root}>
-                <DialogTitle id="form-dialog-title">Add a new library</DialogTitle>
-                <DialogContent>
-                    <Formik ref={this.formikRef}
-                        initialValues={{name:'', tags:[]}}
-                        onSubmit={(e) => {
-                            local.createLibrary(e.name, e.tags)
-                                .then((result) => {
-                                    history.push('library-editor');
-                                    local.createLibrarySuccess(result.data.libraryId);
-                                })
-                        }}
-                        component={this.form}
-                        validationSchema={createLibrarySchema}
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={this.onClose} size="small" color="primary">Cancel</Button>
-                    <Button type='submit' onClick={this.onSave} size="small" color="primary">Save</Button>
-                </DialogActions>
-            </Dialog>
+            <div className="test">
+                <Dialog onClose={this.onClose} open={local.isCreateLibraryDialogOpen} className={local.classes.wrapper} >
+                    <DialogTitle id="form-dialog-title">Add a new library</DialogTitle>
+                    <DialogContent>
+                        <Formik ref={this.formikRef}
+                            initialValues={{ name: '', tags: [] }}
+                            onSubmit={(e) => {
+                                local.createLibrary(e.name, e.tags)
+                                    .then((result) => {
+                                        history.push('library-editor');
+                                        local.createLibrarySuccess(result.data.libraryId);
+                                    })
+                            }}
+                            component={this.form}
+                            validationSchema={createLibrarySchema}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <label className="test">hello</label>
+                        <Button onClick={this.onClose} size="small" className="test" color="primary">Cancel</Button>
+                        <Button type='submit' onClick={this.onSave} size="small" color="primary">Save</Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
         );
     };
 
@@ -105,7 +110,7 @@ class CreateLibrary extends Component {
                                 value={values.title}
                                 error={errors.title} //Error display
                                 component={TextField}
-                                />
+                            />
                         </div>
                         <div>
                             <ChipInput
