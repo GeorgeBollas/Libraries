@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Noter.Application.Libraries.Commands.UpdateLibrary
 {
-    public class UpdateLibraryCommandHandler : IRequestHandler<UpdateLibraryCommand>
+    public class UpdateLibraryCommandHandler : IRequestHandler<UpdateLibraryCommand, UpdateLibraryCommandResult>
     {
-        public Task<Unit> Handle(UpdateLibraryCommand request, CancellationToken cancellationToken)
+        public Task<UpdateLibraryCommandResult> Handle(UpdateLibraryCommand request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

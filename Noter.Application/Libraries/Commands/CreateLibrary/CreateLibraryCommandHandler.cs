@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using Noter.Application.Infrastructure.Commanding;
 using Noter.Domain.Entities;
 using Noter.Persistance;
 using System;
@@ -26,7 +27,14 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
 
         public async Task<CreateLibraryCommandResult> Handle(CreateLibraryCommand request, CancellationToken cancellationToken)
         {
+            var result = new CreateLibraryCommandResult(request.RequestGuid)
+            {
+                RequestGuid = request.RequestGuid,
+                Status = CommandStatus.Succeeded, //todo not needed as it is default but should explicitly 
+            };
+
             logger.LogDebug("CreateLibraryCommand {@value1}", request);
+
             try
             {
                 //todo validate and set errors -- or done in CreateLibraryCommandValidator ?????
@@ -36,19 +44,21 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
                 CreateTags(request.Tags);
 
                 await context.SaveChangesAsync(cancellationToken);
+
+                result.LibraryId = library.Id;
+
+                return result;
             }
             catch (Exception ex)
             {
-                var guid = Guid.NewGuid();
-                logger.LogError(ex, "CreateLibraryCommandHandler:{@value1}", guid);
-                return new CreateLibraryCommandResult()
-                {
-                    LibraryId = library.Id,
-                    Errors = new List<string>() { $"Create Library failed with unknown error\n Reference '{guid}" }
-                };
-            }
+                logger.LogError(ex, "CreateLibraryCommandHandler:{@value1}", request.RequestGuid);
 
-            return new CreateLibraryCommandResult() { LibraryId = library.Id };
+                result.Status = CommandStatus.Failed;
+
+                result.Errors.Add($"Create Library failed with unknown error\n Reference '{request.RequestGuid}");
+
+                return result;
+            }
         }
 
         private void CreateLibrary(CreateLibraryCommand request)
@@ -57,7 +67,7 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
 
             library = new Library
             {
-                Guid = request.RequestGuid,
+                Guid = Guid.NewGuid(),
                 Name = textInfo.ToTitleCase(request.Name.Trim()),
                 Notes = request.Notes,
                 EntityStatus = Domain.Enumerations.EntityStatus.Active,
@@ -79,7 +89,7 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
                 var tag = new Tag()
                 {
                     Name = name,
-                    Guid = Guid.NewGuid(), //todo 
+                    Guid = Guid.NewGuid(),
                     EntityStatus = Domain.Enumerations.EntityStatus.Active,
                     Created = DateTime.Now,
                     Modified = DateTime.Now,

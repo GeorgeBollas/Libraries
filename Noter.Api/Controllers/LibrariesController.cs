@@ -5,6 +5,7 @@ using Noter.Application.Libraries.Commands.UpdateLibrary;
 using Noter.Application.Libraries.Queries;
 using Noter.Application.Libraries.Queries.GetLibraryDetails;
 using Noter.Application.Libraries.Queries.GetLibraryList;
+using System;
 using System.Threading.Tasks;
 
 namespace Noter.Api.Controllers
@@ -16,7 +17,14 @@ namespace Noter.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<LibraryListViewModel>> GetAll()
         {
+            try
+            {
             return Ok(await Mediator.Send(new GetLibraryListQuery()));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         // GET api/libraries/5

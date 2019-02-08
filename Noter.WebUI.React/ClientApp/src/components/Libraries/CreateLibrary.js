@@ -25,7 +25,6 @@ import ChipInput from 'material-ui-chip-input'
 
 import * as librariesActionCreators from '../../actions/Libraries';
 
-import './CreateLibrary.css';
 
 const createLibrarySchema = Yup.object().shape({
     name: Yup.string()
@@ -67,7 +66,7 @@ class CreateLibrary extends Component {
         const { history } = this.props
 
         return (
-            <div className="test">
+            <div className="root">
                 <Dialog onClose={this.onClose} open={local.isCreateLibraryDialogOpen} className={local.classes.wrapper} >
                     <DialogTitle id="form-dialog-title">Add a new library</DialogTitle>
                     <DialogContent>

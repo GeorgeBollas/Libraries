@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Noter.Application.Exceptions;
 using Noter.Persistance;
 using System;
 using System.Collections.Generic;

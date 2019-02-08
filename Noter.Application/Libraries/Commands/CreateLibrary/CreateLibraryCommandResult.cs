@@ -1,18 +1,15 @@
-﻿using Noter.Application.Infrastructure.Validation;
+﻿using Noter.Application.Infrastructure.Commanding;
+using Noter.Application.Infrastructure.Validation;
+using System;
 using System.Collections.Generic;
 
 namespace Noter.Application.Libraries.Commands.CreateLibrary
 {
-    public class CreateLibraryCommandResult
+    public class CreateLibraryCommandResult: CommandResultBase
     {
-        public CreateLibraryCommandResult()
-        {
-            FieldErrors = new List<FieldError>();
-            Errors = new List<string>();
-        }
+        public CreateLibraryCommandResult(Guid requestGuid) : base(requestGuid) { }
+
         public int LibraryId { get; set; }
 
-        public IEnumerable<string> Errors { get; set; }
-        public IEnumerable<FieldError> FieldErrors { get; set; }
     }
 }
