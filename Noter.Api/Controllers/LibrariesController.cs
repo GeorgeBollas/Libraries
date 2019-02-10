@@ -19,7 +19,7 @@ namespace Noter.Api.Controllers
         {
             try
             {
-            return Ok(await Mediator.Send(new GetLibraryListQuery()));
+                return Ok(await Mediator.Send(new GetLibraryListQuery()));
             }
             catch (Exception ex)
             {
@@ -45,11 +45,6 @@ namespace Noter.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody]UpdateLibraryCommand command)
         {
-            if (command == null || command.LibraryId != id) //todo why do we do this
-            {
-                return BadRequest();
-            }
-
             return Ok(await Mediator.Send(command));
         }
 

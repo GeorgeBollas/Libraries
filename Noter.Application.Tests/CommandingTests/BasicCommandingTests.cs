@@ -17,31 +17,37 @@ namespace Noter.Application.Tests.CommandingTests
         }
 
         [Fact]
-        public void CommandRequestBaseShouldNotInitRequestId()
+        public void CommandRequestBase_ShouldNotInitRequestId()
         {
             // Arrange
+
             var command = new TestCommand();
 
             // Assert
+
             Assert.Equal(command.RequestGuid, Guid.Empty);
         }
 
         [Fact]
-        public void CommandRequestBaseMustHaveILoggedRequest()
+        public void CommandRequestBase_MustImplementILoggedRequest()
         {
             // Assert
+
             Assert.IsAssignableFrom<ILoggedRequest>(new TestCommand());
             Assert.IsAssignableFrom<IRequest<TestCommandResult>>(new TestCommand());
         }
 
         [Fact]
-        public void CommandResultBaseInitialValues()
+        public void CommandResultBase_MustHaveInitialValues()
         {
             // Arrange
-            var command = new TestCommandResult(Guid.NewGuid());
+            var guid = Guid.NewGuid();
+
+            var command = new TestCommandResult(guid);
 
             // Assert
-            Assert.Equal(CommandStatus.Succeeded, command.Status);
+
+            Assert.Equal(guid, command.RequestGuid);
 
         }
 

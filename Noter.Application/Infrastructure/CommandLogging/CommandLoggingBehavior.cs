@@ -27,7 +27,7 @@ namespace Noter.Application.Infrastructure.CommandLogging
 
         public Task Process(TRequest request, TResponse response)
         {
-            //todo why is this requried cant use ILoggingRequest:IRequest ???? why does it not work
+            //todo why is this required cant use ILoggingRequest:IRequest ???? why does it not work
             //todo can we add by reflection??
             if (request is ILoggedRequest)
             {

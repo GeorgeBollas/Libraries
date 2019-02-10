@@ -11,13 +11,18 @@ namespace Noter.Application.Tests.CommandingTests
     {
 
         [Fact]
-        public void ValidatorMustTestRequestIdIsNotEmpty()
+        public void Validator_MustTestRequestIdIsNotEmpty()
         {
+            // Arrange
             var tv = new TestValidator();
+
+            // Act
 
             var results = tv.Validate(new TestCommand());
 
             var res = results.Errors;
+
+            // Assert
 
             Assert.Equal(default(ValidationFailure), results.Errors.SingleOrDefault(e => e.ErrorMessage == "'Request Guid' should not be empty")) ;
         }

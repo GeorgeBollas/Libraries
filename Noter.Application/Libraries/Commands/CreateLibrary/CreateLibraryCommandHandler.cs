@@ -1,11 +1,14 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Noter.Application.Exceptions;
 using Noter.Application.Infrastructure.Commanding;
 using Noter.Domain.Entities;
 using Noter.Persistance;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,14 +33,12 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
             var result = new CreateLibraryCommandResult(request.RequestGuid)
             {
                 RequestGuid = request.RequestGuid,
-                Status = CommandStatus.Succeeded, //todo not needed as it is default but should explicitly 
             };
 
             logger.LogDebug("CreateLibraryCommand {@value1}", request);
 
             try
             {
-                //todo validate and set errors -- or done in CreateLibraryCommandValidator ?????
 
                 CreateLibrary(request);
 
@@ -49,15 +50,19 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
 
                 return result;
             }
+            catch (DbUpdateException ex)
+            {
+                throw new ValidationException(new List<FluentValidation.Results.ValidationFailure>()
+                {
+                    new FluentValidation.Results.ValidationFailure("Name", "already exists")
+                });
+            }
             catch (Exception ex)
             {
-                logger.LogError(ex, "CreateLibraryCommandHandler:{@value1}", request.RequestGuid);
+                //todo change this to error notifier which calls logger and maybe notifies user/email etc or maybe an array of notifiers
+                logger.LogError(ex, "CreateLibraryCommandHandler failed:{@value1}", request.RequestGuid);
 
-                result.Status = CommandStatus.Failed;
-
-                result.Errors.Add($"Create Library failed with unknown error\n Reference '{request.RequestGuid}");
-
-                return result;
+                throw (ex);
             }
         }
 
@@ -81,7 +86,7 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
         {
             TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
 
-            foreach (var tagName in tags)
+            foreach (var tagName in tags.Select(t => t.Trim()).Distinct())
             {
 
                 var name = textInfo.ToTitleCase(tagName.ToLower());

@@ -7,6 +7,7 @@ namespace Noter.Application.Infrastructure.Commanding
     public enum CommandStatus
     {
         Succeeded = 0,
-        Failed = 1
+        ValidationFailed = 1,
+        UnexpectedException =2
     }
 }
