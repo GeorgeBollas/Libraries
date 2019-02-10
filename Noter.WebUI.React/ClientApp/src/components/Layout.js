@@ -29,22 +29,15 @@ const styles = theme => ({
         display: 'flex',
     },
     appBar: {
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
+        zIndex: theme.zIndex.drawer + 1,
     },
-    appBarShift: {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: drawerWidth,
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    menuButton: {
+    menuButtonLeft: {
         marginLeft: 12,
         marginRight: 20,
+    },
+    menuButtonRight: {
+        marginLeft: 20,
+        marginRight: 12,
     },
     hide: {
         display: 'none',
@@ -77,13 +70,24 @@ const styles = theme => ({
             duration: theme.transitions.duration.leavingScreen,
         }),
         marginLeft: -drawerWidth,
+        marginRight: -drawerWidth,
     },
-    contentShift: {
+    contentShiftLeft: {
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.easeOut,
             duration: theme.transitions.duration.enteringScreen,
         }),
         marginLeft: 0,
+    },
+    contentShiftRight: {
+        transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginRight: 0,
+    },
+    grow: {
+        flexGrow: 1,
     },
 });
 
@@ -93,20 +97,12 @@ class PersistentDrawerLeft extends React.Component {
         openRight: false,
     };
 
-    handleLeftDrawerOpen = () => {
-        this.setState({ openLeft: true });
+    handleLeftDrawerToggle = () => {
+        this.setState({ openLeft: !this.state.openLeft });
     };
 
-    handleRightDrawerOpen = () => {
-        this.setState({ openRight: true });
-    };
-
-    handleLeftDrawerClose = () => {
-        this.setState({ openLeft: false });
-    };
-
-    handleRightDrawerClose = () => {
-        this.setState({ openRight: false });
+    handleRightDrawerToggle = () => {
+        this.setState({ openRight: !this.state.openRight });
     };
 
     render() {
@@ -117,31 +113,32 @@ class PersistentDrawerLeft extends React.Component {
             <div className={classes.root}>
                 <CssBaseline />
                 <AppBar
-                    position="fixed"
-                    className={classNames(classes.appBar, {
-                        [classes.appBarShift]: openLeft,
-                    })}
+                    position="absolute"
+                    className={classes.appBar}
                 >
-                    <Toolbar disableGutters={!openLeft && !openRight}>
+                    <Toolbar>
                         <IconButton
                             color="inherit"
                             aria-label="Open drawer"
-                            onClick={this.handleLeftDrawerOpen}
-                            className={classNames(classes.menuButton, openLeft && classes.hide)}
+                            onClick={this.handleLeftDrawerToggle}
+                            className={classNames(classes.menuButtonLeft, openLeft)}
                         >
                             <MenuIcon />
                         </IconButton>
-                        <NavMenu />
+                        <div className={classes.grow}>
+                            <NavMenu />
+                        </div>
                         <IconButton
                             color="inherit"
                             aria-label="Open drawer"
-                            onClick={this.handleRightDrawerOpen}
-                            className={classNames(classes.menuButton, openRight && classes.hide)}
+                            onClick={this.handleRightDrawerToggle}
+                            className={classNames(classes.menuButtonRight, openRight)}
                         >
                             <MenuIcon />
                         </IconButton>
                     </Toolbar>
                 </AppBar>
+                <CssBaseline />
                 <Drawer
                     className={classes.drawer}
                     variant="persistent"
@@ -151,12 +148,7 @@ class PersistentDrawerLeft extends React.Component {
                         paper: classes.drawerPaper,
                     }}
                 >
-                    <div className={classNames(classes.drawerHeader, classes.leftDrawerHeader)}>
-                        <IconButton onClick={this.handleLeftDrawerClose}>
-                            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                        </IconButton>
-                    </div>
-                    <Divider />
+                    <div className={classes.drawerHeader} />
                     <List>
                         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
                             <ListItem button key={text}>
@@ -177,7 +169,8 @@ class PersistentDrawerLeft extends React.Component {
                 </Drawer>
                 <main
                     className={classNames(classes.content, {
-                        [classes.contentShift]: openLeft,
+                        [classes.contentShiftLeft]: openLeft,
+                        [classes.contentShiftRight]: openRight,
                     })}
                 >
                     <div className={classes.drawerHeader} />
@@ -194,13 +187,7 @@ class PersistentDrawerLeft extends React.Component {
                         paper: classes.drawerPaper,
                     }}
                 >
-                    <div className={classNames(classes.drawerHeader, classes.rightDrawerHeader)}>
-
-                        <IconButton onClick={this.handleRightDrawerClose}>
-                            {theme.direction === 'ltr' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                        </IconButton>
-                    </div>
-                    <Divider />
+                    <div className={classes.drawerHeader} />
                     <List>
                         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
                             <ListItem button key={text}>

@@ -55,7 +55,6 @@ class Libraries extends Component {
     render() {
         return (
             <div>
-                <h1>Libraries</h1>
                 <Fab color='primary' className={this.props.classes.fab} onClick={this.handleAddLibraryClick}>
                     <AddIcon />
                 </Fab>
