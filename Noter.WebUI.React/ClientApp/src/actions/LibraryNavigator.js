@@ -13,6 +13,8 @@ export const CREATE_LIBRARY_DIALOG_CANCEL = 'CREATE_LIBRARY_DIALOG_CANCEL';
 
 export const EDIT_LIBRARY_OPEN = 'EDIT_LIBRARY_OPEN';
 
+export const DELETE_LIBRARY_OPEN = 'DELETE_LIBRARY_OPEN';
+
 
 export const CREATE_LIBRARY_REQUEST = 'CREATE_LIBRARY_REQUEST';
 export const CREATE_LIBRARY_SUCCESS = 'CREATE_LIBRARY_SUCCESS';
@@ -65,6 +67,12 @@ export const createLibrary = (name, tags) => {
 
 export const editLibraryOpen = (id) => {
     return { type: EDIT_LIBRARY_OPEN, libraryId: id };
+}
+
+// Delete Library 
+
+export const deleteLibraryOpen = (id) => {
+    return { type: DELETE_LIBRARY_OPEN, libraryId: id };
 }
 
 // Create Library Request
