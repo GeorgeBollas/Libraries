@@ -4,29 +4,12 @@ import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import * as librariesActionCreators from '../../actions/Libraries';
+import * as librariesActionCreators from '../../actions/LibraryNavigator';
 
 const styles = theme => ({
 });
 
 class LibraryEditor extends Component {
-    constructor(props) {
-        super(props);
-
-    }
-
-    componentDidMount() {
-        // This method is called when the component is first added to the document
-        //this.ensureDataFetched();
-    }
-
-    componentDidUpdate() {
-        // This method is called when the route parameters change
-        //this.ensureDataFetched();
-    }
-
-    ensureDataFetched() {
-    }
 
     render() {
         return (

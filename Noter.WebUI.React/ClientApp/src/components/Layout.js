@@ -21,8 +21,9 @@ import MailIcon from '@material-ui/icons/Mail';
 
 import { Container } from 'reactstrap';
 import NavMenu from './NavMenu';
+import LibraryNavigator from './LibraryNavigator';
 
-const drawerWidth = 240;
+const drawerWidth = 400;
 
 const styles = theme => ({
     root: {
@@ -149,23 +150,7 @@ class PersistentDrawerLeft extends React.Component {
                     }}
                 >
                     <div className={classes.drawerHeader} />
-                    <List>
-                        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
-                    </List>
-                    <Divider />
-                    <List>
-                        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
-                    </List>
+                    <LibraryNavigator />
                 </Drawer>
                 <main
                     className={classNames(classes.content, {

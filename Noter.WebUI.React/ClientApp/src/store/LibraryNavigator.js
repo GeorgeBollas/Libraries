@@ -1,20 +1,25 @@
 ﻿import {
     FETCH_LIBRARIES_REQUEST,
     FETCH_LIBRARIES_SUCCESS,
-    CREATE_LIBRARY_DIALOG_OPEN,
+
     CREATE_LIBRARY_REQUEST,
     CREATE_LIBRARY_SUCCESS,
+
+    CREATE_LIBRARY_DIALOG_OPEN,
     CREATE_LIBRARY_DIALOG_SAVE,
-    CREATE_LIBRARY_DIALOG_CANCEL
-} from '../actions/LibraryNavigator';
+    CREATE_LIBRARY_DIALOG_CANCEL,
+
+    NAVIGATOR_SELECT_LIBRARY,
+    NAVIGATOR_SELECT_LIBRARY_MENU
+} from '../actions/actionTypes';
 
 const initialState = {
-    libraries: [],
+    libraries: undefined,
     selectedLibraryId: 0,
-    isLibraryListLoading: false,
-    isListValid: false,
+    filterText:'', //todo handle
+    selectedLibraryMenuOpen: false,
     isCreateLibraryDialogOpen: false,
-    isCreateLibraryRequested : false
+    isCreateLibraryRequested: false
 };
 
 
@@ -27,9 +32,7 @@ export const reducer = (state, action) => {
     if (action.type === FETCH_LIBRARIES_REQUEST) {
         return {
             ...state,
-            libraries: [],
-            isListValid: false,
-            isLibraryListLoading: true,
+            libraries: undefined,
         };
     }
 
@@ -37,8 +40,6 @@ export const reducer = (state, action) => {
         return {
             ...state,
             libraries: action.libVM.libraries, //todo fix this
-            isListValid: true,
-            isLibraryListLoading: false,
         };
 
     };
@@ -81,6 +82,22 @@ export const reducer = (state, action) => {
         };
     };
 
+
+    if (action.type === NAVIGATOR_SELECT_LIBRARY) {
+        return {
+            ...state,
+            selectedLibraryId: action.libraryId,
+            selectedLibraryMenuOpen: false
+        };
+    };
+
+    if (action.type === NAVIGATOR_SELECT_LIBRARY_MENU) {
+        return {
+            ...state,
+            selectedLibraryId: action.libraryId,
+            selectedLibraryMenuOpen: true
+        };
+    };
 
     return state;
 }

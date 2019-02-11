@@ -1,10 +1,5 @@
 ﻿import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
-import PropTypes from 'prop-types';
-
-import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types'
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -18,42 +13,37 @@ import IconButton from '@material-ui/core/IconButton';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
 
-import * as libraryNavigatorActionCreators from '../../actions/LibraryNavigator';
+//const styles = theme => ({
+//    root: {
+//        width: '100%',
+//        maxWidth: 360,
+//        backgroundColor: theme.palette.background.paper,
+//    },
+//});
 
-const styles = theme => ({
-    root: {
-        width: '100%',
-        maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
-    },
-});
+const LibraryList = props => {
+    const {
+        libraries,
+        selectedLibraryId,
+        onItemClick,
+        onItemMenuClick,
+        classes, //todo get rid of this and use own styles
+    } = props;
 
-class LibraryList extends React.Component {
-
-    handleListItemClick = (event, libraryId) => {
-        this.props.selectLibrary(libraryId);  //todo acttion
-    };
-
-    render() {
-        const { classes, libraries, loading, selectedLibraryId } = this.props;
-
-        if (loading) {
-            return (<LinearProgress />)
-        }
-
+    if (libraries) {
         return (
             <div className={classes.root}>
                 <List>
                     {libraries.map((lib) => (
-                        <ListItem key={lib.libraryId}> button
+                        <ListItem key={lib.libraryId} button
                             selected={selectedLibraryId && selectedLibraryId === lib.libraryId}
-                            onClick={event => this.handleListItemClick(event, lib.libraryId)}
+                            onClick={event => onItemClick(event, lib.libraryId)} >
                             <ListItemIcon>
                                 <FolderIcon />
                             </ListItemIcon>
                             <ListItemText primary={lib.name} />
                             <ListItemSecondaryAction>
-                                <IconButton aria-label="options">
+                                <IconButton aria-label="options" onClick={event => onItemMenuClick(event, lib.libraryId)} >
                                     <MenuIcon />
                                 </IconButton>
                             </ListItemSecondaryAction>
@@ -61,18 +51,19 @@ class LibraryList extends React.Component {
                     ))}
                 </List>
             </div>
-        );
+        )
     }
-
+    else {
+        return ( <LinearProgress /> )
+    }
 
 }
 
 LibraryList.propTypes = {
-    libraries: PropTypes.object.isRequired,
-};
+    onItemClick: PropTypes.func.isRequired,
+    onItemMenuClick: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired,
+}
 
-export default
-    connect(
-    state => state.libraryNavigatorModule,
-    dispatch => bindActionCreators(libraryNavigatorActionCreators, dispatch)
-    )(withStyles(styles, { withTheme: true })(LibraryList));
+export default LibraryList;
+

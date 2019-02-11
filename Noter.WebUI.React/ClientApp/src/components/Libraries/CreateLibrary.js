@@ -23,7 +23,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { fieldToTextField, TextField, TextFieldProps } from 'formik-material-ui';
 import ChipInput from 'material-ui-chip-input'
 
-import * as librariesActionCreators from '../../actions/Libraries';
+import * as librariesActionCreators from '../../actions/actionTypes';
 
 
 const createLibrarySchema = Yup.object().shape({

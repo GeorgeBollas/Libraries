@@ -2,31 +2,27 @@
 import axios from 'axios';
 import uuid1 from 'uuid/v1';
 
-//import { REQUEST_LIBRARY_LIST, RECEIVE_LIBRARY_LIST, REQUEST_CREATE_LIBRARY, RECEIVE_CREATE_LIBRARY } from '../constants/action-types';
-export const FETCH_LIBRARIES_REQUEST = 'FETCH_LIBRARIES_REQUEST';
-export const FETCH_LIBRARIES_SUCCESS = 'FETCH_LIBRARIES_SUCCESS';
-export const FETCH_LIBRARIES_FAILURE = 'FETCH_LIBRARIES_FAILURE';
+import {
+    FETCH_LIBRARIES_REQUEST,
+    FETCH_LIBRARIES_SUCCESS,
+    CREATE_LIBRARY_DIALOG_OPEN,
+    CREATE_LIBRARY_DIALOG_CANCEL,
+    EDIT_LIBRARY_OPEN,
+    DELETE_LIBRARY_OPEN,
+    CREATE_LIBRARY_REQUEST,
+    CREATE_LIBRARY_SUCCESS,
+    NAVIGATOR_SELECT_LIBRARY,
+    NAVIGATOR_SELECT_LIBRARY_MENU
+} from '../actions/actionTypes';
 
-export const CREATE_LIBRARY_DIALOG_OPEN = 'CREATE_LIBRARY_DIALOG_OPEN';
-export const CREATE_LIBRARY_DIALOG_SAVE = 'CREATE_LIBRARY_DIALOG_SAVE';
-export const CREATE_LIBRARY_DIALOG_CANCEL = 'CREATE_LIBRARY_DIALOG_CANCEL';
-
-export const EDIT_LIBRARY_OPEN = 'EDIT_LIBRARY_OPEN';
-
-export const DELETE_LIBRARY_OPEN = 'DELETE_LIBRARY_OPEN';
-
-
-export const CREATE_LIBRARY_REQUEST = 'CREATE_LIBRARY_REQUEST';
-export const CREATE_LIBRARY_SUCCESS = 'CREATE_LIBRARY_SUCCESS';
-export const CREATE_LIBRARY_FAILURE = 'CREATE_LIBRARY_FAILURE';
 
 // Fetching Library Request
 
-export const fetchLibrariesRequest = () => {
+const fetchLibrariesRequest = () => {
     return { type: FETCH_LIBRARIES_REQUEST };
 }
 
-export const requestLibrariesSuccess = (libraries) => {
+const requestLibrariesSuccess = (libraries) => {
     return { type: FETCH_LIBRARIES_SUCCESS, libVM: libraries };
 }
 
@@ -79,7 +75,7 @@ export const deleteLibraryOpen = (id) => {
 
 export function createLibraryRequest(name, tags) {
     return {
-        type: CREATE_LIBRARY_SUCCESS,
+        type: CREATE_LIBRARY_REQUEST,
         payload: { name, tags }
     };
 }
@@ -90,3 +86,16 @@ export function createLibrarySuccess(libraryId) {
         payload: libraryId
     };
 }
+
+// Select Library 
+
+//todo should we validate id is valid here??
+//todo should it select the actual library rather than ID??
+export const selectLibrary = (id) => {
+    return { type: NAVIGATOR_SELECT_LIBRARY, libraryId: id };
+}
+
+export const selectLibraryMenu = (id) => {
+    return { type: NAVIGATOR_SELECT_LIBRARY_MENU, libraryId: id };
+}
+
