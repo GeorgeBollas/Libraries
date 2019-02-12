@@ -1,14 +1,17 @@
 ﻿import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from "react-router";
 
 import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 
+import { Redirect } from 'react-router-dom';
+
 import LibraryFilter from './LibraryFilter';
 import LibraryList from './LibraryList';
-import CreateLibrary from '../Libraries/CreateLibrary';
+//import CreateLibrary from '../Libraries/CreateLibrary';
 
 import * as libraryNavigatorActionCreators from '../../actions/LibraryNavigator';
 
@@ -28,17 +31,21 @@ class Libraries extends React.Component {
     componentDidMount() {
         // This method is called when the component is first added to the document
         this.props.fetchLibraries();
-    }
+        this.selectLibraryMenu = this.selectLibraryMenu.bind(this);
 
+    }
+       
     render() {
         const {
             classes,
             libraries,
             selectedLibraryId,
             selectLibrary,
-            selectLibraryMenu,
-            filterText
+            //selectLibraryMenu,
+            filterText,
         } = this.props;
+
+        //  history.push('library-editor');
 
         return (
             <div>
@@ -48,15 +55,19 @@ class Libraries extends React.Component {
                     libraries={libraries && libraries.filter(l => l.name.includes(filterText))}
                     selectedLibraryId={selectedLibraryId}
                     onItemClick={selectLibrary}
-                    onItemMenuClick={selectLibraryMenu}
+                    onItemMenuClick={this.selectLibraryMenu}
                     classes={classes}
                 />
-                <CreateLibrary />
             </div>
         );
-
-
     }
+
+    //todo do this in redux way somhow
+    selectLibraryMenu() {
+        this.props.history.push('/library-editor')
+    }
+
+
 }
 
 LibraryList.propTypes = {
@@ -67,4 +78,4 @@ export default
     connect(
         state => state.libraryNavigatorModule,
         dispatch => bindActionCreators(libraryNavigatorActionCreators, dispatch)
-    )(withStyles(styles, { withTheme: true })(Libraries));
+    )(withStyles(styles, { withTheme: true })(withRouter((Libraries))));

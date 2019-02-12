@@ -87,15 +87,3 @@ export function createLibrarySuccess(libraryId) {
     };
 }
 
-// Select Library 
-
-//todo should we validate id is valid here??
-//todo should it select the actual library rather than ID??
-export const selectLibrary = (id) => {
-    return { type: NAVIGATOR_SELECT_LIBRARY, libraryId: id };
-}
-
-export const selectLibraryMenu = (id) => {
-    return { type: NAVIGATOR_SELECT_LIBRARY_MENU, libraryId: id };
-}
-

@@ -27,6 +27,7 @@ const LibraryList = props => {
         selectedLibraryId,
         onItemClick,
         onItemMenuClick,
+        history,
         classes, //todo get rid of this and use own styles
     } = props;
 

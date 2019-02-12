@@ -1,29 +1,32 @@
 ﻿
 import React from 'react';
 
-
-import { Form, Field } from 'formik';
-
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ChipInput from 'material-ui-chip-input'
 
+import { Formik, Form, Field } from 'formik';
 import { TextField } from 'formik-material-ui';
 
-<Formik ref={this.formikRef}
-    initialValues={{ name: '', tags: [] }}
-    onSubmit={(e) => {
-        local.createLibrary(e.name, e.tags)
-            .then((result) => {
-                history.push('library-editor');
-                local.createLibrarySuccess(result.data.libraryId);
-            })
-    }}
-    component={LibraryEditorForm}
-    validationSchema={createLibrarySchema}
-/>
+const Details = props => {
+    const { createLibrary, createLibrarySuccess, history } = props;
+    return (
+        <Formik ref={this.formikRef}
+            initialValues={{ name: '', tags: [] }}
+            onSubmit={(e) => {
+                createLibrary(e.name, e.tags)
+                    .then((result) => {
+                        history.push('library-editor');
+                        createLibrarySuccess(result.data.libraryId);
+                    })
+            }}
+            component={form} //todo need to pass props down here
+            validationSchema={form}
+        />
+    );
+}
 
-const LibraryEditorForm = ({ handleSubmit, handleChange, handleBlur, values, onSave, errors }) => {
-    const { classes, headerIsHidden, ...other } = this.props;
+const form = props => {
+    const { handleSubmit, handleChange, handleBlur, values, onSave, errors, classes, headerIsHidden, ...other } = props;
     return (
         <Form >
             <div className={this.props.classes.wrapper} >
@@ -52,4 +55,4 @@ const LibraryEditorForm = ({ handleSubmit, handleChange, handleBlur, values, onS
         </Form>);
 };
 
-export default LibraryEditorForm
+export default Details

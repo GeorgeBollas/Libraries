@@ -1,28 +1,24 @@
-﻿import React, { Component } from 'react';
+﻿import React, { Component, Fragment } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 import { withRouter } from "react-router";
 
-
-
-import { Formik, Form, Field } from 'formik';
-
 import * as Yup from 'yup';
 
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
+
+import DraftsIcon from '@material-ui/icons/Drafts';
+
+
 import { withStyles } from '@material-ui/core/styles';
-
-//import TextField from '@material-ui/core/TextField';
 
 
 import * as librariesActionCreators from '../../actions/actionTypes';
 
-import LibraryEditorForm from './LibraryEditorForm'
+import Details from './Details'
+import Nav from './Nav'
 
 
 const createLibrarySchema = Yup.object().shape({
@@ -48,6 +44,9 @@ const styles = theme => ({
         maxWidth: 'lg',
         //position: 'relative',
     },
+    paper: {
+
+    }
 });
 
 class LibraryEditor extends Component {
@@ -56,31 +55,37 @@ class LibraryEditor extends Component {
         this.formikRef = React.createRef();
 
         this.onSave = this.onSave.bind(this);
-        this.onClose = this.onClose.bind(this);
 
     }
 
     render() {
-        const local = this.props;
-        const { history } = this.props
+        const { local, classes} = this.props;
 
         return (
-            <div className="root">
-                <Dialog onClose={this.onClose} open={local.isCreateLibraryDialogOpen} className={local.classes.wrapper} >
-                    <DialogTitle id="form-dialog-title">Add a new library</DialogTitle>
-                    <DialogContent>
+            <Fragment>
+                <Nav />
+                <div className={classes.root} >
 
-                    </DialogContent>
-                    <DialogActions>
-                        <label className="test">hello</label>
-                        <Button onClick={this.onClose} size="small" className="test" color="primary">Cancel</Button>
-                        <Button type='submit' onClick={this.onSave} size="small" color="primary">Save</Button>
-                    </DialogActions>
-                </Dialog>
-            </div>
+                    <Paper elevation={1}>
+                        <Typography component="h4">Details</Typography>
+                        <Details />
+                    </Paper>
+
+                    <Paper elevation={1}>
+                        <Typography component="h4">Tags</Typography>
+                    </Paper>
+
+                    <Paper elevation={1}>
+                        <Typography component="h4">Syncs</Typography>
+                    </Paper>
+
+                    <Paper elevation={1}>
+                        <Typography component="h4">Saved Searches</Typography>
+                    </Paper>
+                </div>
+            </Fragment>
         );
     };
-
 
     handleChipChange(chips) {
         console.debug(chips.lenght);
