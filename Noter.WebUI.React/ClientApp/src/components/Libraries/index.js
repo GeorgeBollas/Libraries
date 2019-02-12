@@ -16,14 +16,13 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { withStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 //import TextField from '@material-ui/core/TextField';
 
-import { fieldToTextField, TextField, TextFieldProps } from 'formik-material-ui';
-import ChipInput from 'material-ui-chip-input'
 
 import * as librariesActionCreators from '../../actions/actionTypes';
+
+import LibraryEditorForm from './LibraryEditorForm'
 
 
 const createLibrarySchema = Yup.object().shape({
@@ -51,7 +50,7 @@ const styles = theme => ({
     },
 });
 
-class CreateLibrary extends Component {
+class LibraryEditor extends Component {
     constructor(props) {
         super(props);
         this.formikRef = React.createRef();
@@ -70,18 +69,7 @@ class CreateLibrary extends Component {
                 <Dialog onClose={this.onClose} open={local.isCreateLibraryDialogOpen} className={local.classes.wrapper} >
                     <DialogTitle id="form-dialog-title">Add a new library</DialogTitle>
                     <DialogContent>
-                        <Formik ref={this.formikRef}
-                            initialValues={{ name: '', tags: [] }}
-                            onSubmit={(e) => {
-                                local.createLibrary(e.name, e.tags)
-                                    .then((result) => {
-                                        history.push('library-editor');
-                                        local.createLibrarySuccess(result.data.libraryId);
-                                    })
-                            }}
-                            component={this.form}
-                            validationSchema={createLibrarySchema}
-                        />
+
                     </DialogContent>
                     <DialogActions>
                         <label className="test">hello</label>
@@ -93,39 +81,9 @@ class CreateLibrary extends Component {
         );
     };
 
-    form = ({ handleSubmit, handleChange, handleBlur, values, onSave, errors }) => {
-        const { classes, headerIsHidden, ...other } = this.props;
-        return (
-            <Form >
-                <div className={this.props.classes.wrapper} >
-                    {this.props.isCreateLibraryRequested && <CircularProgress className={this.props.classes.progress} />}
-                    <div>
-                        <div>
-                            <Field
-                                label="Name"
-                                name="name"
-                                onChange={handleChange} //By default client side validation is done onChange
-                                onBlur={handleBlur} //By default client side validation is also done onBlur
-                                value={values.title}
-                                error={errors.title} //Error display
-                                component={TextField}
-                            />
-                        </div>
-                        <div>
-                            <ChipInput
-                                {...other} // to pass down to TextField
-                                label="Tags"
-                                onChange={(chips) => this.handleChipChange(chips)}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </Form>);
-    }
 
     handleChipChange(chips) {
         console.debug(chips.lenght);
-        //this.formikRef.current.state.values.tags = chips; //todo does this violate changing state directly??
         this.formikRef.current.setFieldValue('tags', chips, false);
     }
 
@@ -143,6 +101,6 @@ class CreateLibrary extends Component {
 export default connect(
     state => state.librariesModule,
     dispatch => bindActionCreators(librariesActionCreators, dispatch)
-)(withStyles(styles, { withTheme: true })(withRouter((CreateLibrary))));
+)(withStyles(styles, { withTheme: true })(withRouter((LibraryEditor))));
 
 
