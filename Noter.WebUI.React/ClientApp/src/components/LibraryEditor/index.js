@@ -68,7 +68,7 @@ class LibraryEditor extends Component {
 
                     <Paper elevation={1}>
                         <Typography component="h4">Details</Typography>
-                        <Details />
+                        <Details {...this.props} />
                     </Paper>
 
                     <Paper elevation={1}>
