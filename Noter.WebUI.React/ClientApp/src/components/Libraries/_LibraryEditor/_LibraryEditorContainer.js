@@ -53,9 +53,6 @@ class LibraryEditor extends Component {
     constructor(props) {
         super(props);
         this.formikRef = React.createRef();
-
-        this.onSave = this.onSave.bind(this);
-
     }
 
     render() {
@@ -87,17 +84,16 @@ class LibraryEditor extends Component {
         );
     };
 
-    handleChipChange(chips) {
+    handleChipChange = (chips) => {
         console.debug(chips.lenght);
         this.formikRef.current.setFieldValue('tags', chips, false);
     }
 
-
-    onClose() {
+    onClose = () => {
         this.props.createLibraryDialogCancel()
     }
 
-    onSave() {
+    onSave = () => {
         this.formikRef.current.submitForm();
 
     }

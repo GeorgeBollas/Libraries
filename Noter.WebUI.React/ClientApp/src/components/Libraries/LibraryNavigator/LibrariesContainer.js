@@ -31,8 +31,6 @@ class Libraries extends React.Component {
     componentDidMount() {
         // This method is called when the component is first added to the document
         this.props.fetchLibraries();
-        this.selectLibraryMenu = this.selectLibraryMenu.bind(this);
-
     }
        
     render() {
@@ -63,7 +61,7 @@ class Libraries extends React.Component {
     }
 
     //todo do this in redux way somhow
-    selectLibraryMenu() {
+    selectLibraryMenu = () => {
         this.props.history.push('/library-editor')
     }
 

@@ -23,7 +23,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { fieldToTextField, TextField, TextFieldProps } from 'formik-material-ui';
 import ChipInput from 'material-ui-chip-input'
 
-import * as librariesActionCreators from '../../actions/LibraryNavigator';
+import * as actions from '../../actions/LibraryEditing';
+import LibraryDetails from './LibraryDetails';
 
 
 const createLibrarySchema = Yup.object().shape({
@@ -51,32 +52,29 @@ const styles = theme => ({
     },
 });
 
-class Details extends Component {
+class CreateLibrary extends Component {
     constructor(props) {
         super(props);
         this.formikRef = React.createRef();
-
-        this.onSave = this.onSave.bind(this);
-        this.onClose = this.onClose.bind(this);
-
+        this.state = { isOpen: true };
     }
 
     render() {
-        const local = this.props;
-        const { history } = this.props
+        const { history, createLibrary, createLibrarySuccess, classes } = this.props
 
         return (
             <div className="root">
-                <Dialog onClose={this.onClose} open={local.isCreateLibraryDialogOpen} className={local.classes.wrapper} >
+                <Dialog onClose={this.onClose} open={this.isOpen} className={classes.wrapper} >
                     <DialogTitle id="form-dialog-title">Add a new library</DialogTitle>
                     <DialogContent>
                         <Formik ref={this.formikRef}
                             initialValues={{ name: '', tags: [] }}
                             onSubmit={(e) => {
-                                local.createLibrary(e.name, e.tags)
+                                createLibrary(e.name, e.tags)
                                     .then((result) => {
+                                        this.setState({ isOpen: false });
                                         history.push('library-editor');
-                                        local.createLibrarySuccess(result.data.libraryId);
+                                        createLibrarySuccess(result.data.libraryId);
                                     })
                             }}
                             component={this.form}
@@ -97,51 +95,29 @@ class Details extends Component {
         const { classes, headerIsHidden, ...other } = this.props;
         return (
             <Form >
-                <div className={this.props.classes.wrapper} >
-                    {this.props.isCreateLibraryRequested && <CircularProgress className={this.props.classes.progress} />}
-                    <div>
-                        <div>
-                            <Field
-                                label="Name"
-                                name="name"
-                                onChange={handleChange} //By default client side validation is done onChange
-                                onBlur={handleBlur} //By default client side validation is also done onBlur
-                                value={values.title}
-                                error={errors.title} //Error display
-                                component={TextField}
-                            />
-                        </div>
-                        <div>
-                            <ChipInput
-                                {...other} // to pass down to TextField
-                                label="Tags"
-                                onChange={(chips) => this.handleChipChange(chips)}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </Form>);
+                <LibraryDetails />
+                <LibraryTags />
+            </Form>
+        );
     }
 
-    handleChipChange(chips) {
-        console.debug(chips.lenght);
-        //this.formikRef.current.state.values.tags = chips; //todo does this violate changing state directly??
+    handleChipChange = (chips) => {
         this.formikRef.current.setFieldValue('tags', chips, false);
     }
 
 
-    onClose() {
+    onClose = () => {
+        this.setState({ isOpen: false });
         this.props.createLibraryDialogCancel()
     }
 
-    onSave() {
+    onSave = () => {
         this.formikRef.current.submitForm();
-
     }
 };
 
 export default connect(
     state => state.librariesModule,
-    dispatch => bindActionCreators(librariesActionCreators, dispatch)
-)(withStyles(styles, { withTheme: true })(withRouter((Details))));
+    dispatch => bindActionCreators(actions, dispatch)
+)(withStyles(styles, { withTheme: true })(withRouter((CreateLibrary))));
 
