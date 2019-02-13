@@ -25,6 +25,7 @@ import ChipInput from 'material-ui-chip-input'
 
 import * as actions from '../../actions/LibraryEditing';
 import LibraryDetails from './LibraryDetails';
+import LibraryTags from './LibraryTags';
 
 
 const createLibrarySchema = Yup.object().shape({
@@ -56,11 +57,10 @@ class CreateLibrary extends Component {
     constructor(props) {
         super(props);
         this.formikRef = React.createRef();
-        this.state = { isOpen: true };
     }
 
     render() {
-        const { history, createLibrary, createLibrarySuccess, classes } = this.props
+        const { history, createLibraryRequest, createLibrarySuccess, classes } = this.props
 
         return (
             <div className="root">
@@ -70,11 +70,11 @@ class CreateLibrary extends Component {
                         <Formik ref={this.formikRef}
                             initialValues={{ name: '', tags: [] }}
                             onSubmit={(e) => {
-                                createLibrary(e.name, e.tags)
+                                createLibraryRequest(e.name, e.tags)
                                     .then((result) => {
                                         this.setState({ isOpen: false });
-                                        history.push('library-editor');
                                         createLibrarySuccess(result.data.libraryId);
+                                        this.onClose();
                                     })
                             }}
                             component={this.form}
@@ -82,17 +82,15 @@ class CreateLibrary extends Component {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <label className="test">hello</label>
                         <Button onClick={this.onClose} size="small" className="test" color="primary">Cancel</Button>
-                        <Button type='submit' onClick={this.onSave} size="small" color="primary">Save</Button>
+                        <Button type='submit' onClick={this.onSave} size="small" color="primary">Create</Button>
                     </DialogActions>
                 </Dialog>
             </div>
         );
     };
 
-    form = ({ handleSubmit, handleChange, handleBlur, values, onSave, errors }) => {
-        const { classes, headerIsHidden, ...other } = this.props;
+    form = ({ values, onSave, errors }) => {
         return (
             <Form >
                 <LibraryDetails />
@@ -101,13 +99,13 @@ class CreateLibrary extends Component {
         );
     }
 
+    //todo move into <LibraryTags />
     handleChipChange = (chips) => {
         this.formikRef.current.setFieldValue('tags', chips, false);
     }
 
 
     onClose = () => {
-        this.setState({ isOpen: false });
         this.props.createLibraryDialogCancel()
     }
 

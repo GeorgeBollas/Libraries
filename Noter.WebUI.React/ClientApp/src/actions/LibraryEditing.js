@@ -1,62 +1,41 @@
 ﻿
 import axios from 'axios';
-import uuid1 from 'uuid/v1';
 
 import {
-    CREATE_LIBRARY_DIALOG_OPEN,
-    CREATE_LIBRARY_DIALOG_CANCEL,
     EDIT_LIBRARY_OPEN,
-    DELETE_LIBRARY_OPEN,
-    CREATE_LIBRARY_REQUEST,
-    CREATE_LIBRARY_SUCCESS,
+    UPDATE_LIBRARY_REQUEST,
+    UPDATE_LIBRARY_SUCCESS
 } from '../actions/actionTypes';
 
+// Edit Library Server Call
 
-
-// Create Library Dialog
-
-export const createLibraryDialogOpen = () => {
-    return { type: CREATE_LIBRARY_DIALOG_OPEN };
-}
-
-export const createLibraryDialogCancel = () => {
-    return { type: CREATE_LIBRARY_DIALOG_CANCEL };
-}
-
-export const createLibrary = (name, tags) => {
-    //todo handle uuid better
+export const editLibrary = (libraryId, name) => {
+    
     return (dispatch) => {
-        dispatch(createLibraryRequest(name, tags))
+        dispatch(updateLibraryRequest(libraryId, name))
 
-        return axios.post('http://localhost:63315/api/Libraries', { requestGuid: uuid1(), name, tags: tags || [] });
+        return axios.put('http://localhost:63315/api/Libraries', { libraryId, name}); //todo this is really a rename
     }
 }
 
-// Edit Library 
+// Edit Library Dialog
 
 export const editLibraryOpen = (id) => {
     return { type: EDIT_LIBRARY_OPEN, libraryId: id };
 }
 
-// Delete Library 
+// Update Library Request
 
-export const deleteLibraryOpen = (id) => {
-    return { type: DELETE_LIBRARY_OPEN, libraryId: id };
-}
-
-// Create Library Request
-
-export function createLibraryRequest(name, tags) {
+export function updateLibraryRequest(libraryId, name) {
     return {
-        type: CREATE_LIBRARY_REQUEST,
-        payload: { name, tags }
+        type: UPDATE_LIBRARY_REQUEST,
+        payload: { libraryId, name}
     };
 }
 
-export function createLibrarySuccess(libraryId) {
+export function updateLibrarySuccess(libraryId) {
     return {
-        type: CREATE_LIBRARY_SUCCESS,
+        type: UPDATE_LIBRARY_SUCCESS,
         payload: libraryId
     };
 }
-

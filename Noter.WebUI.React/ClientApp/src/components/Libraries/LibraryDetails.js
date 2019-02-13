@@ -22,7 +22,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { fieldToTextField, TextField, TextFieldProps } from 'formik-material-ui';
 
-import * as librariesActionCreators from '../../actions/Libraries';
+import * as actions from '../../actions/LibraryCreating';
 
 
 const createLibrarySchema = Yup.object().shape({
@@ -50,51 +50,13 @@ const styles = theme => ({
     },
 });
 
-//class LibraryDetails extends Component {
-//    constructor(props) {
-//        super(props);
-//        this.formikRef = React.createRef();
-//        this.state = { isOpen: true };
-//    }
 
-//    render() {
-//        const { history, createLibrary, createLibrarySuccess,  classes } = this.props
-
-//        return (
-//            <div className="root">
-//                <Dialog onClose={this.onClose} open={this.isOpen} className={classes.wrapper} >
-//                    <DialogTitle id="form-dialog-title">Add a new library</DialogTitle>
-//                    <DialogContent>
-//                        <Formik ref={this.formikRef}
-//                            initialValues={{ name: '', tags: [] }}
-//                            onSubmit={(e) => {
-//                                createLibrary(e.name, e.tags)
-//                                    .then((result) => {
-//                                        this.setState({ isOpen: false });
-//                                        history.push('library-editor');
-//                                        createLibrarySuccess(result.data.libraryId);
-//                                    })
-//                            }}
-//                            component={this.form}
-//                            validationSchema={createLibrarySchema}
-//                        />
-//                    </DialogContent>
-//                    <DialogActions>
-//                        <label className="test">hello</label>
-//                        <Button onClick={this.onClose} size="small" className="test" color="primary">Cancel</Button>
-//                        <Button type='submit' onClick={this.onSave} size="small" color="primary">Save</Button>
-//                    </DialogActions>
-//                </Dialog>
-//            </div>
-//        );
-//    };
-
-const LibraryDetails = ({ handleSubmit, handleChange, handleBlur, values, onSave, errors }) => {
+const LibraryDetails = ({ handleChange, handleBlur, values, errors }) => {
         const { classes, headerIsHidden, ...other } = this.props;
         return (
             <Form >
                 <div className={this.props.classes.wrapper} >
-                    {this.props.isCreateLibraryRequested && <CircularProgress className={this.props.classes.progress} />}
+                    {this.props.isLibraryCreatorSaving && <CircularProgress className={this.props.classes.progress} />}
                     <div>
                         <div>
                             <Field
@@ -113,20 +75,9 @@ const LibraryDetails = ({ handleSubmit, handleChange, handleBlur, values, onSave
             </Form>);
     }
 
-
-
-//    onClose = () => {
-//        this.setState({ isOpen: false });
-//        this.props.createLibraryDialogCancel()
-//    }
-
-//    onSave = () => {
-//        this.formikRef.current.submitForm();
-//    }
-//};
-
+//todo remove this, should be passed in from CreateLibraryContainer
 export default connect(
-    state => state.librariesModule,
-    dispatch => bindActionCreators(librariesActionCreators, dispatch)
-)(withStyles(styles, { withTheme: true })(withRouter((LibraryDetails))));
+    state => state.libraryCreator,
+    dispatch => bindActionCreators(actions, dispatch)
+)(withStyles(styles, { withTheme: true })(LibraryDetails));
 

@@ -1,17 +1,10 @@
-﻿//handleChipChange = (chips) => {
-//    this.formikRef.current.setFieldValue('tags', chips, false);
-//}
-
-import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+﻿import React from 'react';
 
 import ChipInput from 'material-ui-chip-input'
 
-import * as actions from '../../actions/LibraryEditing';
 
 
-const LibraryTags = ({ other, handleChipChange }) => (
+const LibraryTags = ({ other }) => (
     <ChipInput
         {...other} // to pass down to TextField
         label="Tags"
@@ -19,7 +12,6 @@ const LibraryTags = ({ other, handleChipChange }) => (
     />
 );
 
-export default connect(
-    state => state.counter,
-    dispatch => bindActionCreators(actions, dispatch)
-)(LibraryTags);
+//todo implement handleChipChange
+
+export default LibraryTags;

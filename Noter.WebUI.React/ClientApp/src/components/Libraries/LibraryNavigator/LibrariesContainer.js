@@ -74,6 +74,6 @@ LibraryList.propTypes = {
 
 export default
     connect(
-        state => state.libraryNavigatorModule,
+        state => state.libraryNavigator,
         dispatch => bindActionCreators(libraryNavigatorActionCreators, dispatch)
     )(withStyles(styles, { withTheme: true })(withRouter((Libraries))));
