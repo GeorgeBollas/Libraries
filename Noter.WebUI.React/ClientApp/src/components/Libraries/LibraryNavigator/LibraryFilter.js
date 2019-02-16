@@ -34,11 +34,20 @@ class LibraryFilter extends Component {
                     label="Search"
                     className={classes.textField}
                     value={filterText}
-                    onChange={event => setFilterText(event.target.value)}
+                    onKeyDown={this.onKeyDown}
+                    onChange={e => setFilterText(e.target.value)}
                     margin="normal"
                 />
             </div>
         )
+    }
+
+    //todo make this a custom control ??
+    onKeyDown = (event) => {
+        if (event.keyCode === 27) {
+            event.preventDefault();
+            this.props.setFilterText('');
+        }
     }
 }
 

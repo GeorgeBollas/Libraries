@@ -13,8 +13,11 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import FolderIcon from '@material-ui/icons/Folder';
-import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
 
@@ -30,6 +33,19 @@ const styles = theme => ({
 
 class LibraryList extends Component {
 
+    state = {
+        anchorEl: null,
+    };
+
+    handleClick = event => {
+        this.setState({ anchorEl: event.currentTarget });
+    };
+
+    handleClose = () => {
+        console.log('close');
+        this.setState({ anchorEl: null });
+    };
+
     componentWillMount() {
         this.props.fetchLibraries();
     }
@@ -43,7 +59,7 @@ class LibraryList extends Component {
             filterText,
             classes, //todo get rid of this and use own styles
         } = this.props;
-
+        const { anchorEl } = this.state;
         var libs = libraries.filter(l => l.name.toLowerCase().includes(filterText.trim().toLowerCase()));
 
         if (libs.length !== 0) {
@@ -59,13 +75,28 @@ class LibraryList extends Component {
                                 </ListItemIcon>
                                 <ListItemText primary={lib.name} />
                                 <ListItemSecondaryAction>
-                                    <IconButton aria-label="options" onClick={event => selectLibrary(lib.libraryId)} >
-                                        <MenuIcon />
+                                    <IconButton aria-label="options" //onClick={event => selectLibrary(lib.libraryId)}
+                                        aria-owns={anchorEl ? 'simple-menu' : undefined}
+                                        aria-haspopup="true"
+                                        onClick={this.handleClick}>
+                                        <MoreVertIcon />
+
                                     </IconButton>
                                 </ListItemSecondaryAction>
                             </ListItem>
                         ))}
                     </List>
+                    <Menu
+                        id="simple-menu"
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        onClose={this.handleClose}
+                    >
+                        <MenuItem onClick={this.handleClose}>Rename</MenuItem>
+                        <MenuItem onClick={this.handleClose}>Tags</MenuItem>
+                        <MenuItem onClick={this.handleClose}>Syncs</MenuItem>
+                        <MenuItem onClick={this.handleClose}>Searches</MenuItem>
+                    </Menu>
                 </div>
             )
         }
