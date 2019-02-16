@@ -1,14 +1,16 @@
 ﻿import {
     FETCH_LIBRARIES_REQUEST,
     FETCH_LIBRARIES_SUCCESS,
-
-    NAVIGATOR_SELECT_LIBRARY,
-    NAVIGATOR_SELECT_LIBRARY_MENU
+    LIBRARY_LIST_SELECT_LIBRARY,
+    LIBRARY_LIST_SELECT_LIBRARY_MENU,
+    LIBRARY_LIST_SET_FILTER_TEXT
 } from '../actions/actionTypes';
 
 const initialState = {
-    libraries: undefined,
+    libraries: [],
     selectedLibraryMenuOpen: false,
+    filterText: '',
+    selectedLibraryId: 0
 };
 
 
@@ -21,7 +23,7 @@ export const reducer = (state, action) => {
     if (action.type === FETCH_LIBRARIES_REQUEST) {
         return {
             ...state,
-            libraries: undefined,
+            libraries: [],
         };
     }
 
@@ -33,19 +35,25 @@ export const reducer = (state, action) => {
 
     };
 
-    if (action.type === NAVIGATOR_SELECT_LIBRARY) {
+    if (action.type === LIBRARY_LIST_SELECT_LIBRARY) {
         return {
             ...state,
             selectedLibraryId: action.libraryId,
-            selectedLibraryMenuOpen: false
         };
     };
 
-    if (action.type === NAVIGATOR_SELECT_LIBRARY_MENU) {
+    if (action.type === LIBRARY_LIST_SELECT_LIBRARY_MENU) {
         return {
             ...state,
             selectedLibraryId: action.libraryId,
-            selectedLibraryMenuOpen: true
+        };
+    };
+
+
+    if (action.type === LIBRARY_LIST_SET_FILTER_TEXT) {
+        return {
+            ...state,
+            filterText: action.filterText,
         };
     };
 

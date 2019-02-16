@@ -6,16 +6,16 @@ import * as Counter from './Counter';
 import * as WeatherForecasts from './WeatherForecasts';
 
 import * as LibraryNavigator from './LibraryNavigator';
-import * as LibraryEditor from './LibraryEditor';
-import * as LibraryCreator from './LibraryCreator';
+import * as LibraryEditing from './LibraryEditing';
+import * as Shell from './Shell';
 
 export default function configureStore(history, initialState) {
     const reducers = {
+        shell: Shell.reducer,
         counter: Counter.reducer,
         weatherForecasts: WeatherForecasts.reducer,
         libraryNavigator: LibraryNavigator.reducer,
-        libraryCreator: LibraryCreator.reducer,
-        libraryEditor: LibraryEditor.reducer
+        //libraryEditor: LibraryEditing.reducer
     };
 
     const middleware = [

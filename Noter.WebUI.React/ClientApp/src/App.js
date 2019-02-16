@@ -1,16 +1,14 @@
 import React from 'react';
 import { Route } from 'react-router';
-import Layout from './components/Layout';
+import Shell from './containers/Shell';
 import Home from './components/Home';
 import Counter from './components/Counter';
 import FetchData from './components/FetchData';
-import LibraryEditor from './components/LibraryEditor';
 
 export default () => (
-    <Layout>
+    <Shell>
         <Route exact path='/' component={Home} />
         <Route path='/counter' component={Counter} />
         <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
-        <Route path='/library-editor/:libraryId?' component={LibraryEditor} />
-    </Layout>
+    </Shell>
 );

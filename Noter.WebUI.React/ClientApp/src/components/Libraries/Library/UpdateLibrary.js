@@ -25,10 +25,8 @@ import ChipInput from 'material-ui-chip-input'
 
 import * as actions from '../../actions/LibraryEditing';
 import LibraryDetails from './LibraryDetails';
-import LibraryTags from './LibraryTags';
 
-
-const createLibrarySchema = Yup.object().shape({
+const updateLibrarySchema = Yup.object().shape({
     name: Yup.string()
         .min(2, 'Too Short!')
         .max(50, 'Too Long!')
@@ -59,8 +57,14 @@ class CreateLibrary extends Component {
         this.formikRef = React.createRef();
     }
 
+
+
+    componentDidMount() {
+        this.props.fetchLibrary(this.props.libraryId);
+    }
+
     render() {
-        const { history, createLibraryRequest, createLibrarySuccess, classes } = this.props
+        const { library, updateLibraryRequest, updateLibrarySuccess, classes } = this.props
 
         return (
             <div className="root">
@@ -68,42 +72,34 @@ class CreateLibrary extends Component {
                     <DialogTitle id="form-dialog-title">Add a new library</DialogTitle>
                     <DialogContent>
                         <Formik ref={this.formikRef}
-                            initialValues={{ name: '', tags: [] }}
+                            initialValues={{ name: library.name }}
                             onSubmit={(e) => {
-                                createLibraryRequest(e.name, e.tags)
+                                updateLibraryRequest(library.id, e.name)
                                     .then((result) => {
-                                        this.setState({ isOpen: false });
-                                        createLibrarySuccess(result.data.libraryId);
+                                        updateLibrarySuccess(result.data.libraryId);
                                         this.onClose();
                                     })
                             }}
                             component={this.form}
-                            validationSchema={createLibrarySchema}
+                            validationSchema={updateLibrarySchema}
                         />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.onClose} size="small" className="test" color="primary">Cancel</Button>
-                        <Button type='submit' onClick={this.onSave} size="small" color="primary">Create</Button>
+                        <Button type='submit' onClick={this.onSave} size="small" color="primary">Save</Button>
                     </DialogActions>
                 </Dialog>
             </div>
         );
     };
 
-    form = ({ values, onSave, errors }) => {
+    form = ({ library }) => {
         return (
             <Form >
-                <LibraryDetails />
-                <LibraryTags />
+                <LibraryDetails library={library} />
             </Form>
         );
     }
-
-    //todo move into <LibraryTags />
-    handleChipChange = (chips) => {
-        this.formikRef.current.setFieldValue('tags', chips, false);
-    }
-
 
     onClose = () => {
         this.props.createLibraryDialogCancel()
@@ -114,8 +110,5 @@ class CreateLibrary extends Component {
     }
 };
 
-export default connect(
-    state => state.librariesModule,
-    dispatch => bindActionCreators(actions, dispatch)
-)(withStyles(styles, { withTheme: true })(withRouter((CreateLibrary))));
+export default CreateLibrary;
 

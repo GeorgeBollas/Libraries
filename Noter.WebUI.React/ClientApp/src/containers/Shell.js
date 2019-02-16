@@ -1,27 +1,36 @@
-import React from 'react';
+﻿import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 
 import { Container } from 'reactstrap';
-import NavMenu from './NavMenu';
-import LibraryNavigator from './LibraryNavigator';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux'
+import { withRouter } from "react-router";
+
+import { withStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Drawer from '@material-ui/core/Drawer';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+
+//import List from '@material-ui/core/List';
+//import Typography from '@material-ui/core/Typography';
+//import Divider from '@material-ui/core/Divider';
+//import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+//import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+//import ListItem from '@material-ui/core/ListItem';
+//import ListItemIcon from '@material-ui/core/ListItemIcon';
+//import ListItemText from '@material-ui/core/ListItemText';
+//import InboxIcon from '@material-ui/icons/MoveToInbox';
+//import MailIcon from '@material-ui/icons/Mail';
+
+import * as actions from '../actions/Shell';
+
+import NavMenu from '../components/NavMenu';
+import LibraryNavigator from '../components/Libraries/LibraryNavigator'
+
 
 const drawerWidth = 400;
 
@@ -92,23 +101,16 @@ const styles = theme => ({
     },
 });
 
-class PersistentDrawerLeft extends React.Component {
-    state = {
-        openLeft: false,
-        openRight: false,
-    };
-
-    handleLeftDrawerToggle = () => {
-        this.setState({ openLeft: !this.state.openLeft });
-    };
-
-    handleRightDrawerToggle = () => {
-        this.setState({ openRight: !this.state.openRight });
-    };
+class Shell extends React.Component {
 
     render() {
         const { classes, theme, children } = this.props;
-        const { openLeft, openRight } = this.state;
+        const {
+            toogleLeftNavigator,
+            toogleRightNavigator,
+            leftNavigatorOpen, 
+            rightNavigatorOpen
+        } = this.props;
 
         return (
             <div className={classes.root}>
@@ -121,8 +123,8 @@ class PersistentDrawerLeft extends React.Component {
                         <IconButton
                             color="inherit"
                             aria-label="Open drawer"
-                            onClick={this.handleLeftDrawerToggle}
-                            className={classNames(classes.menuButtonLeft, openLeft)}
+                            onClick={toogleLeftNavigator}
+                            className={classNames(classes.menuButtonLeft, leftNavigatorOpen)}
                         >
                             <MenuIcon />
                         </IconButton>
@@ -132,8 +134,8 @@ class PersistentDrawerLeft extends React.Component {
                         <IconButton
                             color="inherit"
                             aria-label="Open drawer"
-                            onClick={this.handleRightDrawerToggle}
-                            className={classNames(classes.menuButtonRight, openRight)}
+                            onClick={toogleRightNavigator}
+                            className={classNames(classes.menuButtonRight, rightNavigatorOpen)}
                         >
                             <MenuIcon />
                         </IconButton>
@@ -144,7 +146,7 @@ class PersistentDrawerLeft extends React.Component {
                     className={classes.drawer}
                     variant="persistent"
                     anchor="left"
-                    open={openLeft}
+                    open={leftNavigatorOpen}
                     classes={{
                         paper: classes.drawerPaper,
                     }}
@@ -154,8 +156,8 @@ class PersistentDrawerLeft extends React.Component {
                 </Drawer>
                 <main
                     className={classNames(classes.content, {
-                        [classes.contentShiftLeft]: openLeft,
-                        [classes.contentShiftRight]: openRight,
+                        [classes.contentShiftLeft]: leftNavigatorOpen,
+                        [classes.contentShiftRight]: rightNavigatorOpen,
                     })}
                 >
                     <div className={classes.drawerHeader} />
@@ -167,38 +169,24 @@ class PersistentDrawerLeft extends React.Component {
                     className={classes.drawer}
                     variant="persistent"
                     anchor="right"
-                    open={openRight}
+                    open={rightNavigatorOpen}
                     classes={{
                         paper: classes.drawerPaper,
                     }}
                 >
-                    <div className={classes.drawerHeader} />
-                    <List>
-                        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
-                    </List>
-                    <Divider />
-                    <List>
-                        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
-                    </List>
+                    right drawer goes here
                 </Drawer>
             </div>
         );
     }
 }
 
-PersistentDrawerLeft.propTypes = {
+Shell.propTypes = {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(PersistentDrawerLeft);
+export default connect(
+    state => state.shell,
+    dispatch => bindActionCreators(actions, dispatch)
+)(withStyles(styles, { withTheme: true })(withRouter((Shell))));

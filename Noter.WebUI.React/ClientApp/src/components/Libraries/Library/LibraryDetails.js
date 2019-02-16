@@ -9,29 +9,7 @@ import { Formik, Form, Field } from 'formik';
 
 import * as Yup from 'yup';
 
-
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import { withStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-//import TextField from '@material-ui/core/TextField';
-
 import { fieldToTextField, TextField, TextFieldProps } from 'formik-material-ui';
-
-import * as actions from '../../actions/LibraryCreating';
-
-
-const createLibrarySchema = Yup.object().shape({
-    name: Yup.string()
-        .min(2, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required('Required'),
-});
-
 
 const styles = theme => ({
     root: {
@@ -52,11 +30,10 @@ const styles = theme => ({
 
 
 const LibraryDetails = ({ handleChange, handleBlur, values, errors }) => {
-        const { classes, headerIsHidden, ...other } = this.props;
+        const { classes,  } = this.props;
         return (
             <Form >
-                <div className={this.props.classes.wrapper} >
-                    {this.props.isLibraryCreatorSaving && <CircularProgress className={this.props.classes.progress} />}
+                <div className={classes.wrapper} >
                     <div>
                         <div>
                             <Field
@@ -75,9 +52,23 @@ const LibraryDetails = ({ handleChange, handleBlur, values, errors }) => {
             </Form>);
     }
 
-//todo remove this, should be passed in from CreateLibraryContainer
-export default connect(
-    state => state.libraryCreator,
-    dispatch => bindActionCreators(actions, dispatch)
-)(withStyles(styles, { withTheme: true })(LibraryDetails));
+<Formik ref={this.formikRef}
+    initialValues={{ name: '', tags: [] }}
+    onSubmit={(e) => {
+        createLibraryRequest(e.name, e.tags)
+            .then((result) => {
+                this.setState({ isOpen: false });
+                createLibrarySuccess(result.data.libraryId);
+                this.onClose();
+            })
+    }}
+    component={this.form}
+    validationSchema={createLibrarySchema}
+    //todo move into <LibraryTags />
+
+    handleChipChange= (chips) => {
+        this.formikRef.current.setFieldValue('tags', chips, false);
+}
+
+export default LibraryDetails;
 
