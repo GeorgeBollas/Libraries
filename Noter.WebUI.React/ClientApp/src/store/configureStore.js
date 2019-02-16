@@ -7,6 +7,7 @@ import * as WeatherForecasts from './WeatherForecasts';
 
 import * as LibraryNavigator from './LibraryNavigator';
 import * as LibraryEditing from './LibraryEditing';
+import * as LibrariesModule from './LibrariesModule';
 import * as Shell from './Shell';
 
 export default function configureStore(history, initialState) {
@@ -15,6 +16,7 @@ export default function configureStore(history, initialState) {
         counter: Counter.reducer,
         weatherForecasts: WeatherForecasts.reducer,
         libraryNavigator: LibraryNavigator.reducer,
+        librariesModule: LibrariesModule.reducer
         //libraryEditor: LibraryEditing.reducer
     };
 

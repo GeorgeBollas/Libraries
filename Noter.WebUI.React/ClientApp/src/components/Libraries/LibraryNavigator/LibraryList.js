@@ -21,7 +21,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
 
-import * as actions from '../../../actions/LibraryNavigator';
+import * as navigatorActions from '../../../actions/LibraryNavigator';
+import * as librariesActions from '../../../actions/Libraries';
 
 const styles = theme => ({
     root: {
@@ -46,29 +47,28 @@ class LibraryList extends Component {
         this.setState({ anchorEl: null });
     };
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.fetchLibraries();
     }
 
     render() {
         const {
-            libraries,
-            selectedLibraryId,
+            librariesModule,
+            libraryNavigator,
             selectLibrary,
-            selectLibraryMenu,
-            filterText,
             classes, //todo get rid of this and use own styles
         } = this.props;
-        const { anchorEl } = this.state;
-        var libs = libraries.filter(l => l.name.toLowerCase().includes(filterText.trim().toLowerCase()));
 
-        if (libs.length !== 0) {
+        const { anchorEl } = this.state;
+        var libs = librariesModule.libraries.filter(l => l.name.toLowerCase().includes(libraryNavigator.filterText.trim().toLowerCase()));
+
+        if (librariesModule.loading === false) {
             return (
                 <div className={classes.root}>
                     <List>
                         {libs.map((lib) => (
                             <ListItem key={lib.libraryId} button
-                                selected={selectedLibraryId === lib.libraryId}
+                                selected={libraryNavigator.selectedLibraryId === lib.libraryId}
                                 onClick={event => selectLibrary(lib.libraryId)} >
                                 <ListItemIcon>
                                     <FolderIcon />
@@ -114,7 +114,11 @@ LibraryList.propTypes = {
 }
 
 export default connect(
-    state => state.libraryNavigator,
-    dispatch => bindActionCreators(actions, dispatch)
+    state => (
+        {
+            libraryNavigator: state.libraryNavigator,
+            librariesModule: state.librariesModule
+        }),
+    dispatch => bindActionCreators({ ...librariesActions, ...navigatorActions }, dispatch)
 )(withStyles(styles, { withTheme: true })(withRouter((LibraryList))));
 
