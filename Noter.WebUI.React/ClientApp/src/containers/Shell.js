@@ -29,7 +29,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import * as actions from '../actions/Shell';
 
 import NavMenu from '../components/NavMenu';
-import LibraryNavigator from '../components/Libraries/LibraryNavigator'
+import LibrariesNavigator from '../components/Libraries/LibrariesNavigator'
 
 
 const drawerWidth = 400;
@@ -152,7 +152,7 @@ class Shell extends React.Component {
                     }}
                 >
                     <div className={classes.drawerHeader} />
-                    <LibraryNavigator />
+                    <LibrariesNavigator />
                 </Drawer>
                 <main
                     className={classNames(classes.content, {

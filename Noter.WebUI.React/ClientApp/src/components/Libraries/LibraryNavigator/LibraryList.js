@@ -53,22 +53,24 @@ class LibraryList extends Component {
 
     render() {
         const {
-            librariesModule,
-            libraryNavigator,
+            libraries,
+            librariesLoading,
+            filterText,
+            selectedLibraryId,
             selectLibrary,
             classes, //todo get rid of this and use own styles
         } = this.props;
 
         const { anchorEl } = this.state;
-        var libs = librariesModule.libraries.filter(l => l.name.toLowerCase().includes(libraryNavigator.filterText.trim().toLowerCase()));
+        var libs = libraries.filter(l => l.name.toLowerCase().includes(filterText.trim().toLowerCase()));
 
-        if (librariesModule.loading === false) {
+        if (librariesLoading === false) {
             return (
                 <div className={classes.root}>
                     <List>
                         {libs.map((lib) => (
                             <ListItem key={lib.libraryId} button
-                                selected={libraryNavigator.selectedLibraryId === lib.libraryId}
+                                selected={selectedLibraryId === lib.libraryId}
                                 onClick={event => selectLibrary(lib.libraryId)} >
                                 <ListItemIcon>
                                     <FolderIcon />
@@ -116,8 +118,10 @@ LibraryList.propTypes = {
 export default connect(
     state => (
         {
-            libraryNavigator: state.libraryNavigator,
-            librariesModule: state.librariesModule
+            librariesLoading: state.librariesModule.loading,
+            libraries: state.librariesModule.libraries,
+            filterText: state.libraryNavigator.filterText,
+            selectedLibraryId: state.libraryNavigator.selectedLibraryId,
         }),
     dispatch => bindActionCreators({ ...librariesActions, ...navigatorActions }, dispatch)
 )(withStyles(styles, { withTheme: true })(withRouter((LibraryList))));
