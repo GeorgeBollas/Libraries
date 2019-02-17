@@ -54,10 +54,15 @@ class LibrariesNavigator extends Component {
                     librariesLoading={librariesLoading}
                     selectedLibraryId={selectedLibraryId}
                     selectLibrary={selectLibrary}
+                    selectLibraryMenu={this.selectLibraryMenu}
                 />
             </Fragment>
         )
     };
+
+    selectLibraryMenu = (id, option) => {
+        alert(id + ':' + option);
+    }
 }
 
 

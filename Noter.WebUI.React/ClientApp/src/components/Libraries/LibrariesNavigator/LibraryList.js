@@ -13,9 +13,47 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import { usePopupState, bindTrigger, bindMenu } from 'material-ui-popup-state/hooks'
+
 import LinearProgress from '@material-ui/core/LinearProgress';
 
-const LibraryList = ({ librariesLoading, libraries, selectedLibraryId, selectLibrary, classes }) => {
+const LibraryList = ({ librariesLoading, libraries, selectedLibraryId, selectLibrary, selectLibraryMenu, classes }) => {
+
+    const MenuButton = ({ id }) => {
+
+        const onRename = (popState) => {
+            popState.close();
+            selectLibraryMenu(id,'rename')
+        }
+        const onTags = (popState) => {
+            popState.close();
+            selectLibraryMenu(id,'tags')
+        }
+        const onSyncs = (popState) => {
+            popState.close();
+            selectLibraryMenu(id,'syncs')
+        }
+        const onSearches = (popState) => {
+            popState.close();
+            selectLibraryMenu(id,'searches')
+        }
+        const popupState = usePopupState({ variant: 'popover', popupId: 'demoMenu' })
+        return (
+            <div>
+                <IconButton aria-label="options"
+                    variant="contained" {...bindTrigger(popupState)}
+                    aria-haspopup="true">
+                    <MoreVertIcon />
+                </IconButton>
+                <Menu {...bindMenu(popupState)} >
+                    <MenuItem onClick={() => onRename(popupState)}>Rename</MenuItem>
+                    <MenuItem onClick={() => onTags(popupState)}>Tags</MenuItem>
+                    <MenuItem onClick={() => onSyncs(popupState)}>Syncs</MenuItem>
+                    <MenuItem onClick={() => onSearches(popupState)}>Searches</MenuItem>
+                </Menu>
+            </div>
+        )
+    };
 
     if (librariesLoading === false) {
         return (
@@ -30,10 +68,7 @@ const LibraryList = ({ librariesLoading, libraries, selectedLibraryId, selectLib
                             </ListItemIcon>
                             <ListItemText primary={lib.name} />
                             <ListItemSecondaryAction>
-                                <IconButton aria-label="options" 
-                                    aria-haspopup="true">
-                                    <MoreVertIcon />
-                                </IconButton>
+                                <MenuButton id={lib.libraryId} />
                             </ListItemSecondaryAction>
                         </ListItem>
                     ))}

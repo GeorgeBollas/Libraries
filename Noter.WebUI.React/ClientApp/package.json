@@ -13,6 +13,7 @@
     "formik-material-ui": "0.0.16",
     "jquery": "3.3.1",
     "material-ui-chip-input": "^1.0.0-beta.13",
+    "material-ui-popup-state": "^1.2.0",
     "react": "next",
     "react-dom": "next",
     "react-redux": "^5.1.1",
