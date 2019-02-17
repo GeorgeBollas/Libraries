@@ -1,8 +1,10 @@
-﻿import React from "react";
+﻿import React, { Fragment } from "react";
 
 import TextField from '@material-ui/core/TextField';
+import SearchIcon from '@material-ui/icons/Search';
+import IconButton from '@material-ui/core/IconButton';
 
-const Filter = ({ filterText, onFilterTextChange, classes}) => {
+const Filter = ({ filterText, onFilterTextChange, classes }) => {
 
     const onKeyDown = (event) => {
         if (event.keyCode === 27) {
@@ -12,17 +14,20 @@ const Filter = ({ filterText, onFilterTextChange, classes}) => {
     }
 
     return (
-        <div className={classes.root}>
+        <Fragment>
             <TextField
                 id="filterText"
                 label="Search"
-                className={classes.textField}
+                fullWidth
                 value={filterText}
                 onKeyDown={onKeyDown}
                 onChange={e => onFilterTextChange(e.target.value)}
                 margin="normal"
             />
-        </div>
+            <IconButton className={classes.iconButton} aria-label="Search">
+                <SearchIcon />
+            </IconButton>
+        </Fragment>
     );
 }
 

@@ -3,9 +3,15 @@
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
-import { withRouter } from "react-router";
+
+import { withRouter } from 'react-router-dom';
+
+import { createBrowserHistory } from 'history';
 
 import { withStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
+import RefreshIcon from '@material-ui/icons/Refresh';
 
 import * as navigatorActions from '../../../actions/LibraryNavigator';
 import * as librariesActions from '../../../actions/Libraries';
@@ -18,6 +24,12 @@ const styles = theme => ({
         width: '100%',
         maxWidth: 360,
         backgroundColor: theme.palette.background.paper,
+    },
+    header: {
+        display: 'flex',
+    },
+    grow: {
+        flex: 1,
     },
 });
 
@@ -41,27 +53,37 @@ class LibrariesNavigator extends Component {
         var libs = libraries.filter(l => l.name.toLowerCase().includes(filterText.trim().toLowerCase()));
 
         return (
-            <Fragment>
+            <Paper>
                 {/*<NewLibrary />*/}
-                <Filter
-                    filterText={filterText}
-                    onFilterTextChange={setFilterText}
-                    classes={classes}
-                />
+                <div className={classes.header} >
+                    <IconButton aria-label="Refresh" onClick={this.props.fetchLibraries} className={classes.refreshIcon}>
+                        <RefreshIcon />
+                    </IconButton>
+                    <Filter
+                        filterText={filterText}
+                        onFilterTextChange={setFilterText}
+                        classes={classes.grow}
+                    />
+                </div>
                 <LibraryList
                     classes={classes}
                     libraries={libs}
                     librariesLoading={librariesLoading}
                     selectedLibraryId={selectedLibraryId}
-                    selectLibrary={selectLibrary}
+                    selectLibrary={this.selectLibrary}
                     selectLibraryMenu={this.selectLibraryMenu}
                 />
-            </Fragment>
+            </Paper>
         )
     };
 
+
+    selectLibrary = (id) => {
+        //this.props.history.push('/search/' + id);
+        this.props.history.push('/search/' + id);
+    }
+
     selectLibraryMenu = (id, option) => {
-        alert(id + ':' + option);
     }
 }
 
