@@ -52,23 +52,6 @@ const LibraryDetails = ({ handleChange, handleBlur, values, errors }) => {
             </Form>);
     }
 
-<Formik ref={this.formikRef}
-    initialValues={{ name: '', tags: [] }}
-    onSubmit={(e) => {
-        createLibraryRequest(e.name, e.tags)
-            .then((result) => {
-                this.setState({ isOpen: false });
-                createLibrarySuccess(result.data.libraryId);
-                this.onClose();
-            })
-    }}
-    component={this.form}
-    validationSchema={createLibrarySchema}
-    //todo move into <LibraryTags />
-
-    handleChipChange= (chips) => {
-        this.formikRef.current.setFieldValue('tags', chips, false);
-}
 
 export default LibraryDetails;
 

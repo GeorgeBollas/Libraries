@@ -18,6 +18,7 @@ const styles = theme => ({
     },
 });
 
+//todo turn into function component??
 class LibraryFilter extends Component {
 
     render() {

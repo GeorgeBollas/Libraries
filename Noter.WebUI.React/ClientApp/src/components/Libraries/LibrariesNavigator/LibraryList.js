@@ -21,6 +21,7 @@ const LibraryList = ({ librariesLoading, libraries, selectedLibraryId, selectLib
 
     const MenuButton = ({ id }) => {
 
+        //todo can we move this to the actions passing the id and the menu option??
         const onRename = (popState) => {
             popState.close();
             selectLibraryMenu(id,'rename')

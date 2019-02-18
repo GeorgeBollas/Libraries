@@ -14,14 +14,14 @@ export const filterLibraries = (filterText, libraries) => {
     //we need to select the next or whatever rule we use
 }
 
-export const selectLibrary = (libraryId) => {
-    return { type: LIBRARY_LIST_SELECT_LIBRARY, libraryId };
-}
+export const selectLibrary = (libraryId) => ({
+    type: LIBRARY_LIST_SELECT_LIBRARY, libraryId
+})
 
-export const selectLibraryMenu = (libraryId) => {
-    return { type: LIBRARY_LIST_SELECT_LIBRARY_MENU, libraryId };
-}
+export const selectLibraryMenu = (libraryId) => ({
+    type: LIBRARY_LIST_SELECT_LIBRARY_MENU, libraryId
+})
 
-export const setFilterText = (filterText) => {
-    return { type: LIBRARY_LIST_SET_FILTER_TEXT, filterText: filterText };
-}
+export const setFilterText = (filterText) => ({
+    type: LIBRARY_LIST_SET_FILTER_TEXT, filterText: filterText
+})

@@ -23,7 +23,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { fieldToTextField, TextField, TextFieldProps } from 'formik-material-ui';
 import ChipInput from 'material-ui-chip-input'
 
-import * as actions from '../../actions/LibraryEditing';
+import * as actions from '../../../actions/actionTypes';
+
 import LibraryDetails from './LibraryDetails';
 import LibraryTags from './LibraryTags';
 
@@ -93,9 +94,7 @@ class CreateLibrary extends Component {
     form = ({ values, onSave, errors }) => {
         return (
             <Form >
-                <LibraryDetails
-                    name={values.name}
-                />
+                <LibraryDetails name={values.name} />
                 <LibraryTags tags={values.tags}/>
             </Form>
         );

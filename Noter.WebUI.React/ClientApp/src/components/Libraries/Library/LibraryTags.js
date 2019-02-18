@@ -13,5 +13,8 @@ const LibraryTags = ({ other }) => (
 );
 
 //todo implement handleChipChange
+const handleChipChange = (chips) => {
+    this.formikRef.current.setFieldValue('tags', chips, false);
+}
 
 export default LibraryTags;

@@ -40,6 +40,7 @@ class LibrariesNavigator extends Component {
     }
 
     render() {
+
         const {
             libraries,
             librariesLoading,
@@ -47,6 +48,7 @@ class LibrariesNavigator extends Component {
             setFilterText,
             selectedLibraryId,
             selectLibrary,
+            fetchLibraries,
             classes, //todo get rid of this and use own styles
         } = this.props;
 
@@ -56,7 +58,7 @@ class LibrariesNavigator extends Component {
             <Paper>
                 {/*<NewLibrary />*/}
                 <div className={classes.header} >
-                    <IconButton aria-label="Refresh" onClick={this.props.fetchLibraries} className={classes.refreshIcon}>
+                    <IconButton aria-label="Refresh" onClick={fetchLibraries} className={classes.refreshIcon}>
                         <RefreshIcon />
                     </IconButton>
                     <Filter
