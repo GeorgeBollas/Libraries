@@ -45,30 +45,3 @@ import {
 //    };
 //}
 
-export const createLibraryDialogOpen = (name, tags) => {
-    return { type: CREATE_LIBRARY_DIALOG_OPEN };
-}
-
-export const createLibraryDialogCancel = () => {
-    return { type: CREATE_LIBRARY_DIALOG_CANCEL };
-}
-
-export const createLibraryRequest = () => {
-    return { type: CREATE_LIBRARY_REQUEST };
-}
-
-export const requestCreateLibrary = (name, tags) => {
-    return (dispatch) => {
-        dispatch(createLibraryRequest());
-
-        //todo handle uuid better
-
-        axios.post('http://localhost:63315/api/Libraries', { requestGuid: uuid1(), name, tags: tags || [] })
-            .then(res => {
-                var libVM = res.data
-                dispatch({ type: CREATE_LIBRARY_SUCCESS, libVM });
-                dispatch(fetchLibraries());
-            })
-
-    }
-}

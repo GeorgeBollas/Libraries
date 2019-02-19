@@ -12,12 +12,15 @@ import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import RefreshIcon from '@material-ui/icons/Refresh';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 import * as navigatorActions from '../../../actions/LibraryNavigator';
 import * as librariesActions from '../../../actions/Libraries';
 
 import Filter from './Filter';
 import LibraryList from './LibraryList';
+import CreatLibraryDialog from './CreateLibraryDialog';
 
 const styles = theme => ({
     root: {
@@ -30,6 +33,9 @@ const styles = theme => ({
     },
     grow: {
         flex: 1,
+    },
+    fab: {
+        margin: theme.spacing.unit,
     },
 });
 
@@ -49,6 +55,7 @@ class LibrariesNavigator extends Component {
             selectedLibraryId,
             selectLibrary,
             fetchLibraries,
+            createLibraryDialogOpen,
             classes, //todo get rid of this and use own styles
         } = this.props;
 
@@ -56,7 +63,6 @@ class LibrariesNavigator extends Component {
 
         return (
             <Paper>
-                {/*<NewLibrary />*/}
                 <div className={classes.header} >
                     <IconButton aria-label="Refresh" onClick={fetchLibraries} className={classes.refreshIcon}>
                         <RefreshIcon />
@@ -66,6 +72,9 @@ class LibrariesNavigator extends Component {
                         onFilterTextChange={setFilterText}
                         classes={classes.grow}
                     />
+                    <IconButton aria-label="Refresh" onClick={createLibraryDialogOpen} className={classes.refreshIcon}>
+                        <AddIcon />
+                    </IconButton>
                 </div>
                 <LibraryList
                     classes={classes}
@@ -75,13 +84,13 @@ class LibrariesNavigator extends Component {
                     selectLibrary={this.selectLibrary}
                     selectLibraryMenu={this.selectLibraryMenu}
                 />
+                <CreatLibraryDialog />
             </Paper>
         )
     };
 
 
     selectLibrary = (id) => {
-        //this.props.history.push('/search/' + id);
         this.props.history.push('/search/' + id);
     }
 
