@@ -1,39 +1,74 @@
-﻿
-import axios from 'axios';
+﻿import axios from 'axios';
+import uuid1 from 'uuid/v1';
 
+import { fetchLibraries } from './libraries'
 
+import {
+    CREATE_LIBRARY_DIALOG_OPEN,
+    CREATE_LIBRARY_DIALOG_CANCEL,
+    CREATE_LIBRARY_REQUEST,
+    CREATE_LIBRARY_SUCCESS
+} from './actionTypes';
 // dialogs
 
 
-// Edit Library Server Call
+//// Edit Library Server Call
 
-export const editLibrary = (libraryId, name) => {
+//export const editLibrary = (libraryId, name) => {
     
+//    return (dispatch) => {
+//        dispatch(updateLibraryRequest(libraryId, name))
+
+//        return axios.put('http://localhost:63315/api/Libraries', { libraryId, name}); //todo this is really a rename
+//    }
+//}
+
+//// Edit Library Dialog
+
+//export const editLibraryOpen = (id) => {
+//    return { type: EDIT_LIBRARY_OPEN, libraryId: id };
+//}
+
+//// Update Library Request
+
+//export function updateLibraryRequest(libraryId, name) {
+//    return {
+//        type: UPDATE_LIBRARY_REQUEST,
+//        payload: { libraryId, name}
+//    };
+//}
+
+//export function updateLibrarySuccess(libraryId) {
+//    return {
+//        type: UPDATE_LIBRARY_SUCCESS,
+//        payload: libraryId
+//    };
+//}
+
+export const createLibraryDialogOpen = (name, tags) => {
+    return { type: CREATE_LIBRARY_DIALOG_OPEN };
+}
+
+export const createLibraryDialogCancel = () => {
+    return { type: CREATE_LIBRARY_DIALOG_CANCEL };
+}
+
+export const createLibraryRequest = () => {
+    return { type: CREATE_LIBRARY_REQUEST };
+}
+
+export const requestCreateLibrary = (name, tags) => {
     return (dispatch) => {
-        dispatch(updateLibraryRequest(libraryId, name))
+        dispatch(createLibraryRequest());
 
-        return axios.put('http://localhost:63315/api/Libraries', { libraryId, name}); //todo this is really a rename
+        //todo handle uuid better
+
+        axios.post('http://localhost:63315/api/Libraries', { requestGuid: uuid1(), name, tags: tags || [] })
+            .then(res => {
+                var libVM = res.data
+                dispatch({ type: CREATE_LIBRARY_SUCCESS, libVM });
+                dispatch(fetchLibraries());
+            })
+
     }
-}
-
-// Edit Library Dialog
-
-export const editLibraryOpen = (id) => {
-    return { type: EDIT_LIBRARY_OPEN, libraryId: id };
-}
-
-// Update Library Request
-
-export function updateLibraryRequest(libraryId, name) {
-    return {
-        type: UPDATE_LIBRARY_REQUEST,
-        payload: { libraryId, name}
-    };
-}
-
-export function updateLibrarySuccess(libraryId) {
-    return {
-        type: UPDATE_LIBRARY_SUCCESS,
-        payload: libraryId
-    };
 }
