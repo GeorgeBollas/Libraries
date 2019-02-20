@@ -5,7 +5,7 @@ import {
     LIBRARY_LIST_SELECT_LIBRARY,
     LIBRARY_LIST_SELECT_LIBRARY_MENU,
     LIBRARY_LIST_SET_FILTER_TEXT,
-    CREATE_LIBRARY_DIALOG_OPEN,
+    SET_CREATE_LIBRARY_DIALOG_OPEN_STATUS,
     CREATE_LIBRARY_DIALOG_CANCEL,
     CREATE_LIBRARY_REQUEST,
     CREATE_LIBRARY_SUCCESS
@@ -31,12 +31,8 @@ export const setFilterText = (filterText) => ({
     type: LIBRARY_LIST_SET_FILTER_TEXT, filterText: filterText
 })
 
-export const createLibraryDialogOpen = () => {
-    return { type: CREATE_LIBRARY_DIALOG_OPEN };
-}
-
-export const createLibraryDialogCancel = () => {
-    return { type: CREATE_LIBRARY_DIALOG_CANCEL };
+export const createLibraryDialogOpen = (isOpen) => {
+    return { type: SET_CREATE_LIBRARY_DIALOG_OPEN_STATUS, action: isOpen };
 }
 
 export const createLibraryRequest = () => {

@@ -60,7 +60,7 @@ class CreateLibraryDialog extends Component {
     }
 
     render() {
-        const { history, isCreateLibraryDialogOpen, classes, requestCreateLibrary, createLibrarySuccess } = this.props
+        const { isCreateLibraryDialogOpen, classes, onCreateLibrarySubmit, onCreateLibrarySuccess } = this.props
 
         return (
             <Dialog onClose={this.onClose} open={isCreateLibraryDialogOpen} className={classes.root}>
@@ -69,11 +69,7 @@ class CreateLibraryDialog extends Component {
                     <Formik ref={this.formikRef}
                         initialValues={{name:'', tags:[]}}
                         onSubmit={(e) => {
-                            requestCreateLibrary(e.name, e.tags)
-                                .then((result) => {
-                                    history.push('library-editor');
-                                    createLibrarySuccess(result.data.libraryId);
-                                })
+                            onCreateLibrarySubmit(e.name, e.tags)
                         }}
                         component={this.form}
                         validationSchema={createLibrarySchema}
@@ -86,6 +82,8 @@ class CreateLibraryDialog extends Component {
             </Dialog>
         );
     };
+
+
 
     form = ({ handleSubmit, handleChange, handleBlur, values, onSave, errors}) => {
         return (

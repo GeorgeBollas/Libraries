@@ -48,6 +48,7 @@ class LibrariesNavigator extends Component {
     render() {
 
         const {
+            history,
             libraries,
             librariesLoading,
             filterText,
@@ -56,6 +57,7 @@ class LibrariesNavigator extends Component {
             selectLibrary,
             fetchLibraries,
             createLibraryDialogOpen,
+            requestCreateLibrary,
             classes, //todo get rid of this and use own styles
         } = this.props;
 
@@ -84,11 +86,34 @@ class LibrariesNavigator extends Component {
                     selectLibrary={this.selectLibrary}
                     selectLibraryMenu={this.selectLibraryMenu}
                 />
-                <CreatLibraryDialog />
+                <CreatLibraryDialog
+                    isCreateLibraryDialogOpen={isCreateLibraryDialogOpen}
+                    classes={classes}
+                    onCreateLibrarySubmit={this.onCreateLibrarySubmit}
+                />
             </Paper>
         )
     };
 
+    onCreateLibrarySubmit = (name, tags) => {
+
+        // 1. submit
+        // 2. check for errors and set them on the display
+        // 3. - if ok then call onCreateLibrarySuccess function to do what is next (close form navigate etc)
+
+        requestCreateLibrary(e.name, e.tags)
+            .then((result) => {
+                this.props.history.push('/search/' + id);
+                onCreateLibrarySuccess(result.data.libraryId);
+                // close the dialog in here or in 
+            })
+    }
+
+    onCreateLibrarySuccess = (id) => {
+        // close dialog
+        createLibraryDialogOpen(false);
+        // 
+    }
 
     selectLibrary = (id) => {
         this.props.history.push('/search/' + id);

@@ -2,8 +2,7 @@
     LIBRARY_LIST_SELECT_LIBRARY,
     LIBRARY_LIST_SELECT_LIBRARY_MENU,
     LIBRARY_LIST_SET_FILTER_TEXT,
-    CREATE_LIBRARY_DIALOG_OPEN,
-    CREATE_LIBRARY_DIALOG_CLOSED
+    SET_CREATE_LIBRARY_DIALOG_OPEN_STATUS
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -42,17 +41,10 @@ export const reducer = (state, action) => {
         };
     };
 
-    if (action.type === CREATE_LIBRARY_DIALOG_OPEN) {
+    if (action.type === SET_CREATE_LIBRARY_DIALOG_OPEN_STATUS) {
         return {
             ...state,
-            isCreateLibraryDialogOpen: true,
-        };
-    };
-
-    if (action.type === CREATE_LIBRARY_DIALOG_CLOSED) {
-        return {
-            ...state,
-            isCreateLibraryDialogOpen: false,
+            isCreateLibraryDialogOpen: action,
         };
     };
 

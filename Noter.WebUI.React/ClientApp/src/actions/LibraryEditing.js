@@ -4,7 +4,7 @@ import uuid1 from 'uuid/v1';
 import { fetchLibraries } from './libraries'
 
 import {
-    CREATE_LIBRARY_DIALOG_OPEN,
+    SET_CREATE_LIBRARY_DIALOG_OPEN_STATUS,
     CREATE_LIBRARY_DIALOG_CANCEL,
     CREATE_LIBRARY_REQUEST,
     CREATE_LIBRARY_SUCCESS
