@@ -44,7 +44,7 @@ export const reducer = (state, action) => {
     if (action.type === SET_CREATE_LIBRARY_DIALOG_OPEN_STATUS) {
         return {
             ...state,
-            isCreateLibraryDialogOpen: action,
+            isCreateLibraryDialogOpen: action.isOpen,
         };
     };
 

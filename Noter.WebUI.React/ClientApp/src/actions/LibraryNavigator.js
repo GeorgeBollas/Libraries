@@ -32,7 +32,7 @@ export const setFilterText = (filterText) => ({
 })
 
 export const createLibraryDialogOpen = (isOpen) => {
-    return { type: SET_CREATE_LIBRARY_DIALOG_OPEN_STATUS, action: isOpen };
+    return { type: SET_CREATE_LIBRARY_DIALOG_OPEN_STATUS, isOpen: isOpen };
 }
 
 export const createLibraryRequest = () => {
@@ -40,8 +40,8 @@ export const createLibraryRequest = () => {
 }
 
 
-export const createLibraryRequestSuccess = () => {
-    return { type: CREATE_LIBRARY_SUCCESS };
+export const createLibraryRequestSuccess = (id) => {
+    return { type: CREATE_LIBRARY_SUCCESS, id };
 }
 
 export const requestCreateLibrary = (name, tags) => {
@@ -50,11 +50,12 @@ export const requestCreateLibrary = (name, tags) => {
 
         //todo handle uuid better
 
-        axios.post('http://localhost:63315/api/Libraries', { requestGuid: uuid1(), name, tags: tags || [] })
+        return axios.post('http://localhost:63315/api/Libraries', { requestGuid: uuid1(), name, tags: tags || [] })
             .then(res => {
                 var libVM = res.data; //todo handle any conditions here
-                dispatch(createLibraryRequestSuccess());
+                dispatch(createLibraryRequestSuccess(libVM.libraryId));
                 dispatch(fetchLibraries());
+                return res;
             })
         //todo handle errors and if val errors then sink error and set status to bad request or similar
 

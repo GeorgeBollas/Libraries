@@ -60,7 +60,7 @@ class CreateLibraryDialog extends Component {
     }
 
     render() {
-        const { isCreateLibraryDialogOpen, classes, onCreateLibrarySubmit, onCreateLibrarySuccess } = this.props
+        const { isCreateLibraryDialogOpen, classes, onCreateLibrarySubmit } = this.props
 
         return (
             <Dialog onClose={this.onClose} open={isCreateLibraryDialogOpen} className={classes.root}>

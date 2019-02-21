@@ -41,6 +41,11 @@ const styles = theme => ({
 
 class LibrariesNavigator extends Component {
 
+    constructor(props) {
+        super(props);
+        //this.onCreateLibrarySubmit = this.onCreateLibrarySubmit.bind(this);
+    }
+
     componentDidMount() {
         this.props.fetchLibraries();
     }
@@ -57,7 +62,7 @@ class LibrariesNavigator extends Component {
             selectLibrary,
             fetchLibraries,
             createLibraryDialogOpen,
-            requestCreateLibrary,
+            isCreateLibraryDialogOpen,
             classes, //todo get rid of this and use own styles
         } = this.props;
 
@@ -74,7 +79,7 @@ class LibrariesNavigator extends Component {
                         onFilterTextChange={setFilterText}
                         classes={classes.grow}
                     />
-                    <IconButton aria-label="Refresh" onClick={createLibraryDialogOpen} className={classes.refreshIcon}>
+                    <IconButton aria-label="Refresh" onClick={() => createLibraryDialogOpen(true)} className={classes.refreshIcon}>
                         <AddIcon />
                     </IconButton>
                 </div>
@@ -100,20 +105,22 @@ class LibrariesNavigator extends Component {
         // 1. submit
         // 2. check for errors and set them on the display
         // 3. - if ok then call onCreateLibrarySuccess function to do what is next (close form navigate etc)
+        const { history, createLibraryRequestSuccess, createLibraryDialogOpen } = this.props;
 
-        requestCreateLibrary(e.name, e.tags)
-            .then((result) => {
-                this.props.history.push('/search/' + id);
-                onCreateLibrarySuccess(result.data.libraryId);
+        this.props.requestCreateLibrary(name, tags)
+            .then(result => {
+                history.push('/search/' + result.data.libraryId);
+                createLibraryRequestSuccess(result.data.libraryId);
+                createLibraryDialogOpen(false)
                 // close the dialog in here or in 
             })
     }
 
-    onCreateLibrarySuccess = (id) => {
-        // close dialog
-        createLibraryDialogOpen(false);
-        // 
-    }
+    //onCreateLibrarySuccess = (id) => {
+    //    // close dialog
+    //    this.props.createLibraryDialogOpen(false);
+    //    // 
+    //}
 
     selectLibrary = (id) => {
         this.props.history.push('/search/' + id);
