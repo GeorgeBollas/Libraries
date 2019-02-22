@@ -1,4 +1,11 @@
-﻿import React, { Component } from 'react';
+﻿// move all logic relating to creating here
+// only return to caller if succeded and the id.
+// it can navigate 
+
+
+
+
+import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 import { withRouter } from "react-router";
@@ -24,6 +31,8 @@ import { fieldToTextField, TextField, TextFieldProps } from 'formik-material-ui'
 import ChipInput from 'material-ui-chip-input'
 
 import * as actions from '../../../actions/LibraryNavigator';
+
+import CreateLibraryForm from './Form';
 
 const createLibrarySchema = Yup.object().shape({
     name: Yup.string()
@@ -59,19 +68,21 @@ class CreateLibraryDialog extends Component {
         this.formikRef = React.createRef();
     }
 
+    //const { a } = this.props; -- why cant we do this
+
     render() {
-        const { isCreateLibraryDialogOpen, classes, onCreateLibrarySubmit } = this.props
+        const { onCreatedSuccessful, isCreateLibraryDialogOpen, classes, onCreateLibrarySubmit } = this.props
 
         return (
             <Dialog onClose={this.onClose} open={isCreateLibraryDialogOpen} className={classes.root}>
                 <DialogTitle id="form-dialog-title">Add a new library</DialogTitle>
                 <DialogContent>
                     <Formik ref={this.formikRef}
-                        initialValues={{name:'', tags:[]}}
+                        initialValues={{ name: '', tags: [] }}
                         onSubmit={(e) => {
                             onCreateLibrarySubmit(e.name, e.tags)
                         }}
-                        component={this.form}
+                        component={Form}
                         validationSchema={createLibrarySchema}
                     />
                 </DialogContent>
@@ -82,45 +93,26 @@ class CreateLibraryDialog extends Component {
             </Dialog>
         );
     };
-
-
-
-    form = ({ handleSubmit, handleChange, handleBlur, values, onSave, errors}) => {
-        return (
-            <Form >
-                <div className={this.props.classes.wrapper} >
-                    {this.props.isRequestedCreateLibrary && <CircularProgress className={this.props.classes.progress} />}
-                    <div>
-                        <div>
-                            <Field
-                                label="Name"
-                                name="name"
-                                onChange={handleChange} //By default client side validation is done onChange
-                                onBlur={handleBlur} //By default client side validation is also done onBlur
-                                value={values.title}
-                                error={errors.title} //Error display
-                                onEnter={onSave}
-                                component={TextField}
-                                />
-                        </div>
-                        <div>
-                            <ChipInput
-                                {...this.props} // to pass down to TextField
-                                label="Tags"
-                                onChange={(chips) => this.handleChipChange(chips)}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </Form>);
-    }
+    
 
     handleChipChange(chips) {
         console.debug(chips.lenght);
-        //this.formikRef.current.state.values.tags = chips; //todo does this violate changing state directly??
         this.formikRef.current.setFieldValue('tags', chips, false);
     }
 
+    onCreateLibrarySubmit = (name, tags) => {
+
+        const { history, createLibraryRequestSuccess, createLibraryDialogOpen } = this.props;
+
+        const { onCreatedSuccessful } = this; //todo does this work?? or do we need to use this/that
+
+        this.props.requestCreateLibrary(name, tags)
+            .then(result => {
+                createLibraryRequestSuccess(result.data.libraryId); //todo do we need this, should only need if ui changes state or to refresh list
+                createLibraryDialogOpen(false)
+                onCreatedSuccessful(result.data.libraryId);
+            })
+    }
 
     onClose = () => {
         this.props.createLibraryDialogCancel()
@@ -134,7 +126,7 @@ class CreateLibraryDialog extends Component {
 
 export default connect(
     state => ({
-        isCreateLibraryDialogOpen: state.libraryNavigator.isCreateLibraryDialogOpen 
+        isCreateLibraryDialogOpen: state.libraryNavigator.isCreateLibraryDialogOpen
     }),
     dispatch => bindActionCreators(actions, dispatch)
 )(withStyles(styles, { withTheme: true })(withRouter((CreateLibraryDialog))));
