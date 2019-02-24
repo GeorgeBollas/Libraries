@@ -52,12 +52,16 @@ export const requestCreateLibrary = (name, tags) => {
 
         return axios.post('http://localhost:63315/api/Libraries', { requestGuid: uuid1(), name, tags: tags || [] })
             .then(res => {
-                var libVM = res.data; //todo handle any conditions here
+                var libVM = res.data;
                 dispatch(createLibraryRequestSuccess(libVM.libraryId));
                 dispatch(fetchLibraries());
                 return res;
-            })
-        //todo handle errors and if val errors then sink error and set status to bad request or similar
+            });
+            //.catch(e => {
+            //    // response.data.failures.Name [] of errors for name
+            //    // extract and throw as validation error suitable for setErrors({ name: 'error message' });
+            //    throw e;
+            //});
 
     }
 }

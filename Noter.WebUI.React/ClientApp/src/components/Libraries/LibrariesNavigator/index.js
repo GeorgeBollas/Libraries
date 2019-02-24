@@ -20,7 +20,7 @@ import * as librariesActions from '../../../actions/Libraries';
 
 import Filter from './Filter';
 import LibraryList from './LibraryList';
-import CreatLibraryDialog from './CreateLibraryDialog';
+import CreatLibraryDialog from '../CreateLibraryDialog';
 
 const styles = theme => ({
     root: {
@@ -40,11 +40,6 @@ const styles = theme => ({
 });
 
 class LibrariesNavigator extends Component {
-
-    constructor(props) {
-        super(props);
-        //this.onCreateLibrarySubmit = this.onCreateLibrarySubmit.bind(this);
-    }
 
     componentDidMount() {
         this.props.fetchLibraries();

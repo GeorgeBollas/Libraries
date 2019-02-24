@@ -18,7 +18,6 @@ namespace Noter.Persistance.Configurations
             builder.Property(e => e.Name)
                 .IsRequired();
 
-
             builder.Property(e => e.Created)
                 .IsRequired()
                 .HasColumnType("datetime");
@@ -26,6 +25,8 @@ namespace Noter.Persistance.Configurations
             builder.Property(e => e.Modified)
                 .IsRequired()
                 .HasColumnType("datetime");
+
+            builder.HasAlternateKey("Name");
 
             builder.HasMany(l => l.Tags).WithOne(t => t.Library).OnDelete(DeleteBehavior.Restrict);
 

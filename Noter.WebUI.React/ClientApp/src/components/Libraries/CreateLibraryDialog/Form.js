@@ -1,8 +1,40 @@
-﻿const form = ({ handleSubmit, handleChange, handleBlur, values, onSave, errors }) => {
+﻿import React from 'react';
+
+import { Formik, Form, Field } from 'formik';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { fieldToTextField, TextField, TextFieldProps } from 'formik-material-ui';
+import ChipInput from 'material-ui-chip-input'
+import { withStyles } from '@material-ui/core/styles';
+
+
+const styles = theme => ({
+    root: {
+        display: 'flex',
+        alignItems: 'center',
+    },
+    progress: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+    },
+    wrapper: {
+        margin: theme.spacing.unit,
+        padding: theme.spacing.unit,
+        position: 'relative',
+    },
+});
+
+
+interface Values {
+    name: string;
+    tags: string[];
+}
+
+const form = ({ classes, handleSubmit, handleChange, isRequestedCreateLibrary, handleBlur, values, onSave, errors }) => {
     return (
         <Form >
-            <div className={this.props.classes.wrapper} >
-                {this.props.isRequestedCreateLibrary && <CircularProgress className={this.props.classes.progress} />}
+            <div className={classes.wrapper} >
+                {isRequestedCreateLibrary && <CircularProgress className={classes.progress} />}
                 <div>
                     <div>
                         <Field
@@ -10,8 +42,8 @@
                             name="name"
                             onChange={handleChange} //By default client side validation is done onChange
                             onBlur={handleBlur} //By default client side validation is also done onBlur
-                            value={values.title}
-                            error={errors.title} //Error display
+                            value={values.name}
+                            error={errors.name} //Error display
                             onEnter={onSave}
                             component={TextField}
                         />
@@ -28,4 +60,4 @@
         </Form>);
 }
 
-export default form;
+export default (withStyles(styles, { withTheme: true })(form));

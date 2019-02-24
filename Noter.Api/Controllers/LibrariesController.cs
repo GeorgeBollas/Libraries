@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Noter.Application.Exceptions;
 using Noter.Application.Libraries.Commands.CreateLibrary;
 using Noter.Application.Libraries.Commands.DeleteLibrary;
 using Noter.Application.Libraries.Commands.UpdateLibrary;
@@ -38,7 +39,18 @@ namespace Noter.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]CreateLibraryCommand command)
         {
-            return Ok(await Mediator.Send(command));
+            try
+            {
+                return Ok(await Mediator.Send(command));
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(ex);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // PUT api/libraries/5
