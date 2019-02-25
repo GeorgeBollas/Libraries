@@ -1,14 +1,14 @@
-﻿import axios from 'axios';
-import uuid1 from 'uuid/v1';
+﻿//import axios from 'axios';
+//import uuid1 from 'uuid/v1';
 
-import { fetchLibraries } from './libraries'
+//import { fetchLibraries } from './libraries'
 
-import {
-    SET_CREATE_LIBRARY_DIALOG_OPEN_STATUS,
-    CREATE_LIBRARY_DIALOG_CANCEL,
-    CREATE_LIBRARY_REQUEST,
-    CREATE_LIBRARY_SUCCESS
-} from './actionTypes';
+//import {
+//    SET_CREATE_LIBRARY_DIALOG_OPEN_STATUS,
+//    CREATE_LIBRARY_DIALOG_CANCEL,
+//    CREATE_LIBRARY_REQUEST,
+//    CREATE_LIBRARY_SUCCESS
+//} from './actionTypes';
 // dialogs
 
 

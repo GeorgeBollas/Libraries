@@ -21,9 +21,9 @@ import * as actions from '../../../actions/LibraryNavigator';
 
 const createLibrarySchema = Yup.object().shape({
     name: Yup.string()
-        //.min(2, 'Too Short!')
+        .min(2, 'Too Short!')
         .max(50, 'Too Long!')
-        //.required('Required'),
+        .required('Required'),
 });
 
 const styles = theme => ({
@@ -85,13 +85,15 @@ class CreateLibraryDialog extends Component {
 
         var errors = {};
 
-        const { createLibraryRequestSuccess, createLibraryDialogOpen, onCreatedSuccessful } = this.props;
+        const { history, createLibraryRequestSuccess, createLibraryDialogOpen, onCreatedSuccessful } = this.props;
         this.props.requestCreateLibrary(name, tags)
             .then(result => {
                 setSubmitting(false);
                 createLibraryRequestSuccess(result.data.libraryId); //todo do we need this, should only need if ui changes state or to refresh list
                 createLibraryDialogOpen(false)
                 onCreatedSuccessful(result.data.libraryId);
+                this.props.history.push('/library/' + result.data.libraryId);
+
             })
             .catch(e => {
                 setSubmitting(false);

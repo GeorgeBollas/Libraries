@@ -1,58 +1,34 @@
-﻿//import {
+﻿import {
 
-//    UPDATE_LIBRARY_REQUEST,
-//    UPDATE_LIBRARY_SUCCESS,
-//    UPDATE_LIBRARY_DIALOG_OPEN,
-//    UPDATE_LIBRARY_DIALOG_SAVE,
-//    UPDATE_LIBRARY_DIALOG_CANCEL,
+    FETCH_LIBRARY_REQUEST,
+    FETCH_LIBRARY_SUCCESS,
+    FETCH_LIBRARY_FAILURE,
 
-//} from '../actions/actionTypes';
+} from '../actions/actionTypes';
 
-//const initialState = {
-//    libraryId: 0,
-//    isLibraryEditorDialogOpen: false,
-//    isLibraryEditorSaving: false
-//};
+const initialState = {
+    libraryId: 0,
+    library: {}
+};
 
 
-//export const reducer = (state, action) => {
-//    state = state || initialState;
+export const reducer = (state, action) => {
+    state = state || initialState;
 
-//    if (action.type === UPDATE_LIBRARY_DIALOG_OPEN) {
-//        return {
-//            ...state,
-//            isLibraryEditorDialogOpen: true,
-//        };
-//    };
+    if (action.type === FETCH_LIBRARY_REQUEST) {
+        return {
+            ...state,
+            library: {},
+        };
+    };
 
-//    if (action.type === UPDATE_LIBRARY_DIALOG_CANCEL) {
-//        return {
-//            ...state,
-//            isLibraryEditorDialogOpen: false,
-//        };
-//    };
+    if (action.type === FETCH_LIBRARY_SUCCESS) {
+        return {
+            ...state,
+            library: action.libVM,
+        };
+    };
 
-//    if (action.type === UPDATE_LIBRARY_DIALOG_SAVE) {
-//        return {
-//            ...state,
-//            isLibraryEditorDialogOpen: false,
-//        };
-//    };
 
-//    if (action.type === UPDATE_LIBRARY_REQUEST) {
-//        return {
-//            ...state,
-//            isLibraryEditorSaving: true,
-//        };
-//    };
-
-//    if (action.type === UPDATE_LIBRARY_SUCCESS) {
-//        return {
-//            ...state,
-//            isLibraryEditorSaving: false,
-//            isLibraryEditorDialogOpen: false,
-//        };
-//    };
-
-//    return state;
-//}
+    return state;
+}

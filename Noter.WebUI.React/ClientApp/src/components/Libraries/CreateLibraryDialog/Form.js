@@ -25,10 +25,10 @@ const styles = theme => ({
 });
 
 
-interface Values {
-    name: string;
-    tags: string[];
-}
+//interface Values {
+//    name: string;
+//    tags: string[];
+//}
 
 const form = ({ classes, handleSubmit, handleChange, isRequestedCreateLibrary, handleBlur, values, onSave, errors }) => {
     return (

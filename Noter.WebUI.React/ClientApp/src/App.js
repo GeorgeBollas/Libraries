@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Counter from './components/Counter';
 import FetchData from './components/FetchData';
 import Search from './components/Search'
+import EditLibrary from './components/Libraries/Library'
 
 export default () => (
     <Shell>
@@ -12,5 +13,6 @@ export default () => (
         <Route path='/counter' component={Counter} />
         <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
         <Route path='/search/:id' component={Search} />
+        <Route path='/library/:id' component={EditLibrary} />
     </Shell>
 );
