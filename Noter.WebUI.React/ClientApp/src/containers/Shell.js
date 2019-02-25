@@ -55,6 +55,25 @@ const styles = theme => ({
     drawer: {
         width: drawerWidth,
         flexShrink: 0,
+        whiteSpace: 'nowrap',
+    },
+    drawerOpen: {
+        width: drawerWidth,
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
+    drawerClose: {
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        overflowX: 'hidden',
+        width: theme.spacing.unit * 7 + 1,
+        [theme.breakpoints.up('sm')]: {
+            width: theme.spacing.unit * 9 + 1,
+        },
     },
     drawerPaper: {
         width: drawerWidth,
@@ -143,12 +162,18 @@ class Shell extends React.Component {
                 </AppBar>
                 <CssBaseline />
                 <Drawer
-                    className={classes.drawer}
-                    variant="persistent"
+                    variant="permanent"
                     anchor="left"
                     open={leftNavigatorOpen}
+                    className={classNames(classes.drawer, {
+                        [classes.drawerOpen]: leftNavigatorOpen,
+                        [classes.drawerClose]: !leftNavigatorOpen,
+                    })}
                     classes={{
-                        paper: classes.drawerPaper,
+                        paper: classNames({
+                            [classes.drawerOpen]: leftNavigatorOpen,
+                            [classes.drawerClose]: !leftNavigatorOpen,
+                        }),
                     }}
                 >
                     <div className={classes.drawerHeader} />

@@ -55,11 +55,7 @@ class LibraryEditor extends Component {
 
         return (
             <Paper>
-                <Tabs
-                    value={this.state.value}
-                    indicatorColor="primary"
-                    textColor="primary"
-                    onChange={this.handleChange}>
+                <Tabs value={this.state.value} indicatorColor="primary" textColor="primary" onChange={this.handleChange}>
                     <Tab label="Details" />
                     <Tab label="Tags" />
                     <Tab label="Syncs" />

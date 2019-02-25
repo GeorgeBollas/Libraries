@@ -17,7 +17,7 @@
       "commandName": "IISExpress",
       "launchUrl": "http://localhost:63315/api/libraries",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "VM"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
   }

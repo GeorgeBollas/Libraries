@@ -1,5 +1,7 @@
 ﻿import React from "react";
 
+import { withStyles } from '@material-ui/core/styles';
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -13,9 +15,30 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import Avatar from '@material-ui/core/Avatar';
+import deepOrange from '@material-ui/core/colors/deepOrange';
+import deepPurple from '@material-ui/core/colors/deepPurple';
+
 import { usePopupState, bindTrigger, bindMenu } from 'material-ui-popup-state/hooks'
 
 import LinearProgress from '@material-ui/core/LinearProgress';
+
+
+const styles = {
+    avatar: {
+        margin: 10,
+    },
+    orangeAvatar: {
+        margin: 10,
+        color: '#fff',
+        backgroundColor: deepOrange[500],
+    },
+    purpleAvatar: {
+        margin: 10,
+        color: '#fff',
+        backgroundColor: deepPurple[500],
+    },
+};
 
 const LibraryList = ({ librariesLoading, libraries, selectedLibraryId, selectLibrary, selectLibraryMenu, classes }) => {
 
@@ -65,7 +88,7 @@ const LibraryList = ({ librariesLoading, libraries, selectedLibraryId, selectLib
                             selected={selectedLibraryId === lib.libraryId}
                             onClick={event => selectLibrary(lib.libraryId)} >
                             <ListItemIcon>
-                                <FolderIcon />
+                                <Avatar className={classes.orangeAvatar}>{lib.name.substring(0, 1)}</Avatar>
                             </ListItemIcon>
                             <ListItemText primary={lib.name} />
                             <ListItemSecondaryAction>
@@ -83,4 +106,4 @@ const LibraryList = ({ librariesLoading, libraries, selectedLibraryId, selectLib
     }
 };
 
-export default LibraryList;
+export default withStyles(styles)(LibraryList);
