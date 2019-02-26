@@ -99,6 +99,8 @@ class LibrariesNavigator extends Component {
     }
 
     selectLibraryMenu = (id, option) => {
+        //todo handl option
+        this.props.history.push('/library/' + id);
     }
 }
 

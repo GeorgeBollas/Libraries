@@ -13,6 +13,8 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
+import SaveCancel from '../../Shared/SaveCancel'
+
 import * as libraryEditingActions from '../../../actions/Libraries';
 
 const styles = theme => ({
@@ -56,11 +58,13 @@ class LibraryEditor extends Component {
         return (
             <Paper>
                 <Tabs value={this.state.value} indicatorColor="primary" textColor="primary" onChange={this.handleChange}>
-                    <Tab label="Details" />
+                    <Tab label="Details" >
+                        </Tab>
                     <Tab label="Tags" />
                     <Tab label="Syncs" />
                     <Tab label="Searches" />
                 </Tabs>
+                            <SaveCancel />
             </Paper>
         )
     };
