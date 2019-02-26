@@ -13,6 +13,10 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
+import { Editor } from 'react-draft-wysiwyg';
+
+import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
+
 import SaveCancel from '../../Shared/SaveCancel'
 
 import * as libraryEditingActions from '../../../actions/Libraries';
@@ -37,7 +41,7 @@ const styles = theme => ({
 class LibraryEditor extends Component {
 
     state = {
-        value: 2,
+        value: 0,
     };
 
     componentDidMount() {
@@ -52,9 +56,9 @@ class LibraryEditor extends Component {
 
         const {
             history,
-            classes, //todo get rid of this and use own styles
+            classes, //todo get rid of this and use own styles 
         } = this.props;
-
+        const { value } = this.state;
         return (
             <Paper>
                 <Tabs value={this.state.value} indicatorColor="primary" textColor="primary" onChange={this.handleChange}>
@@ -64,7 +68,11 @@ class LibraryEditor extends Component {
                     <Tab label="Syncs" />
                     <Tab label="Searches" />
                 </Tabs>
-                            <SaveCancel />
+
+                {value === 0 && <div>
+                    <SaveCancel />
+                    <Editor />
+                    </div>}
             </Paper>
         )
     };
