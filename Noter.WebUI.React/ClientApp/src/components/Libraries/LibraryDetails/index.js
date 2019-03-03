@@ -1,0 +1,92 @@
+﻿import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux'
+import { withRouter } from "react-router";
+
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+
+import { withStyles } from '@material-ui/core/styles';
+
+import Form from './Form';
+
+import * as actions from '../../../actions/Libraries';
+
+const libraryDetailsSchema = Yup.object().shape({
+    name: Yup.string()
+        .min(2, 'Too Short!')
+        .max(50, 'Too Long!')
+        .required('Required'),
+});
+
+const styles = theme => ({
+    root: {
+        display: 'flex',
+        alignItems: 'center',
+    },
+    progress: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+    },
+    wrapper: {
+        margin: theme.spacing.unit,
+        padding: theme.spacing.unit,
+        position: 'relative',
+    },
+});
+
+class LibraryDetails extends Component {
+    constructor(props) {
+        super(props);
+        this.formikRef = React.createRef();
+    }
+
+    componentDidMount() {
+        this.props.fetchLibrary(this.props.match.params.id);
+    }
+
+    render() {
+
+        return (
+                    <Formik ref={this.formikRef}
+                        initialValues={{ name: '', tags: [] }}
+                        onSubmit={(values, { setSubmitting, setErrors }) => {
+                            this.onEditDetailsSubmit(values.name, values.tags, setSubmitting, setErrors);
+                        }}
+                        component={Form}
+                        validationSchema={libraryDetailsSchema}
+                    />
+        );
+    };
+
+
+    
+    onEditDetailsSubmit = (name, description, setSubmitting, setErrors) => {
+
+        var errors = {};
+
+        const { history, updateLibraryDetailsRequestSuccess, onUpdateDetailsSuccessful } = this.props;
+        this.props.requestCreateLibrary(name, description)
+            .then(result => {
+                setSubmitting(false);
+                updateLibraryDetailsRequestSuccess(result.data.libraryId); //todo do we need this, should only need if ui changes state or to refresh list
+                onUpdateDetailsSuccessful(result.data.libraryId);
+                history.push('/search/' + result.data.libraryId);
+
+            })
+            .catch(e => {
+                setSubmitting(false);
+                setErrors({ name: e.response.data.failures.Name });
+            })
+    }
+
+};
+
+export default connect(
+    state => ({
+    }),
+    dispatch => bindActionCreators(actions, dispatch)
+)(withStyles(styles, { withTheme: true })(withRouter((LibraryDetails))));
+
+

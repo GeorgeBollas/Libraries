@@ -39,6 +39,8 @@ namespace Noter.Api
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationPipeline<,>));
 
+            services.AddSwaggerDocument();
+
             services.AddMediatR(typeof(CreateLibraryCommandHandler).GetTypeInfo().Assembly);  //point to the assemby to look for handlers
 
             // Add DbContext using SQL Server Provider
@@ -65,6 +67,10 @@ namespace Noter.Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUi3();
+
             app.UseCors(builder =>
                 builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 

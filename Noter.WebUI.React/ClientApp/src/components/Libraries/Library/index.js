@@ -4,20 +4,13 @@ import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 
-import { withRouter } from 'react-router-dom';
-
-import { createBrowserHistory } from 'history';
 
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 
-import { Editor } from 'react-draft-wysiwyg';
+import Typography from '@material-ui/core/Typography';
 
 import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-
-import SaveCancel from '../../Shared/SaveCancel'
 
 import * as libraryEditingActions from '../../../actions/Libraries';
 
@@ -36,44 +29,38 @@ const styles = theme => ({
     fab: {
         margin: theme.spacing.unit,
     },
+    sectionMargins: {
+        margin: theme.spacing.unit,
+        minHeight: "200px"
+    }
 });
 
 class LibraryEditor extends Component {
 
-    state = {
-        value: 0,
-    };
-
-    componentDidMount() {
+      componentDidMount() {
         this.props.fetchLibrary(this.props.libraryId);
     }
-
-    handleChange = (event, value) => {
-        this.setState({ value });
-    };
 
     render() {
 
         const {
-            history,
-            classes, //todo get rid of this and use own styles 
+            classes
         } = this.props;
-        const { value } = this.state;
         return (
-            <Paper>
-                <Tabs value={this.state.value} indicatorColor="primary" textColor="primary" onChange={this.handleChange}>
-                    <Tab label="Details" >
-                        </Tab>
-                    <Tab label="Tags" />
-                    <Tab label="Syncs" />
-                    <Tab label="Searches" />
-                </Tabs>
-
-                {value === 0 && <div>
-                    <SaveCancel />
-                    <Editor />
-                    </div>}
-            </Paper>
+            <div>
+                <Paper className={classes.sectionMargins}>
+                    Details
+                </Paper>
+                <Paper className={classes.sectionMargins}>
+                    Tags
+                </Paper>
+                <Paper className={classes.sectionMargins}>
+                    Searches
+                </Paper>
+                <Paper className={classes.sectionMargins}>
+                    Syncs
+                </Paper>
+            </div>
         )
     };
 
@@ -94,5 +81,5 @@ export default connect(
             library: state.libraryEditing.library,
         }),
     dispatch => bindActionCreators(libraryEditingActions, dispatch)
-)(withStyles(styles, { withTheme: true })(withRouter((LibraryEditor))));
+)(withStyles(styles, { withTheme: true })(LibraryEditor));
 

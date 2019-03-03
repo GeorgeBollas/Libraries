@@ -24,24 +24,24 @@ export const selectLibrary = (libraryId) => ({
 })
 
 export const selectLibraryMenu = (libraryId) => ({
-    type: LIBRARY_LIST_SELECT_LIBRARY_MENU, libraryId
+    type: LIBRARY_LIST_SELECT_LIBRARY_MENU, data: { libraryId }
 })
 
 export const setFilterText = (filterText) => ({
-    type: LIBRARY_LIST_SET_FILTER_TEXT, filterText: filterText
+    type: LIBRARY_LIST_SET_FILTER_TEXT, data: { filterText }
 })
 
-export const createLibraryDialogOpen = (isOpen) => {
-    return { type: SET_CREATE_LIBRARY_DIALOG_OPEN_STATUS, isOpen: isOpen };
-}
+export const createLibraryDialogOpen = (isOpen) => ({
+    type: SET_CREATE_LIBRARY_DIALOG_OPEN_STATUS, data: { isOpen }
+})
 
-export const createLibraryRequest = () => {
-    return { type: CREATE_LIBRARY_REQUEST };
-}
+export const createLibraryRequest = () => ({
+    type: CREATE_LIBRARY_REQUEST
+})
 
 
 export const createLibraryRequestSuccess = (id) => {
-    return { type: CREATE_LIBRARY_SUCCESS, id };
+    return { type: CREATE_LIBRARY_SUCCESS, data: { id } };
 }
 
 export const requestCreateLibrary = (name, tags) => {
@@ -57,11 +57,11 @@ export const requestCreateLibrary = (name, tags) => {
                 dispatch(fetchLibraries());
                 return res;
             });
-            //.catch(e => {
-            //    // response.data.failures.Name [] of errors for name
-            //    // extract and throw as validation error suitable for setErrors({ name: 'error message' });
-            //    throw e;
-            //});
+        //.catch(e => {
+        //    // response.data.failures.Name [] of errors for name
+        //    // extract and throw as validation error suitable for setErrors({ name: 'error message' });
+        //    throw e;
+        //});
 
     }
 }

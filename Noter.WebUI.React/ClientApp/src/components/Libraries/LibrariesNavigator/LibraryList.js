@@ -40,14 +40,20 @@ const styles = {
     },
 };
 
-const LibraryList = ({ librariesLoading, libraries, selectedLibraryId, selectLibrary, selectLibraryMenu, classes }) => {
+const LibraryList = ({
+    librariesLoading,
+    libraries,
+    selectedLibraryId,
+    selectLibrary,
+    selectLibraryMenu,
+    classes }) => {
 
     const MenuButton = ({ id }) => {
 
         //todo can we move this to the actions passing the id and the menu option??
-        const onEdit = (popState) => {
+        const onMenuSelection = (popState,menu) => {
             popState.close();
-            selectLibraryMenu(id,'edit')
+            selectLibraryMenu(id,menu)
         }
 
         const popupState = usePopupState({ variant: 'popover', popupId: 'demoMenu' })
@@ -59,7 +65,10 @@ const LibraryList = ({ librariesLoading, libraries, selectedLibraryId, selectLib
                     <MoreVertIcon />
                 </IconButton>
                 <Menu {...bindMenu(popupState)} >
-                    <MenuItem onClick={() => onEdit(popupState)}>Edit</MenuItem>
+                    <MenuItem onClick={() => onMenuSelection(popupState, 'Details')}>Edit Details</MenuItem>
+                    <MenuItem onClick={() => onMenuSelection(popupState,'Tags')}>Manage Tags</MenuItem>
+                    <MenuItem onClick={() => onMenuSelection(popupState,'Searches')}>Manage Searches</MenuItem>
+                    <MenuItem onClick={() => onMenuSelection(popupState, 'Syncs')}>Manage Syncs</MenuItem>
                 </Menu>
             </div>
         )

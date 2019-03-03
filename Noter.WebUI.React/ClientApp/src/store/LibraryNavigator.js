@@ -22,14 +22,14 @@ export const reducer = (state, action) => {
     if (action.type === LIBRARY_LIST_SELECT_LIBRARY) {
         return {
             ...state,
-            selectedLibraryId: action.libraryId,
+            selectedLibraryId: action.data,
         };
     };
 
     if (action.type === LIBRARY_LIST_SELECT_LIBRARY_MENU) {
         return {
             ...state,
-            selectedLibraryId: action.libraryId,
+            selectedLibraryId: action.data,
         };
     };
 
@@ -37,14 +37,14 @@ export const reducer = (state, action) => {
     if (action.type === LIBRARY_LIST_SET_FILTER_TEXT) {
         return {
             ...state,
-            filterText: action.filterText,
+            filterText: action.data,
         };
     };
 
     if (action.type === SET_CREATE_LIBRARY_DIALOG_OPEN_STATUS) {
         return {
             ...state,
-            isCreateLibraryDialogOpen: action.isOpen,
+            isCreateLibraryDialogOpen: action.data,
         };
     };
 

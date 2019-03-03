@@ -55,7 +55,7 @@ namespace Noter.Api.Controllers
 
         // PUT api/libraries/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody]UpdateLibraryCommand command)
+        public async Task<IActionResult> Update([FromBody]UpdateLibraryCommand command)
         {
             return Ok(await Mediator.Send(command));
         }

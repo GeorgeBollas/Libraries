@@ -25,7 +25,7 @@ export const reducer = (state, action) => {
     if (action.type === FETCH_LIBRARY_SUCCESS) {
         return {
             ...state,
-            library: action.libVM,
+            library: action.data.library,
         };
     };
 
