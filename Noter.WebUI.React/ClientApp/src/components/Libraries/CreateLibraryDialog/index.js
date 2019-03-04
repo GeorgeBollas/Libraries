@@ -15,7 +15,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 //import TextField from '@material-ui/core/TextField';
 
-import Form from './Form';
+import CreateLibraryForm from './CreateLibraryForm';
 
 import * as actions from '../../../actions/LibraryNavigator';
 
@@ -52,7 +52,7 @@ class CreateLibraryDialog extends Component {
     //const { a } = this.props; -- why cant we do this
 
     render() {
-        const { onCreatedSuccessful, isCreateLibraryDialogOpen, classes } = this.props
+        const { onCreatedSuccessful, isCreateLibraryDialogOpen, isRequestedCreateLibrary, classes } = this.props
 
         return (
             <Dialog onClose={this.onClose} open={isCreateLibraryDialogOpen} className={classes.root}>
@@ -63,9 +63,11 @@ class CreateLibraryDialog extends Component {
                         onSubmit={(values, { setSubmitting, setErrors }) => {
                             this.onCreateLibrarySubmit(values.name, values.tags, setSubmitting, setErrors);
                         }}
-                        component={Form}
+                        //component={Form}
                         validationSchema={createLibrarySchema}
-                    />
+                        render={props => <CreateLibraryForm {...{ ...props, handleChipChanged: this.handleChipChanged, isRequestedCreateLibrary }} />}
+                    >
+                    </Formik>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.onClose} size="small" color="primary">Cancel</Button>
@@ -74,9 +76,9 @@ class CreateLibraryDialog extends Component {
             </Dialog>
         );
     };
-    
 
-    handleChipChange(chips) {
+
+    handleChipChanged = (chips) => {
         console.debug(chips.lenght);
         this.formikRef.current.setFieldValue('tags', chips, false);
     }
@@ -113,7 +115,8 @@ class CreateLibraryDialog extends Component {
 
 export default connect(
     state => ({
-        isCreateLibraryDialogOpen: state.libraryNavigator.isCreateLibraryDialogOpen
+        isCreateLibraryDialogOpen: state.libraryNavigator.isCreateLibraryDialogOpen,
+        isRequestedCreateLibrary: state.libraryNavigator.isRequestedCreateLibrary
     }),
     dispatch => bindActionCreators(actions, dispatch)
 )(withStyles(styles, { withTheme: true })(withRouter((CreateLibraryDialog))));

@@ -30,7 +30,7 @@ const styles = theme => ({
 //    tags: string[];
 //}
 
-const form = ({ classes, handleSubmit, handleChange, isRequestedCreateLibrary, handleBlur, values, onSave, errors }) => {
+const form = ({ classes, handleSubmit, handleChipChanged, handleChange, isRequestedCreateLibrary, handleBlur, values, onSave, errors }) => {
     return (
         <Form >
             <div className={classes.wrapper} >
@@ -52,7 +52,7 @@ const form = ({ classes, handleSubmit, handleChange, isRequestedCreateLibrary, h
                         <ChipInput
                             {...this.props} // to pass down to TextField
                             label="Tags"
-                            onChange={(chips) => this.handleChipChange(chips)}
+                            onChange={(chips) => handleChipChanged(chips)}
                         />
                     </div>
                 </div>
