@@ -16,7 +16,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
 import * as navigatorActions from '../../../actions/LibraryNavigator';
-import * as librariesActions from '../../../actions/Libraries';
+import * as librariesApiActions from '../../../actions/LibrariesApi';
 
 import Filter from './Filter';
 import LibraryList from './LibraryList';
@@ -126,6 +126,6 @@ export default connect(
             filterText: state.libraryNavigator.filterText,
             selectedLibraryId: state.libraryNavigator.selectedLibraryId,
         }),
-    dispatch => bindActionCreators({ ...librariesActions, ...navigatorActions }, dispatch)
+    dispatch => bindActionCreators({ ...librariesApiActions, ...navigatorActions }, dispatch)
 )(withStyles(styles, { withTheme: true })(withRouter((LibrariesNavigator))));
 

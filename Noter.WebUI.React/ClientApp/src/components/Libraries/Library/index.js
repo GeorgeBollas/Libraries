@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 
 import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
-import * as libraryEditingActions from '../../../actions/Libraries';
+import * as actions from '../../../actions/LibrariesApi';
 
 const styles = theme => ({
     root: {
@@ -80,6 +80,6 @@ export default connect(
             libraryId: state.libraryEditing.libraryId,
             library: state.libraryEditing.library,
         }),
-    dispatch => bindActionCreators(libraryEditingActions, dispatch)
+    dispatch => bindActionCreators(actions, dispatch)
 )(withStyles(styles, { withTheme: true })(LibraryEditor));
 

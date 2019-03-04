@@ -10,7 +10,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Form from './Form';
 
-import * as actions from '../../../actions/Libraries';
+import * as actions from '../../../actions/LibrariesApi';
 
 const libraryDetailsSchema = Yup.object().shape({
     name: Yup.string()
@@ -66,11 +66,10 @@ class LibraryDetails extends Component {
 
         var errors = {};
 
-        const { history, updateLibraryDetailsRequestSuccess, onUpdateDetailsSuccessful } = this.props;
+        const { history, onUpdateDetailsSuccessful } = this.props;
         this.props.requestCreateLibrary(name, description)
             .then(result => {
                 setSubmitting(false);
-                updateLibraryDetailsRequestSuccess(result.data.libraryId); //todo do we need this, should only need if ui changes state or to refresh list
                 onUpdateDetailsSuccessful(result.data.libraryId);
                 history.push('/search/' + result.data.libraryId);
 

@@ -1,5 +1,5 @@
 ﻿import axios from 'axios';
-//import uuid1 from 'uuid/v1';
+import uuid1 from 'uuid/v1';
 
 import {
     FETCH_LIBRARIES_REQUEST,
@@ -21,7 +21,7 @@ import {
 } from './actionTypes';
 
 
-// Fetching Libraries Request
+// Fetch Libraries
 
 const fetchLibrariesRequest = () => {
     return { type: FETCH_LIBRARIES_REQUEST };
@@ -47,37 +47,7 @@ export const fetchLibraries = () => {
 
 }
 
-// Create Library Details
-
-const createLibraryRequest = (name) => {
-    return {
-        type: CREATE_LIBRARY_REQUEST, data: { name }
-    };
-}
-
-const createLibrarySuccess = (libraryId) => {
-    return {
-        type: UPDATE_LIBRARY_DETAILS_SUCCESS, data: { libraryId }
-    };
-}
-
-
-// Update Library Details
-
-const updateLibraryDetailsRequest = (libraryId) => {
-    return {
-        type: UPDATE_LIBRARY_DETAILS_REQUEST, data: { libraryId }
-    };
-}
-
-const updateLibraryDetailsSuccess = (libraryId) => {
-    return {
-        type: UPDATE_LIBRARY_DETAILS_SUCCESS, data: { libraryId }
-    };
-}
-
-
-// Fetching Library Request
+// Fetch Library
 
 const fetchLibraryRequest = (libraryId) => {
     return {
@@ -104,17 +74,53 @@ export const fetchLibrary = (id) => {
     }
 }
 
-export const createLibraryDetailsLibrary = (name, notes) => {
-    return (dispatch) => {
-        dispatch(createLibraryRequest(name));
 
-        //todo should the 'then' be moved to the component
-        return axios.post(`http://localhost:63315/api/Libraries/${name}`)
-            .then(response => {
-                dispatch(createLibrarySuccess(response.data));
+
+// Create Library
+
+export const createLibraryRequest = () => ({
+    type: CREATE_LIBRARY_REQUEST
+})
+
+
+export const createLibraryRequestSuccess = (id) => {
+    return { type: CREATE_LIBRARY_SUCCESS, data: { id } };
+}
+
+export const requestCreateLibrary = (name, tags) => {
+    return (dispatch) => {
+        dispatch(createLibraryRequest());
+
+        //todo handle uuid better
+
+        return axios.post('http://localhost:63315/api/Libraries',
+            {
+                requestGuid: uuid1(),
+                name,
+                tags: tags || []
             })
-            .catch(error => { throw (error) });
+            .then(res => {
+                var libVM = res.data;
+                dispatch(createLibraryRequestSuccess(libVM.libraryId));
+                dispatch(fetchLibraries()); //todo move from here?? should ui do this
+                return res;
+            });
     }
+}
+
+
+// Update Library
+
+const updateLibraryDetailsRequest = (libraryId) => {
+    return {
+        type: UPDATE_LIBRARY_DETAILS_REQUEST, data: { libraryId }
+    };
+}
+
+const updateLibraryDetailsSuccess = (libraryId) => {
+    return {
+        type: UPDATE_LIBRARY_DETAILS_SUCCESS, data: { libraryId }
+    };
 }
 
 export const updateLibraryDetailsLibrary = (id, name, notes) => {
@@ -122,7 +128,11 @@ export const updateLibraryDetailsLibrary = (id, name, notes) => {
         dispatch(updateLibraryDetailsRequest(id));
 
         //todo should the 'then' be moved to the component
-        return axios.put(`http://localhost:63315/api/Libraries/${id}`)
+        return axios.put(`http://localhost:63315/api/Libraries`,
+            {
+                name,
+                notes
+            })
             .then(response => {
                 dispatch(updateLibraryDetailsSuccess(response.data));
             })

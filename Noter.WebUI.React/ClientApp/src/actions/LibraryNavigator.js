@@ -1,17 +1,13 @@
 ﻿import axios from 'axios';
-import uuid1 from 'uuid/v1';
 
 import {
     LIBRARY_LIST_SELECT_LIBRARY,
     LIBRARY_LIST_SELECT_LIBRARY_MENU,
     LIBRARY_LIST_SET_FILTER_TEXT,
     SET_CREATE_LIBRARY_DIALOG_OPEN_STATUS,
-    CREATE_LIBRARY_DIALOG_CANCEL,
-    CREATE_LIBRARY_REQUEST,
-    CREATE_LIBRARY_SUCCESS
+    CREATE_LIBRARY_DIALOG_CANCEL
 } from './actionTypes';
 
-import { fetchLibraries } from './Libraries'; //todo is this how we handle calling other
 
 export const filterLibraries = (filterText, libraries) => {
     return libraries.filter(l => l.name.includes(filterText)); //2015 way
@@ -35,33 +31,3 @@ export const createLibraryDialogOpen = (isOpen) => ({
     type: SET_CREATE_LIBRARY_DIALOG_OPEN_STATUS, data: { isOpen }
 })
 
-export const createLibraryRequest = () => ({
-    type: CREATE_LIBRARY_REQUEST
-})
-
-
-export const createLibraryRequestSuccess = (id) => {
-    return { type: CREATE_LIBRARY_SUCCESS, data: { id } };
-}
-
-export const requestCreateLibrary = (name, tags) => {
-    return (dispatch) => {
-        dispatch(createLibraryRequest());
-
-        //todo handle uuid better
-
-        return axios.post('http://localhost:63315/api/Libraries', { requestGuid: uuid1(), name, tags: tags || [] })
-            .then(res => {
-                var libVM = res.data;
-                dispatch(createLibraryRequestSuccess(libVM.libraryId));
-                dispatch(fetchLibraries());
-                return res;
-            });
-        //.catch(e => {
-        //    // response.data.failures.Name [] of errors for name
-        //    // extract and throw as validation error suitable for setErrors({ name: 'error message' });
-        //    throw e;
-        //});
-
-    }
-}
