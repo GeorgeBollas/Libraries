@@ -48,9 +48,12 @@ class LibraryDetails extends Component {
 
     render() {
 
+        const { library } = this.props;
+
         return (
-                    <Formik ref={this.formikRef}
-                        initialValues={{ name: '', tags: [] }}
+            <Formik ref={this.formikRef}
+                enableReinitialize={true}
+                        initialValues={{ name: library.name, description: library.description }}
                         onSubmit={(values, { setSubmitting, setErrors }) => {
                             this.onEditDetailsSubmit(values.name, values.tags, setSubmitting, setErrors);
                         }}
@@ -84,6 +87,7 @@ class LibraryDetails extends Component {
 
 export default connect(
     state => ({
+        library: state.libraryEditing.library
     }),
     dispatch => bindActionCreators(actions, dispatch)
 )(withStyles(styles, { withTheme: true })(withRouter((LibraryDetails))));
