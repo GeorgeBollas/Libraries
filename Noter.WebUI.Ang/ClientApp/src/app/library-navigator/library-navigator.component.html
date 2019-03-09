@@ -1,0 +1,19 @@
+<h3>Libraries</h3>
+<div>
+  <label>
+    Filter:
+    <input #filterText />
+  </label>
+  <button (click)="filterLibraries(filterText.value)">
+    search
+  </button>
+</div>
+
+<ul class="libraries">
+  <li *ngFor="let library of filteredLibraries">
+    <a (click)="show(library)">
+      <span class="badge">{{ library.id || -1 }}</span>
+      <span >{{library.name}}</span>
+    </a>
+  </li>
+</ul>
