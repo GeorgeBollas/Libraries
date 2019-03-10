@@ -2,18 +2,16 @@
 <div>
   <label>
     Filter:
-    <input #filterText />
+    <input [(ngModel)]="filterText" (keyup)="filterLibraries()" />
   </label>
-  <button (click)="filterLibraries(filterText.value)">
-    search
-  </button>
 </div>
 
-<ul class="libraries">
-  <li *ngFor="let library of filteredLibraries">
-    <a (click)="show(library)">
-      <span class="badge">{{ library.id || -1 }}</span>
-      <span >{{library.name}}</span>
-    </a>
-  </li>
-</ul>
+<div>
+  <button mat-icon-button (click)="openDialog()"><mat-icon>library_add</mat-icon></button>
+</div>
+
+<mat-nav-list>
+  <mat-list-item *ngFor="let library of filteredLibraries">
+    <a [routerLink]="['/search', library.libraryId]">{{ library.name }}</a>
+  </mat-list-item>
+</mat-nav-list>

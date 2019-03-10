@@ -2,19 +2,14 @@
   <app-nav-menu (menuClicked)="sidenav.toggle()"></app-nav-menu>
 
   <mat-sidenav-container class="example-container">
-    <mat-sidenav #sidenav mode="side" [(opened)]="leftNavOpen" (opened)="events.push('open!')"
+    <mat-sidenav #sidenav mode="side" [(opened)]="leftNavOpen"
                  (closed)="events.push('close!')">
       <app-library-navigator></app-library-navigator>
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <p><mat-checkbox [(ngModel)]="leftNavOpen">sidenav.opened</mat-checkbox></p>
-
-      <p>Events:</p>
-      <div class="example-events">
-        <div *ngFor="let e of events">{{e}}</div>
-      </div>
-    <router-outlet></router-outlet>
+      <!--<p><mat-checkbox [(ngModel)]="leftNavOpen">sidenav.opened</mat-checkbox></p>-->
+      <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
 
