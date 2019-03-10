@@ -1,20 +1,23 @@
 <h2 mat-dialog-title>New library</h2>
 
 <div mat-dialog-content>
-  <mat-form-field>
-    <input matInput placeholder="Name" [formControl]="name" cdkFocusInitial required>
-    <mat-error *ngIf="name.invalid">{{getErrorMessage()}}</mat-error>
-  </mat-form-field>
+  <form #createLibraryForm="ngForm">
 
-  <mat-form-field>
-    <input matInput placeholder="Description" [formControl]="description">
-  </mat-form-field>
+    <mat-form-field>
+      <input matInput #name="ngModel" name="name" placeholder="Name" cdkFocusInitial [(ngModel)]="newLibrary.name" required>
+      <mat-error *ngIf="name.invalid && name.errors.required">name is required</mat-error>
+    </mat-form-field>
 
+    <mat-form-field>
+      <input matInput #description="ngModel" name="description" placeholder="Description" [(ngModel)]="newLibrary.description">
+    </mat-form-field>
+
+  </form>
 </div>
 
 <div mat-dialog-actions align="end">
 
   <button mat-button (click)="onCancelClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data.name" >Create</button>
+  <button mat-button [mat-dialog-close]="data.name" [disabled]="createLibraryForm.form.invalid">Create</button>
   <!--replace with data.Id once implemented-->
 </div>
