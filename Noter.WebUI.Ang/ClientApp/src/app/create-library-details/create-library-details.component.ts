@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import { CreateLibraryDialogData } from '../library-navigator/library-navigator.component';
 import { CreateLibrary } from './CreateLibrary';
@@ -12,8 +13,12 @@ import { CreateLibrary } from './CreateLibrary';
 })
 export class CreateLibraryDetailsComponent implements OnInit {
 
+  public Editor = ClassicEditor;
+
   newLibrary: CreateLibrary
 
+  panelOpenState: boolean = false;
+  
   constructor(
     public dialogRef: MatDialogRef<CreateLibraryDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: CreateLibraryDialogData)

@@ -41,7 +41,7 @@ export class LibraryNavigatorComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CreateLibraryDetailsComponent, {
-      width: '250px',
+      width: '750px',
       data: { name: '', description: '' }
     });
 

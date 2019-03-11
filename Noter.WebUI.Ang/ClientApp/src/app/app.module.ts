@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NoterMaterialModule } from './material-module';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -26,12 +27,13 @@ import { CreateLibraryDetailsComponent } from './create-library-details/create-l
     FetchDataComponent,
     LibraryNavigatorComponent,
     SearchComponent,
-    CreateLibraryDetailsComponent
+    CreateLibraryDetailsComponent,
   ],
   imports: [
     [BrowserAnimationsModule],
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    CKEditorModule,
     FormsModule,
     ReactiveFormsModule,
     NoterMaterialModule,

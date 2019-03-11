@@ -7,11 +7,30 @@
       <input matInput #name="ngModel" name="name" placeholder="Name" cdkFocusInitial [(ngModel)]="newLibrary.name" required>
       <mat-error *ngIf="name.invalid && name.errors.required">name is required</mat-error>
     </mat-form-field>
+    <br />
+    <!--<mat-form-field>-->
+    <!--<input matInput #description="ngModel" name="description" placeholder="Description" [(ngModel)]="newLibrary.description">-->
 
-    <mat-form-field>
-      <input matInput #description="ngModel" name="description" placeholder="Description" [(ngModel)]="newLibrary.description">
-    </mat-form-field>
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Description (optional)
+        </mat-panel-title>
+        <mat-panel-description>
+          {{panelOpenState ? '' : 'click to edit'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
 
+      <!--to fix bug that causes it to flicker before showing collapsed-->
+      <div *ngIf="panelOpenState == true">
+        <ckeditor [(ngModel)]="newLibrary.description" #description="ngModel" name="description" [editor]="Editor"></ckeditor>
+      </div>
+    </mat-expansion-panel>
+    <br />
+
+
+    <!--</mat-form-field>-->
   </form>
 </div>
 
