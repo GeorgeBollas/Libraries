@@ -5,6 +5,10 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import { CreateLibraryDialogData } from '../library-navigator/library-navigator.component';
 import { CreateLibrary } from './CreateLibrary';
+import { LibrariesService } from '../services/libraries/libraries.service';
+import { error } from 'protractor';
+
+
 
 @Component({
   selector: 'app-create-library-details',
@@ -18,11 +22,11 @@ export class CreateLibraryDetailsComponent implements OnInit {
   newLibrary: CreateLibrary
 
   panelOpenState: boolean = false;
-  
+
   constructor(
+    private libraryService: LibrariesService,
     public dialogRef: MatDialogRef<CreateLibraryDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: CreateLibraryDialogData)
-  {
+    @Inject(MAT_DIALOG_DATA) public data: CreateLibraryDialogData) {
     this.newLibrary = new CreateLibrary("", "");
   }
 
@@ -33,6 +37,22 @@ export class CreateLibraryDetailsComponent implements OnInit {
     this.dialogRef.close();
   }
 
+
+  //todo
+  // 1. close the dialog (done)
+  // 2. refresh list of libraries
+
+  onSubmit() {
+    console.log('onSubmit');
+    this.libraryService.createLibrary(this.newLibrary.name, this.newLibrary.description)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.dialogRef.close();
+        },
+        error => console.log(error)
+      )
+  }
 
   // done this way because material only has space for one error at a time
   //getErrorMessage() {

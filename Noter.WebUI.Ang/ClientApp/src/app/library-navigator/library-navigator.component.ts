@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { Observable } from 'rxjs';
 
-import { Library } from '../services/libraries/library';
+import { Library } from '../services/libraries/library.models';
 
 import { LibrariesService } from '../services/libraries/libraries.service'
 import { CreateLibraryDetailsComponent } from '../create-library-details/create-library-details.component';
@@ -23,7 +23,7 @@ export class LibraryNavigatorComponent implements OnInit {
   libraries: Library[] = [];
   filteredLibraries: Library[] = [];
 
-  filterText:string;
+  filterText: string;
 
   constructor(
     private librariesService: LibrariesService,
@@ -31,12 +31,16 @@ export class LibraryNavigatorComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.librariesService.getLibraries().subscribe(data => { this.libraries = data; this.filteredLibraries = this.libraries });
+    this.getLibraries();
+  }
+
+  private getLibraries() {
+    this.librariesService.getLibraries().subscribe(data => { this.libraries = data; this.filteredLibraries = this.libraries; });
   }
 
   filterLibraries() {
     this.filterText = this.filterText.trim();
-    this.filteredLibraries = this.libraries.filter( (lib:Library) => lib.name.includes(this.filterText)) //todo is this the best way
+    this.filteredLibraries = this.libraries.filter((lib: Library) => lib.name.includes(this.filterText)) //todo is this the best way
   }
 
   openDialog(): void {
@@ -47,6 +51,7 @@ export class LibraryNavigatorComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      this.getLibraries();
       //this.animal = result;
     });
   }

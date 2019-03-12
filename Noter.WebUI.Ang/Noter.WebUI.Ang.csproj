@@ -27,13 +27,13 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\create-library-details\CreateLibrary.ts" />
     <None Remove="ClientApp\src\app\material-module.ts" />
-    <None Remove="ClientApp\src\app\services\libraries\library.ts" />
+    <None Remove="ClientApp\src\app\services\libraries\library.models.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\create-library-details\CreateLibrary.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\material-module.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\services\libraries\library.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\libraries\library.models.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
