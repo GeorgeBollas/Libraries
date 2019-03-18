@@ -17,6 +17,9 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(p => this.id = +p.get('id')); //+ trick to convert to number
+
+    // get details library details from API (cache)
+
   }
 
 }

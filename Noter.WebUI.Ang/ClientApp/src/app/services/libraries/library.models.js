@@ -6,8 +6,4 @@ var Library = /** @class */ (function () {
     return Library;
 }());
 exports.Library = Library;
-// create command
-//export interface createLibraryResponse {
-//  status: string;
-//}
 //# sourceMappingURL=library.models.js.map

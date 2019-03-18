@@ -1,12 +1,16 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef, Input } from '@angular/core';
+
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { FormControl, FormGroup, Validators, NgModel } from '@angular/forms';
+
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { CreateLibraryDialogData } from '../library-navigator/library-navigator.component';
 import { CreateLibrary } from './CreateLibrary';
 import { LibrariesService } from '../services/libraries/libraries.service';
-import { error } from 'protractor';
 
 
 
@@ -20,6 +24,9 @@ export class CreateLibraryDetailsComponent implements OnInit {
   public Editor = ClassicEditor;
 
   newLibrary: CreateLibrary
+  
+
+  @ViewChild('name') nameField: NgModel;
 
   panelOpenState: boolean = false;
 
@@ -27,7 +34,8 @@ export class CreateLibraryDetailsComponent implements OnInit {
     private libraryService: LibrariesService,
     public dialogRef: MatDialogRef<CreateLibraryDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: CreateLibraryDialogData) {
-    this.newLibrary = new CreateLibrary("", "");
+    //this.newLibrary = new CreateLibrary("library " + (new Date()).toISOString(), "");
+    this.newLibrary = new CreateLibrary("","");
   }
 
   ngOnInit() {
@@ -50,12 +58,38 @@ export class CreateLibraryDetailsComponent implements OnInit {
           console.log(data);
           this.dialogRef.close();
         },
-        error => console.log(error)
+      error => this.handleError(error) // this will be a ValidationException or other http type exception
       )
   }
 
-  // done this way because material only has space for one error at a time
+  handleError(error: HttpErrorResponse) {
+
+    //todo: error may not be 400 may be 4xx
+
+    if (error.status == 400 && error.error.failures) {
+
+      // validation errors
+      var failures = error.error.failures;
+
+      if (failures.Name) {
+        var nameError = failures.Name[0];
+        this.nameField.control.setErrors({ serverError: nameError });
+      }
+
+      //todo write a generic routine that matches the failure fields to the input controls errors
+
+
+    }
+    else {
+      //todo: notify
+      alert(error.statusText);
+    }
+  }
+
   //getErrorMessage() {
-  //  return this.name.hasError('required') ? 'You must enter a value' : '';
+  //  return this.email.hasError('required') ? 'You must enter a value' :
+  //    this.email.hasError('email') ? 'Not a valid email' :
+  //      '';
   //}
+
 }

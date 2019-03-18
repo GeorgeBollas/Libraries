@@ -1,3 +1,4 @@
+import uuid1 from 'uuid/v1';
 
 export class Library {
   id: number;
@@ -9,7 +10,15 @@ export class Library {
 
 // create command
 
-//export interface createLibraryResponse {
-//  status: string;
-//}
+export interface CreateLibraryCommand {
+  RequestGuid: uuid1;
+  Name: string;
+  Notes: string;
+  Tags: string[];
+}
+
+
+export interface createLibraryResponse {
+  LibraryId: number;
+}
 

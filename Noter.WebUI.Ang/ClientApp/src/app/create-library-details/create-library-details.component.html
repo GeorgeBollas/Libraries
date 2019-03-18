@@ -1,11 +1,12 @@
 <h2 mat-dialog-title>New library</h2>
 
-<form #createLibraryForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+<form #createLibraryForm="ngForm" name="createLibraryForm" (ngSubmit)="onSubmit()" novalidate>
   <div mat-dialog-content>
 
     <mat-form-field>
       <input matInput #name="ngModel" name="name" placeholder="Name" cdkFocusInitial [(ngModel)]="newLibrary.name" required>
       <mat-error *ngIf="name.invalid && name.errors.required">name is required</mat-error>
+      <mat-error *ngIf="name.invalid  && name.errors?.serverError">{{name.errors?.serverError}}</mat-error>
     </mat-form-field>
     <br />
     <!--<mat-form-field>-->
