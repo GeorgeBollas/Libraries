@@ -55,4 +55,13 @@ export class LibraryNavigatorComponent implements OnInit {
       //this.animal = result;
     });
   }
+
+
+  edit(id: any) {
+    console.log("edit " + id);
+  }
+
+  tags(id: any) {
+    console.log("tags " + id);
+  }
 }
