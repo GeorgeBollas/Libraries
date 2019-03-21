@@ -1,6 +1,37 @@
+.nav-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
 @media (max-width: 767px) {
   /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
   .body-content {
     padding-top: 50px;
   }
 }
+
+#container {
+  top: 64px !important;
+}
+
+@media(max-width: 599px) {
+  #container {
+    top: 56px !important;
+  }
+}
+
+#sidenav {
+  width:240px;
+
+}
+
+#sidenav.menu-closed {
+  width: 70px;
+}
+
+  #sidenav.menu-open {
+    width: 240px;
+  }

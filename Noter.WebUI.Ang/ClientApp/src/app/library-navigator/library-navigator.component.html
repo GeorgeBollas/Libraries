@@ -1,13 +1,21 @@
-<h3>Libraries</h3>
-<div>
-  <label>
-    Filter:
-    <input [(ngModel)]="filterText" (keyup)="filterLibraries()" />
-  </label>
-</div>
+<mat-expansion-panel (opened)="panelOpenState = true"
+                     (closed)="panelOpenState = false">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <label>
+        Filter:
+        <input [(ngModel)]="filterText" (keyup)="filterLibraries()" />
+      </label>
+    </mat-panel-title>
+    <mat-panel-description>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <mat-checkbox>Show inactive</mat-checkbox>
+</mat-expansion-panel>
 
 <div>
-  <button mat-icon-button (click)="openDialog()"><mat-icon>library_add</mat-icon></button>
+  <button mat-mini-fab (click)="openDialog()"><mat-icon>library_add</mat-icon></button>
 </div>
 
 <mat-nav-list>
@@ -16,7 +24,7 @@
     <a matLine [routerLink]="['/search', library.libraryId]">{{ library.name }}</a>
     <button mat-icon-button [matMenuTriggerFor]="appMenu" [matMenuTriggerData]="{id: library.libraryId}">
       <mat-icon>more_vert</mat-icon>
-  </button>
+    </button>
   </mat-list-item>
 </mat-nav-list>
 

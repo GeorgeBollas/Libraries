@@ -1,16 +1,23 @@
-<body>
-  <app-nav-menu (menuClicked)="sidenav.toggle()"></app-nav-menu>
+<div class="basic-container">
+  <app-nav-menu (menuClicked)="toggled()"></app-nav-menu>
 
-  <mat-sidenav-container class="example-container">
-    <mat-sidenav #sidenav mode="side" [(opened)]="leftNavOpen"
-                 (closed)="events.push('close!')">
+  <mat-sidenav-container
+      id="container" class="nav-container" fullscreen>
+    <mat-sidenav
+                 id="sidenav"
+                 mode="side"
+                 opened
+                 [class.menu-open]="leftNavOpen"
+                 [class.menu-closed]="!leftNavOpen"
+                 role="navigation">
       <app-library-navigator></app-library-navigator>
     </mat-sidenav>
 
-    <mat-sidenav-content>
+    <mat-sidenav-content [ngStyle]="{ 'margin-left.px': contentMargin }" role="main">
       <!--<p><mat-checkbox [(ngModel)]="leftNavOpen">sidenav.opened</mat-checkbox></p>-->
-      <router-outlet></router-outlet>
+      <div>
+        <router-outlet></router-outlet>
+      </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
-
-</body>
+</div>
