@@ -20,6 +20,8 @@ export interface CreateLibraryDialogData {
 })
 export class LibraryNavigatorComponent implements OnInit {
 
+  @Input('isCollapsed') isCollapsed: boolean;
+
   libraries: Library[] = [];
   filteredLibraries: Library[] = [];
 

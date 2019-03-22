@@ -18,11 +18,15 @@
   <button mat-mini-fab (click)="openDialog()"><mat-icon>library_add</mat-icon></button>
 </div>
 
+<p>is collapesed {{isCollapsed}}</p>
+
 <mat-nav-list>
-  <mat-list-item *ngFor="let library of filteredLibraries">
-    <mat-icon matListIcon>folder</mat-icon>
-    <a matLine [routerLink]="['/search', library.libraryId]">{{ library.name }}</a>
-    <button mat-icon-button [matMenuTriggerFor]="appMenu" [matMenuTriggerData]="{id: library.libraryId}">
+  <mat-list-item *ngFor="let library of filteredLibraries" [routerLink]="['/search', library.libraryId]">
+    <span matLine>
+      <mat-icon matListIcon>folder</mat-icon>
+      {{ library.name }}
+    </span>
+    <button mat-icon-button [matMenuTriggerFor]="appMenu" [matMenuTriggerData]="{id: library.libraryId}" *ngIf="!isCollapsed">
       <mat-icon>more_vert</mat-icon>
     </button>
   </mat-list-item>

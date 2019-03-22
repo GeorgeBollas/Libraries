@@ -43,6 +43,15 @@ const styles = theme => ({
     },
 });
 
+// 1. accept initial values
+// 2. must be able to update values via properties
+// 3. onSubmit
+// 4. validate - called continuesly and returns error fields 
+// 5. onCancel - widget closes the dialog though
+// 6. accept validationSchema
+// 7. styling from here unless overriden
+// 8. openStateChanged
+
 class NameDescriptionEditor extends Component {
     constructor(props) {
         super(props);
@@ -52,14 +61,14 @@ class NameDescriptionEditor extends Component {
     //const { a } = this.props; -- why cant we do this
 
     render() {
-        const { onSubmit, isCreateLibraryDialogOpen, classes } = this.props
+        const { onSubmit, isOpen, classes } = this.props
 
         return (
-            <Dialog onClose={this.onClose} open={isCreateLibraryDialogOpen} className={classes.root}>
+            <Dialog onClose={this.onClose} open={isOpen} className={classes.root}>
                 <DialogTitle id="form-dialog-title">Add a new library</DialogTitle>
                 <DialogContent>
                     <Formik ref={this.formikRef}
-                        initialValues={{ name: '', tags: [] }}
+                        initialValues={{ name: '', description: '' }}
                         onSubmit={this.onClose}
                         component={Form}
                         validationSchema={createLibrarySchema}
@@ -73,34 +82,17 @@ class NameDescriptionEditor extends Component {
         );
     };
 
-
-    handleChipChange(chips) {
-        console.debug(chips.lenght);
-        this.formikRef.current.setFieldValue('tags', chips, false);
-    }
-
-    onCreateLibrarySubmit = (name, tags, setSubmitting, setErrors) => {
-
-        var errors = {};
+    onCreateLibrarySubmit = (name, description, setSubmitting, setErrors) => {
 
         const { history, createLibraryRequestSuccess, createLibraryDialogOpen, onCreatedSuccessful } = this.props;
-        this.props.requestCreateLibrary(name, tags)
-            .then(result => {
-                setSubmitting(false);
-                createLibraryRequestSuccess(result.data.libraryId); //todo do we need this, should only need if ui changes state or to refresh list
-                createLibraryDialogOpen(false)
-                onCreatedSuccessful(result.data.libraryId);
-                this.props.history.push('/library/' + result.data.libraryId);
 
-            })
-            .catch(e => {
-                setSubmitting(false);
-                setErrors({ name: e.response.data.failures.Name });
-            })
+        // validate and submit if ok
+        //  then close when completed
+        // otherwise set errors for fields
     }
 
     onClose = () => {
-        this.props.createLibraryDialogCancel()
+        this.props.Cancel()
     }
 
     onSave = () => {
@@ -109,6 +101,8 @@ class NameDescriptionEditor extends Component {
     }
 };
 
+
+// manage is open in internal state?? but call openStateChanged
 export default connect(
     state => ({
         isCreateLibraryDialogOpen: state.libraryNavigator.isCreateLibraryDialogOpen

@@ -15,7 +15,7 @@ export class AppComponent {
     this.leftNavOpen = !this.leftNavOpen;
 
     if (!this.leftNavOpen) {
-      this.contentMargin = 70
+      this.contentMargin = 170
     }
     else {
       this.contentMargin = 240

@@ -34,7 +34,16 @@ const styles = theme => ({
 //    tags: string[];
 //}
 
-const form = ({ classes, handleSubmit, handleChange, isRequestedCreateLibrary, handleBlur, values, onSave, errors }) => {
+const form = ({
+    classes,
+    handleSubmit,
+    handleChange,
+    isRequestedCreateLibrary,
+    handleBlur,
+    values,
+    onSave,
+    onCancel,
+    errors }) => {
     return (
         <Form >
             <div className={classes.wrapper} >

@@ -10,7 +10,7 @@
                  [class.menu-open]="leftNavOpen"
                  [class.menu-closed]="!leftNavOpen"
                  role="navigation">
-      <app-library-navigator></app-library-navigator>
+      <app-library-navigator [isCollapsed]="!leftNavOpen"></app-library-navigator>
     </mat-sidenav>
 
     <mat-sidenav-content [ngStyle]="{ 'margin-left.px': contentMargin }" role="main">
