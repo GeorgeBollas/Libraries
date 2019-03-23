@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import uuid1 from 'uuid/v1';
 
 import {
@@ -9,7 +9,7 @@ import {
 
 
 import { Observable, throwError, of } from 'rxjs';
-import { catchError, map, retry } from 'rxjs/operators';
+import { catchError, map, retry, tap } from 'rxjs/operators';
 
 
 import { Library, CreateLibraryCommand, createLibraryResponse } from './library.models';
@@ -26,11 +26,15 @@ import { Library, CreateLibraryCommand, createLibraryResponse } from './library.
 })
 export class LibrariesService {
 
+  public libraryAdded$: EventEmitter<number> = new EventEmitter();
+
   //todo move this to the config service
   librariesUrl = 'http://localhost:63315/api/libraries';  // URL to web api
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient)
+  {
+  }
 
   getLibraries(): Observable<Library[]> {
 
@@ -51,10 +55,12 @@ export class LibrariesService {
       Tags: []
     };
 
-    return this.http.post<createLibraryResponse>(this.librariesUrl, request)
+    return this.http.post<createLibraryResponse>(this.librariesUrl, request,)
       .pipe(
         // todo add throttling etc
-        retry(3)
+        retry(3),
+        tap(item => this.libraryAdded$.emit(item.LibraryId))
+        // this.libraryAdded$.emit(item);
       );
   }
 }

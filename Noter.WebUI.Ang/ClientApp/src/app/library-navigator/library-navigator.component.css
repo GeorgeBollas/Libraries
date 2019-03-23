@@ -12,3 +12,10 @@
   overflow: auto;
   border: 1px solid #555;
 }
+
+#navList::ng-deep div.mat-list-item-content {
+  padding: 0 !important;
+  background-color: var(--nav-background-color);
+}
+
+

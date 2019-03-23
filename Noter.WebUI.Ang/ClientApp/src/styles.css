@@ -10,3 +10,7 @@ body {
 .basic-container {
   padding: 5px;
 }
+
+:root {
+  --nav-background-color: orange;
+}

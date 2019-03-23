@@ -11,7 +11,7 @@
     </mat-panel-description>
   </mat-expansion-panel-header>
 
-  <mat-checkbox>Show inactive</mat-checkbox>
+  <mat-checkbox [(checked)]="includeInactive" (change)="toggleShowInactive()">Show inactive</mat-checkbox>
 </mat-expansion-panel>
 
 <div>
@@ -20,15 +20,17 @@
 
 <p>is collapesed {{isCollapsed}}</p>
 
-<mat-nav-list>
+<mat-nav-list id="navList">
   <mat-list-item *ngFor="let library of filteredLibraries" [routerLink]="['/search', library.libraryId]">
-    <span matLine>
-      <mat-icon matListIcon>folder</mat-icon>
-      {{ library.name }}
-    </span>
-    <button mat-icon-button [matMenuTriggerFor]="appMenu" [matMenuTriggerData]="{id: library.libraryId}" *ngIf="!isCollapsed">
-      <mat-icon>more_vert</mat-icon>
-    </button>
+    <!--<mat-list-item-content  [ngStyle] ="{'padding-left.px': 5}">-->
+      <span matLine> <!--matLine so button can be on the right-->
+        <mat-icon matListIcon>folder</mat-icon>
+        {{ library.name }}
+      </span>
+      <button mat-icon-button [matMenuTriggerFor]="appMenu" [matMenuTriggerData]="{id: library.libraryId}" *ngIf="!isCollapsed">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    <!--</mat-list-item-content>-->
   </mat-list-item>
 </mat-nav-list>
 
