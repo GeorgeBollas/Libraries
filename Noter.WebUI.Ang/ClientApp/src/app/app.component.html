@@ -1,10 +1,8 @@
 <div class="basic-container">
-  <app-nav-menu (menuClicked)="toggled()"></app-nav-menu>
+  <app-nav-menu (leftMenuClicked)="toggledLeft()"  (rightMenuClicked)="toggledRight()"></app-nav-menu>
 
-  <mat-sidenav-container
-      id="container" class="nav-container" fullscreen>
-    <mat-sidenav
-                 id="sidenav"
+  <mat-sidenav-container id="container" class="nav-container" fullscreen>
+    <mat-sidenav id="leftSideNav"
                  mode="side"
                  opened
                  [class.menu-open]="leftNavOpen"
@@ -13,11 +11,19 @@
       <app-library-navigator [isCollapsed]="!leftNavOpen"></app-library-navigator>
     </mat-sidenav>
 
-    <mat-sidenav-content [ngStyle]="{ 'margin-left.px': contentMargin }" role="main">
-      <!--<p><mat-checkbox [(ngModel)]="leftNavOpen">sidenav.opened</mat-checkbox></p>-->
+    <mat-sidenav-content [ngStyle]="{ 'margin-left.px': leftContentMargin, 'margin-right.px': rightContentMargin }" role="main">
       <div>
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>
+    <mat-sidenav id="rightSideNav"
+                 mode="side"
+                 position="end"
+                 opened
+                 [class.menu-open]="rightNavOpen"
+                 [class.menu-closed]="!rightNavOpen"
+                 role="region">
+      drop zones go here
+    </mat-sidenav>
   </mat-sidenav-container>
 </div>

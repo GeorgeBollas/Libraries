@@ -23,15 +23,27 @@
   }
 }
 
-#sidenav {
+#leftSideNav {
   width:240px;
 
 }
 
-#sidenav.menu-closed {
-  width: 170px;
+  #leftSideNav.menu-closed {
+    width: 80px;
+  }
+
+  #leftSideNav.menu-open {
+    width: 240px;
+  }
+
+#rightSideNav {
+  width: 240px;
 }
 
-  #sidenav.menu-open {
+  #rightSideNav.menu-closed {
+    width: 80px;
+  }
+
+  #rightSideNav.menu-open {
     width: 240px;
   }
