@@ -1,12 +1,13 @@
 import { Component, OnInit, Input, Output, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, fadeInContent } from '@angular/material';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { Library } from '../services/libraries/library.models';
 
 import { LibrariesService } from '../services/libraries/libraries.service'
 import { CreateLibraryDetailsComponent } from '../create-library-details/create-library-details.component';
+import { filter, tap } from 'rxjs/operators';
 
 export interface CreateLibraryDialogData {
   name: string;
@@ -33,8 +34,9 @@ export class LibraryNavigatorComponent implements OnInit {
   @Input('isCollapsed') isCollapsed: boolean;
 
 
-  libraries: Library[] = [];
-  filteredLibraries: Library[] = [];
+  libraries: Observable<Library[]>;
+
+  filteredLibraries: Observable<Library[]>;
 
   includeInactive: boolean = false;
 
@@ -45,31 +47,40 @@ export class LibraryNavigatorComponent implements OnInit {
     public dialog: MatDialog
   ) {
     //todo ensure filter is kept when we do a refresh due to change in libraries
-    librariesService.libraryAdded$.subscribe(id => this.getLibraries()); // or add to the top for now?? 
+    //librariesService.libraryAdded$.subscribe(id => this.getLibraries()); // or add to the top for now?? 
   }
 
   ngOnInit() {
-    this.getLibraries();
+    //this.getLibraries();
+
+    this.libraries = this.librariesService.Libraries; //todo filter somehow
+      //.pipe(
+      //  tap(l => this.filteredLibraries = of(l.filter(l => l.name.includes(this.filterText.trim()) && this.includeInactive ? true : l.isActive == true)))
+      //);
+      // todo create a custom filter to filter out only active if so selected
+    
+    //todo apply filter if any
+
   }
 
-  private getLibraries() {
-    this.librariesService.getLibraries()
-      .subscribe(data =>
-      {
-        this.libraries = data;
-        this.filterLibraries();
-      });
-  }
+  //private getLibraries() {
+  //  this.librariesService.getLibraries()
+  //    .subscribe(data =>
+  //    {
+  //      this.libraries = data;
+  //      this.filterLibraries();
+  //    });
+  //}
 
-  filterLibraries() {
-    this.filterText = this.filterText.trim();
-    this.filteredLibraries = this.libraries
-      .filter((lib: Library) => lib.name.includes(this.filterText) && this.includeInactive ? true : lib.isActive == true) //todo is this the best way
-  }
+  //filterLibraries() {
+  //  this.filterText = this.filterText.trim();
+  //  this.filteredLibraries = this.libraries
+  //    .filter((lib: Library) => lib.name.includes(this.filterText) && this.includeInactive ? true : lib.isActive == true) //todo is this the best way
+  //}
 
   toggleShowInactive() {
     this.includeInactive = !this.includeInactive;
-    this.filterLibraries();
+    //this.filterLibraries(); //todo do we need to do this any more?????????????????? 
     console.log(this.includeInactive);
   }
 
