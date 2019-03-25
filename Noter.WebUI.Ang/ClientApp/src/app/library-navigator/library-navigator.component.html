@@ -21,7 +21,7 @@
 <p>is collapesed {{isCollapsed}}</p>
 
 <mat-nav-list id="navList">
-  <mat-list-item *ngFor="let library of filteredLibraries" [routerLink]="['/search', library.libraryId]">
+  <mat-list-item *ngFor="let library of filteredLibraries | async" [routerLink]="['/search', library.libraryId]">
     <!--<mat-list-item-content  [ngStyle] ="{'padding-left.px': 5}">-->
       <span matLine> <!--matLine so button can be on the right-->
         <mat-icon matListIcon>folder</mat-icon>
