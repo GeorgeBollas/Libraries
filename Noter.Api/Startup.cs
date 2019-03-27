@@ -10,11 +10,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Noter.Api.Hubs;
 using Noter.Application.Infrastructure;
 using Noter.Application.Infrastructure.CommandLogging;
 using Noter.Application.Libraries.Commands.CreateLibrary;
 using Noter.Persistance;
 using Serilog;
+using System;
 using System.Reflection;
 
 namespace Noter.Api
@@ -49,6 +51,8 @@ namespace Noter.Api
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateLibraryCommandValidator>());
+
+            services.AddSignalR();
    //});
         }
 
@@ -71,8 +75,12 @@ namespace Noter.Api
             app.UseSwagger();
             app.UseSwaggerUi3();
 
+            //note: AllowCredentials required for SignalR (even if not used)
             app.UseCors(builder =>
-                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+                builder
+                .WithOrigins("http://localhost:64338", "https://localhost:64338")
+                //.AllowAnyOrigin()
+                .AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -82,6 +90,11 @@ namespace Noter.Api
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
+            });
+
+            app.UseSignalR(route =>
+            {
+                route.MapHub<LibrariesHub>("/librarieshub");
             });
         }
     }

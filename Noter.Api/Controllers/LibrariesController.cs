@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using Noter.Api.Hubs;
 using Noter.Application.Exceptions;
 using Noter.Application.Libraries.Commands.CreateLibrary;
 using Noter.Application.Libraries.Commands.DeleteLibrary;
@@ -14,12 +16,21 @@ namespace Noter.Api.Controllers
     [Route("api/[controller]")]
     public class LibrariesController : BaseController
     {
+        public IHubContext<LibrariesHub, ILibrariesClient> _hubContext { get; }
+
+        public LibrariesController(IHubContext<LibrariesHub, ILibrariesClient> hubContext)
+        {
+            _hubContext = hubContext;
+        }
+
         // GET api/libraries
         [HttpGet]
         public async Task<ActionResult<LibraryListViewModel>> GetAll()
         {
             try
             {
+                await _hubContext.Clients.All.ReceiveMessage("George", "Get libraries was called");
+
                 return Ok(await Mediator.Send(new GetLibraryListQuery()));
             }
             catch (Exception ex)
