@@ -8,7 +8,7 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { CreateLibraryDialogData } from '../library-navigator/library-navigator.component';
+import { CreateLibraryDialogData } from '../create-library-launcher/create-library-launcher.component';
 import { CreateLibrary } from './CreateLibrary';
 import { LibrariesService } from '../services/libraries/libraries.service';
 

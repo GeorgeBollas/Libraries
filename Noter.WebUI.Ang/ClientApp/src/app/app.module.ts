@@ -17,6 +17,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LibraryNavigatorComponent } from './library-navigator/library-navigator.component';
 import { SearchComponent } from './search/search.component';
 import { CreateLibraryDetailsComponent } from './create-library-details/create-library-details.component';
+import { CreateLibraryLauncherComponent } from './create-library-launcher/create-library-launcher.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { CreateLibraryDetailsComponent } from './create-library-details/create-l
     LibraryNavigatorComponent,
     SearchComponent,
     CreateLibraryDetailsComponent,
+    CreateLibraryLauncherComponent,
   ],
   imports: [
     [BrowserAnimationsModule],

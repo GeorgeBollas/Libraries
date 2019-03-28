@@ -1,18 +1,11 @@
 import { Component, OnInit, Input, Output, ViewEncapsulation } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, fadeInContent } from '@angular/material';
 
 import { Observable, of } from 'rxjs';
 
 import { Library } from '../services/libraries/library.models';
 
 import { LibrariesService } from '../services/libraries/libraries.service'
-import { CreateLibraryDetailsComponent } from '../create-library-details/create-library-details.component';
 import { filter, tap, map } from 'rxjs/operators';
-
-export interface CreateLibraryDialogData {
-  name: string;
-  description: string;
-}
 
 
 class LibraryViewModel {
@@ -42,7 +35,6 @@ export class LibraryNavigatorComponent implements OnInit {
 
   constructor(
     private librariesService: LibrariesService,
-    public dialog: MatDialog
   ) {
     //todo ensure filter is kept when we do a refresh due to change in libraries
     //librariesService.libraryAdded$.subscribe(id => this.getLibraries()); // or add to the top for now?? 
@@ -63,16 +55,6 @@ export class LibraryNavigatorComponent implements OnInit {
     this.includeInactive = !this.includeInactive;
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(CreateLibraryDetailsComponent, {
-      width: '750px',
-      data: { name: '', description: '' }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
 
 
   edit(id: any) {
