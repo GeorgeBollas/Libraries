@@ -27,17 +27,35 @@ namespace Noter.Application.Libraries.Queries.GetLibraryList
         {
             logger.LogDebug("GetLibraryListQuery {@value1}", request);
 
-            // TODO: Set view model state based on user permissions.
-            var model = new LibraryListViewModel
+            //todo: don't repeat yourself
+            if (request.PinnedFirst)
             {
-                Libraries = await _context.Libraries
-                    .Select(LibraryListDto.Projection)
-                    .OrderBy(p => p.Name)
-                    .ToListAsync(cancellationToken)
-            };
+                var model = new LibraryListViewModel
+                {
+                    Libraries = await _context.Libraries
+                        .OrderBy(l => l.Sequence) // do this here because later we will be using virtual lists and paging
+                        .ThenBy(l => l.Name)
+                        .Select(LibraryListDto.Projection)
+                        .ToListAsync(cancellationToken)
+                };
 
-            return model;
+                return model;
+
+            }
+            else
+            {
+                var model = new LibraryListViewModel
+                {
+                    Libraries = await _context.Libraries
+                        .OrderBy(l => l.Name)
+                        .Select(LibraryListDto.Projection)
+                        .ToListAsync(cancellationToken)
+                };
+
+                return model;
+
+                // TODO: Set view model state based on user permissions.
+            }
         }
-
     }
 }

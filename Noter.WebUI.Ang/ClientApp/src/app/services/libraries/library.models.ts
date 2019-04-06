@@ -4,6 +4,7 @@ export class Library {
   id: number;
   name: string;
   description: string;
+  isPinned: boolean;
   isActive:boolean;
 }
 
@@ -22,3 +23,8 @@ export interface createLibraryResponse {
   LibraryId: number;
 }
 
+export interface GetLibraryListQuery {
+  NamePart: string;
+  PinnedFirst: boolean;
+  IncludeInactive: boolean;
+}

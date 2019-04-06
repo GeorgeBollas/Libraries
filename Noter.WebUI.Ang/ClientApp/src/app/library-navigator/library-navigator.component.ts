@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, Output, ViewEncapsulation } from '@angular/core';
 
-import { Observable, of } from 'rxjs';
+import { Observable, of, combineLatest } from 'rxjs';
 
 import { Library } from '../services/libraries/library.models';
 
 import { LibrariesService } from '../services/libraries/libraries.service'
-import { filter, tap, map } from 'rxjs/operators';
+import { filter, tap, map, retry, startWith } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
 
 
 class LibraryViewModel {
@@ -27,32 +28,54 @@ export class LibraryNavigatorComponent implements OnInit {
   @Input('isCollapsed') isCollapsed: boolean;
 
 
-  libraries: Observable<Library[]>;
+  libraries$: Observable<Library[]>;
 
-  includeInactive: boolean = false;
+  filteredLibraries$: Observable<Library[]>;
+  pinnedLibraries$: Observable<Library[]>;
 
-  filterText: string = "";
+  // filters
+  includeInactive: FormControl;
+  includeInactive$: Observable<boolean>;
+
+  filterText: FormControl;
+  filterText$: Observable<string>;
+
+
 
   constructor(
     private librariesService: LibrariesService,
   ) {
-    //todo ensure filter is kept when we do a refresh due to change in libraries
-    //librariesService.libraryAdded$.subscribe(id => this.getLibraries()); // or add to the top for now?? 
+
   }
 
   ngOnInit() {
-    this.libraries = this.librariesService.Libraries;
-  }
+    //todo ensure filter is kept when we do a refresh due to change in libraries
+    //librariesService.libraryAdded$.subscribe(id => this.getLibraries()); // or add to the top for now??
+    this.libraries$ = this.librariesService.Libraries;
 
-  get filteredLibraries() {
+    this.includeInactive = new FormControl('');
+    this.includeInactive$ = this.includeInactive.valueChanges.pipe(startWith(false));
 
-    return this.libraries.pipe(
-      map(libs => libs.filter(l => l.name.includes(this.filterText.trim()) && this.includeInactive ? true : l.isActive == true))
+    this.filterText = new FormControl('');
+    this.filterText$ = this.filterText.valueChanges.pipe(startWith(''));
+
+    this.pinnedLibraries$ = combineLatest(this.libraries$).pipe(
+      map(([libs]) => libs.filter(lib => lib.isPinned))
     );
-  }
+
+    this.filteredLibraries$ = combineLatest(this.libraries$, this.filterText$, this.includeInactive$).pipe(
+      map(([lib, filterString, includeInactive]) =>
+        lib.filter(lib => lib.name.toLocaleLowerCase().indexOf(filterString.trim().toLocaleLowerCase()) !== -1
+          && !lib.isPinned
+          && includeInactive ? true : lib.isActive
+        ))
+    );  }
+
+
+  //todo filter is not working here need to do it async way
 
   toggleShowInactive() {
-    this.includeInactive = !this.includeInactive;
+//    this.includeInactive = !this.includeInactive;
   }
 
 

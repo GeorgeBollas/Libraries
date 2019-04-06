@@ -9,6 +9,8 @@ namespace Noter.Application.Libraries.Queries.GetLibraryList
     {
         public string NamePart { get; set; }
 
+        public bool PinnedFirst { get; set; }
+
         public bool IncludeInactive { get; set; }
 
     }

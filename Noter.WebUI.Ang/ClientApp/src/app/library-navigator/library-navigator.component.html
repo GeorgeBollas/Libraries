@@ -4,32 +4,49 @@
     <mat-panel-title>
       <label>
         Filter:
-        <input [(ngModel)]="filterText" (keyup)="filterLibraries()" />
+        <input type="text" [formControl]="filterText" />
       </label>
     </mat-panel-title>
     <mat-panel-description>
     </mat-panel-description>
   </mat-expansion-panel-header>
 
-  <mat-checkbox [(checked)]="includeInactive" (change)="toggleShowInactive()">Show inactive</mat-checkbox>
+  <mat-checkbox [formControl]="includeInactive" >Show inactive</mat-checkbox>
 </mat-expansion-panel>
 
 <div>
   <app-create-library-launcher></app-create-library-launcher>
 </div>
 
-<p>is collapesed {{isCollapsed}}</p>
-
 <mat-nav-list id="navList">
-  <mat-list-item *ngFor="let library of filteredLibraries | async" [routerLink]="['/search', library.libraryId]">
+  <mat-list-item *ngFor="let library of pinnedLibraries$ | async" [routerLink]="['/search', library.libraryId]">
     <!--<mat-list-item-content  [ngStyle] ="{'padding-left.px': 5}">-->
-      <span matLine> <!--matLine so button can be on the right-->
-        <mat-icon matListIcon>folder</mat-icon>
-        {{ library.name }}
-      </span>
-      <button mat-icon-button [matMenuTriggerFor]="appMenu" [matMenuTriggerData]="{id: library.libraryId}" *ngIf="!isCollapsed">
-        <mat-icon>more_vert</mat-icon>
-      </button>
+    <span matLine>
+      <!--matLine so button can be on the right-->
+      <mat-icon matListIcon>folder</mat-icon>
+      {{ library.name }} 
+    </span>
+    <button mat-icon-button>
+      <mat-icon>star</mat-icon>
+    </button>
+    <button mat-icon-button [matMenuTriggerFor]="appMenu" [matMenuTriggerData]="{id: library.libraryId}" *ngIf="!isCollapsed">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <!--</mat-list-item-content>-->
+  </mat-list-item>
+  <mat-list-item *ngFor="let library of filteredLibraries$ | async" [routerLink]="['/search', library.libraryId]">
+    <!--<mat-list-item-content  [ngStyle] ="{'padding-left.px': 5}">-->
+    <span matLine>
+      <!--matLine so button can be on the right-->
+      <mat-icon matListIcon>folder</mat-icon>
+      <span [class.inactive]="!library.isActive">{{ library.name }}</span>
+    </span>
+    <button mat-icon-button>
+      <mat-icon>star_border</mat-icon>
+    </button>
+    <button mat-icon-button [matMenuTriggerFor]="appMenu" [matMenuTriggerData]="{id: library.libraryId}" *ngIf="!isCollapsed">
+      <mat-icon>more_vert</mat-icon>
+    </button>
     <!--</mat-list-item-content>-->
   </mat-list-item>
 </mat-nav-list>

@@ -15,7 +15,7 @@ namespace Noter.Persistance.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
+                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -111,6 +111,10 @@ namespace Noter.Persistance.Migrations
                     b.Property<Guid>("Guid")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsPinned")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
+
                     b.Property<DateTime>("Modified")
                         .HasColumnType("datetime");
 
@@ -118,6 +122,10 @@ namespace Noter.Persistance.Migrations
                         .IsRequired();
 
                     b.Property<string>("Notes");
+
+                    b.Property<int>("Sequence")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(1000000);
 
                     b.HasKey("Id");
 
@@ -171,7 +179,7 @@ namespace Noter.Persistance.Migrations
                     b.Property<Guid>("Guid")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsQuickPick");
+                    b.Property<bool>("IsPinned");
 
                     b.Property<int>("LibraryId");
 

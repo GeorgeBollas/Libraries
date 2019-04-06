@@ -11,6 +11,7 @@ namespace Noter.Application.Libraries.Queries.GetLibraryList
         public int LibraryId { get; set; }
         public string Name { get; set; }
         public bool IsActive { get; set; }
+        public bool IsPinned { get; set; }
 
         public static Expression<Func<Library, LibraryListDto>> Projection
         {
@@ -20,6 +21,7 @@ namespace Noter.Application.Libraries.Queries.GetLibraryList
                 {
                     LibraryId = l.Id,
                     Name = l.Name,
+                    IsPinned = l.IsPinned,
                     IsActive = l.EntityStatus == Domain.Enumerations.EntityStatus.Active
                 };
             }

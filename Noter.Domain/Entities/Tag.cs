@@ -12,7 +12,7 @@ namespace Noter.Domain.Entities
 
         public int LibraryId { get; set; }
 
-        public bool IsQuickPick { get; set; }
+        public bool IsPinned { get; set; }
         public int Sequence { get; set; }
 
         public string Name { get; set; }

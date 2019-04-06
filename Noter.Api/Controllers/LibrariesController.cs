@@ -24,14 +24,21 @@ namespace Noter.Api.Controllers
         }
 
         // GET api/libraries
-        [HttpGet]
-        public async Task<ActionResult<LibraryListViewModel>> GetAll()
+        [HttpGet("pinnedFirst/{pinnedFirst}")]
+        public async Task<ActionResult<LibraryListViewModel>> GetAll(bool pinnedFirst = true)
         {
             try
             {
                 await _hubContext.Clients.All.ReceiveMessage("George", "Get libraries was called");
 
-                return Ok(await Mediator.Send(new GetLibraryListQuery()));
+                var request = new GetLibraryListQuery
+                {
+                    NamePart ="",
+                    PinnedFirst = pinnedFirst,
+                    IncludeInactive = false,
+                };
+
+                return Ok(await Mediator.Send(request));
             }
             catch (Exception ex)
             {

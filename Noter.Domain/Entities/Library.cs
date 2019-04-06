@@ -12,9 +12,15 @@ namespace Noter.Domain.Entities
         public string Name { get; set; }
         public string Notes { get; set; }
 
+        public bool IsPinned { get; set; }
+
+        public int Sequence { get; set; }
+
         public ICollection<Tag> Tags { get; set; } = new HashSet<Tag>();
 
         public ICollection<Item> Documents { get; set; }
 
+        public const int MaxSeuquence = 1000000;
     }
+
 }

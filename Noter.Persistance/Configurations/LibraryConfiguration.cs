@@ -18,6 +18,13 @@ namespace Noter.Persistance.Configurations
             builder.Property(e => e.Name)
                 .IsRequired();
 
+            builder.Property(e => e.IsPinned)
+                .HasDefaultValue(false);
+
+            builder.Property(e => e.Sequence)
+                .IsRequired()
+                .HasDefaultValue(Library.MaxSeuquence);
+
             builder.Property(e => e.Created)
                 .IsRequired()
                 .HasColumnType("datetime");

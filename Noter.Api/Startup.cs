@@ -76,6 +76,9 @@ namespace Noter.Api
             app.UseSwaggerUi3();
 
             //note: AllowCredentials required for SignalR (even if not used)
+
+            //todo: may have to merge this project (API) with Angular project (Client) so that can allow any origin
+            //question: how can we have multiple clients then??
             app.UseCors(builder =>
                 builder
                 .WithOrigins("http://localhost:64338", "https://localhost:64338")

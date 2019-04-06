@@ -9,33 +9,55 @@ namespace Noter.Persistance.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Libraries",
+                name: "CommandLogs",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime", nullable: false),
                     Modified = table.Column<DateTime>(type: "datetime", nullable: false),
                     EntityStatus = table.Column<int>(nullable: false),
+                    Command = table.Column<string>(nullable: false),
+                    Request = table.Column<string>(nullable: false),
+                    Response = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CommandLogs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Libraries",
+                columns: table => new
+                {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime", nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    Notes = table.Column<string>(nullable: true)
+                    Notes = table.Column<string>(nullable: true),
+                    IsQuickpick = table.Column<bool>(nullable: false, defaultValue: false),
+                    Sequence = table.Column<int>(nullable: false, defaultValue: 1000000)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Libraries", x => x.Id);
+                    table.UniqueConstraint("AK_Libraries_Name", x => x.Name);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Notes",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime", nullable: false),
                     Modified = table.Column<DateTime>(type: "datetime", nullable: false),
                     EntityStatus = table.Column<int>(nullable: false),
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(maxLength: 100, nullable: false),
                     Notes = table.Column<string>(type: "ntext", nullable: true),
                     Context = table.Column<string>(nullable: true)
@@ -49,12 +71,12 @@ namespace Noter.Persistance.Migrations
                 name: "Workspaces",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime", nullable: false),
                     Modified = table.Column<DateTime>(type: "datetime", nullable: false),
                     EntityStatus = table.Column<int>(nullable: false),
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(nullable: false),
                     Notes = table.Column<string>(nullable: true),
                     Context = table.Column<string>(nullable: true)
@@ -65,28 +87,27 @@ namespace Noter.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Documents",
+                name: "Items",
                 columns: table => new
                 {
-                    Created = table.Column<DateTime>(type: "datetime", nullable: false),
-                    Modified = table.Column<DateTime>(type: "datetime", nullable: false),
-                    EntityStatus = table.Column<int>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime", nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: false),
                     Notes = table.Column<string>(nullable: true),
-                    CategoryId = table.Column<int>(nullable: false),
+                    LibraryId = table.Column<int>(nullable: false),
                     Type_BaseType = table.Column<string>(maxLength: 7, nullable: false),
                     Type_Version = table.Column<string>(maxLength: 3, nullable: false),
-                    Context = table.Column<string>(nullable: true),
-                    LibraryId = table.Column<int>(nullable: true)
+                    Context = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Documents", x => x.Id);
+                    table.PrimaryKey("PK_Items", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Documents_Libraries_LibraryId",
+                        name: "FK_Items_Libraries_LibraryId",
                         column: x => x.LibraryId,
                         principalTable: "Libraries",
                         principalColumn: "Id",
@@ -97,12 +118,12 @@ namespace Noter.Persistance.Migrations
                 name: "Tags",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime", nullable: false),
                     Modified = table.Column<DateTime>(type: "datetime", nullable: false),
                     EntityStatus = table.Column<int>(nullable: false),
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     LibraryId = table.Column<int>(nullable: false),
                     IsQuickPick = table.Column<bool>(nullable: false),
                     Sequence = table.Column<int>(nullable: false),
@@ -124,23 +145,23 @@ namespace Noter.Persistance.Migrations
                 name: "WorkspaceItems",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime", nullable: false),
                     Modified = table.Column<DateTime>(type: "datetime", nullable: false),
                     EntityStatus = table.Column<int>(nullable: false),
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     WorkspaceId = table.Column<int>(nullable: false),
-                    DocumentId = table.Column<int>(nullable: false),
+                    ItemId = table.Column<int>(nullable: false),
                     Sequence = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WorkspaceItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_WorkspaceItems_Documents_DocumentId",
-                        column: x => x.DocumentId,
-                        principalTable: "Documents",
+                        name: "FK_WorkspaceItems_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -152,24 +173,24 @@ namespace Noter.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DocumentTags",
+                name: "ItemTags",
                 columns: table => new
                 {
-                    DocumentId = table.Column<int>(nullable: false),
+                    ItemId = table.Column<int>(nullable: false),
                     TagId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DocumentTags", x => new { x.DocumentId, x.TagId })
+                    table.PrimaryKey("PK_ItemTags", x => new { x.ItemId, x.TagId })
                         .Annotation("SqlServer:Clustered", false);
                     table.ForeignKey(
-                        name: "FK_DocumentTags_Documents_DocumentId",
-                        column: x => x.DocumentId,
-                        principalTable: "Documents",
+                        name: "FK_ItemTags_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DocumentTags_Tags_TagId",
+                        name: "FK_ItemTags_Tags_TagId",
                         column: x => x.TagId,
                         principalTable: "Tags",
                         principalColumn: "Id",
@@ -177,13 +198,13 @@ namespace Noter.Persistance.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Documents_LibraryId",
-                table: "Documents",
+                name: "IX_Items_LibraryId",
+                table: "Items",
                 column: "LibraryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DocumentTags_TagId",
-                table: "DocumentTags",
+                name: "IX_ItemTags_TagId",
+                table: "ItemTags",
                 column: "TagId");
 
             migrationBuilder.CreateIndex(
@@ -192,9 +213,9 @@ namespace Noter.Persistance.Migrations
                 column: "LibraryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WorkspaceItems_DocumentId",
+                name: "IX_WorkspaceItems_ItemId",
                 table: "WorkspaceItems",
-                column: "DocumentId");
+                column: "ItemId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WorkspaceItems_WorkspaceId",
@@ -205,7 +226,10 @@ namespace Noter.Persistance.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DocumentTags");
+                name: "CommandLogs");
+
+            migrationBuilder.DropTable(
+                name: "ItemTags");
 
             migrationBuilder.DropTable(
                 name: "Notes");
@@ -217,7 +241,7 @@ namespace Noter.Persistance.Migrations
                 name: "Tags");
 
             migrationBuilder.DropTable(
-                name: "Documents");
+                name: "Items");
 
             migrationBuilder.DropTable(
                 name: "Workspaces");

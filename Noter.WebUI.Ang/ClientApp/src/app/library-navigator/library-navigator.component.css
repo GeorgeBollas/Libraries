@@ -18,4 +18,8 @@
   background-color: var(--nav-background-color);
 }
 
+.inactive {
+  text-decoration: line-through;
+}
+
 

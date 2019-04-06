@@ -30,10 +30,7 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
 
         public async Task<CreateLibraryCommandResult> Handle(CreateLibraryCommand request, CancellationToken cancellationToken)
         {
-            var result = new CreateLibraryCommandResult(request.RequestGuid)
-            {
-                RequestGuid = request.RequestGuid,
-            };
+            var result = new CreateLibraryCommandResult(request.RequestGuid);
 
             logger.LogDebug("CreateLibraryCommand {@value1}", request);
 
@@ -77,7 +74,9 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
                 Notes = request.Notes,
                 EntityStatus = Domain.Enumerations.EntityStatus.Active,
                 Created = DateTime.Now,
-                Modified = DateTime.Now
+                Modified = DateTime.Now,
+                IsPinned = false,
+                Sequence = Library.MaxSeuquence
             };
 
             context.Libraries.Add(library);

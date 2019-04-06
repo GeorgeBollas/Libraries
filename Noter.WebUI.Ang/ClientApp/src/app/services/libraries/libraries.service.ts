@@ -4,7 +4,9 @@ import uuid1 from 'uuid/v1';
 import {
   HttpClient,
   HttpHeaders,
-  HttpErrorResponse
+  HttpErrorResponse,
+
+  HttpParams
 } from '@angular/common/http';
 
 
@@ -12,7 +14,7 @@ import { Observable, throwError, of, timer } from 'rxjs';
 import { catchError, map, retry, tap, shareReplay, switchMap } from 'rxjs/operators';
 
 
-import { Library, CreateLibraryCommand, createLibraryResponse } from './library.models';
+import { Library, CreateLibraryCommand, createLibraryResponse, GetLibraryListQuery } from './library.models';
 
 //const httpOptions = {
 //  headers: new HttpHeaders({
@@ -59,9 +61,9 @@ export class LibrariesService {
 
   private getLibraries(): Observable<Library[]> {
 
-    return this.http.get<Library[]>(librariesUrl)
+    return this.http.get<Library[]>(librariesUrl + '/pinnedFirst/true')
       .pipe(
-        map<any, Library[]>(respnse => respnse.libraries),
+        map<any, Library[]>(response => response.libraries),
         catchError(err => []) //todo: dont do this here?? this makes it silent
       );
   }
@@ -77,7 +79,6 @@ export class LibrariesService {
 
     return this.http.post<createLibraryResponse>(librariesUrl, request, )
       .pipe(
-        retry(3),
         tap(item => this.libraryAdded$.emit(item.LibraryId))
       );
   }
