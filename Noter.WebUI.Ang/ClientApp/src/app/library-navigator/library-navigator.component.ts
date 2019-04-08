@@ -69,16 +69,14 @@ export class LibraryNavigatorComponent implements OnInit {
           && !lib.isPinned
           && includeInactive ? true : lib.isActive
         ))
-    );  }
-
-
-  //todo filter is not working here need to do it async way
-
-  toggleShowInactive() {
-//    this.includeInactive = !this.includeInactive;
+    );
   }
 
-
+  toggleStar(event) {
+    event.preventDefault();
+    console.debug('toggeStar');
+    console.debug(event);
+  }
 
   edit(id: any) {
     console.log("edit " + id);

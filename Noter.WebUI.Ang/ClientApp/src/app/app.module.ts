@@ -18,6 +18,7 @@ import { LibraryNavigatorComponent } from './library-navigator/library-navigator
 import { SearchComponent } from './search/search.component';
 import { CreateLibraryDetailsComponent } from './create-library-details/create-library-details.component';
 import { CreateLibraryLauncherComponent } from './create-library-launcher/create-library-launcher.component';
+import { LibraryListComponent } from './library-list/library-list.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { CreateLibraryLauncherComponent } from './create-library-launcher/create
     SearchComponent,
     CreateLibraryDetailsComponent,
     CreateLibraryLauncherComponent,
+    LibraryListComponent,
   ],
   imports: [
     [BrowserAnimationsModule],
@@ -40,7 +42,7 @@ import { CreateLibraryLauncherComponent } from './create-library-launcher/create
     ReactiveFormsModule,
     NoterMaterialModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: LibraryListComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'search/:id', component: SearchComponent },

@@ -3,7 +3,7 @@ import uuid1 from 'uuid/v1';
 export class Library {
   id: number;
   name: string;
-  description: string;
+  notes: string;
   isPinned: boolean;
   isActive:boolean;
 }

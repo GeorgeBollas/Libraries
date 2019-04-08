@@ -1,54 +1,47 @@
-<mat-expansion-panel (opened)="panelOpenState = true"
-                     (closed)="panelOpenState = false">
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      <label>
-        Filter:
-        <input type="text" [formControl]="filterText" />
-      </label>
-    </mat-panel-title>
-    <mat-panel-description>
-    </mat-panel-description>
-  </mat-expansion-panel-header>
 
-  <mat-checkbox [formControl]="includeInactive" >Show inactive</mat-checkbox>
-</mat-expansion-panel>
+<mat-card>
+  <input type="text" [formControl]="filterText" />
+  <button mat-icon-button [matMenuTriggerFor]="listMenu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+</mat-card>
 
 <div>
   <app-create-library-launcher></app-create-library-launcher>
 </div>
 
 <mat-nav-list id="navList">
-  <mat-list-item *ngFor="let library of pinnedLibraries$ | async" [routerLink]="['/search', library.libraryId]">
-    <!--<mat-list-item-content  [ngStyle] ="{'padding-left.px': 5}">-->
-    <span matLine>
-      <!--matLine so button can be on the right-->
-      <mat-icon matListIcon>folder</mat-icon>
-      {{ library.name }} 
-    </span>
-    <button mat-icon-button>
+
+  <mat-list-item *ngFor="let library of pinnedLibraries$ | async">
+
+    <mat-icon matListIcon>folder</mat-icon>
+    <a matLine [routerLink]="['/search', library.libraryId]">{{ library.name }}</a>
+
+    <button mat-icon-button (click)="null">
       <mat-icon>star</mat-icon>
     </button>
     <button mat-icon-button [matMenuTriggerFor]="appMenu" [matMenuTriggerData]="{id: library.libraryId}" *ngIf="!isCollapsed">
       <mat-icon>more_vert</mat-icon>
     </button>
-    <!--</mat-list-item-content>-->
+
   </mat-list-item>
-  <mat-list-item *ngFor="let library of filteredLibraries$ | async" [routerLink]="['/search', library.libraryId]">
-    <!--<mat-list-item-content  [ngStyle] ="{'padding-left.px': 5}">-->
-    <span matLine>
-      <!--matLine so button can be on the right-->
-      <mat-icon matListIcon>folder</mat-icon>
+
+  <mat-list-item *ngFor="let library of filteredLibraries$ | async" >
+
+    <mat-icon matListIcon>folder</mat-icon>
+    <a matLine [routerLink]="['/search', library.libraryId]">
       <span [class.inactive]="!library.isActive">{{ library.name }}</span>
-    </span>
-    <button mat-icon-button>
+    </a>
+
+    <button mat-icon-button (click)="toggleStar($event)">
       <mat-icon>star_border</mat-icon>
     </button>
     <button mat-icon-button [matMenuTriggerFor]="appMenu" [matMenuTriggerData]="{id: library.libraryId}" *ngIf="!isCollapsed">
       <mat-icon>more_vert</mat-icon>
     </button>
-    <!--</mat-list-item-content>-->
+
   </mat-list-item>
+
 </mat-nav-list>
 
 
@@ -59,3 +52,8 @@
   </ng-template>
 </mat-menu>
 
+<mat-menu #listMenu="matMenu">
+  <ng-template matMenuContent let-id="id">
+    <mat-checkbox [formControl]="includeInactive">Show inactive</mat-checkbox>
+  </ng-template>
+</mat-menu>
