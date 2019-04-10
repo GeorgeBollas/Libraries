@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Noter.Persistance.Configurations
 {
-    public class LibraryConfiguration : IEntityTypeConfiguration<Library>
+    public class ItemContentTypeConfiguration : IEntityTypeConfiguration<ItemContentType>
     {
-        public void Configure(EntityTypeBuilder<Library> builder)
+        public void Configure(EntityTypeBuilder<ItemContentType> builder)
         {
             builder.Property(e => e.Guid)
                 .IsRequired()
@@ -17,13 +17,6 @@ namespace Noter.Persistance.Configurations
 
             builder.Property(e => e.Name)
                 .IsRequired();
-
-            builder.Property(e => e.IsPinned)
-                .HasDefaultValue(false);
-
-            builder.Property(e => e.Sequence)
-                .IsRequired()
-                .HasDefaultValue(Library.MaxSeuquence);
 
             builder.Property(e => e.Created)
                 .IsRequired()
@@ -33,11 +26,6 @@ namespace Noter.Persistance.Configurations
                 .IsRequired()
                 .HasColumnType("datetime");
 
-            builder.HasAlternateKey("Name");
-
-            builder.HasMany(l => l.LibraryTagTypes).WithOne(t => t.Library).OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasMany(l => l.Documents).WithOne(d => d.Library).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

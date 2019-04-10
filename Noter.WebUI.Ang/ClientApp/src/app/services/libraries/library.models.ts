@@ -15,7 +15,6 @@ export interface CreateLibraryCommand {
   RequestGuid: uuid1;
   Name: string;
   Notes: string;
-  Tags: string[];
 }
 
 

@@ -47,7 +47,7 @@ namespace Noter.Application.Tests.Libraries
                 RequestGuid = requestId,
                 Name = "new library",
                 Notes = "notes for new library",
-                Tags = new string[] { "tag1", "tag2", "tag3" }
+                //Tags = new string[] { "tag1", "tag2", "tag3" }
             };
 
             // Act
@@ -86,7 +86,7 @@ namespace Noter.Application.Tests.Libraries
                 RequestGuid = requestId,
                 Name = "new library",
                 Notes = "notes for new library",
-                Tags = new string[] { "tag1", "tag2", "tag3" }
+                //Tags = new string[] { "tag1", "tag2", "tag3" }
             };
 
             // Act
@@ -123,7 +123,7 @@ namespace Noter.Application.Tests.Libraries
                 RequestGuid = requestId,
                 Name = "new library",
                 Notes = "notes for new library",
-                Tags = new string[] { "tag1", "tag2", "tag1", "tag2" }
+                //Tags = new string[] { "tag1", "tag2", "tag1", "tag2" }
             };
 
             // Act
@@ -173,7 +173,7 @@ namespace Noter.Application.Tests.Libraries
                 RequestGuid = requestId,
                 Name = "new library",
                 Notes = "notes for new library",
-                Tags = new string[] { "tag1", "tag2", "tag3" }
+                //Tags = new string[] { "tag1", "tag2", "tag3" }
             };
 
             // Act + Assert

@@ -26,10 +26,8 @@ namespace Noter.Persistance.Configurations
                 .IsRequired()
                 .HasColumnType("datetime");
 
-            builder.Property(e => e.LibraryId)
+            builder.Property(e => e.TagType)
                 .IsRequired();
-
-            builder.HasMany(t => t.ItemTags).WithOne(dt => dt.Tag).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

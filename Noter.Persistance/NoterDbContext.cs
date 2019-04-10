@@ -16,14 +16,21 @@ namespace Noter.Persistance
 
 
         public DbSet<Item> Items { get; set; }
+
+        public DbSet<ItemContentType> ItemContentTypes { get; set; }
+
         public DbSet<ItemTag> ItemTags { get; set; }
 
         public DbSet<Library> Libraries { get; set; }
+
         public DbSet<Note> Notes { get; set; }
+
+        public DbSet<TagType> TagTypes { get; set; }
 
         public DbSet<Tag> Tags { get; set; }
 
         public DbSet<Workspace> Workspaces { get; set; }
+
         public DbSet<WorkspaceItem> WorkspaceItems { get; set; }
 
         public DbSet<CommandLog> CommandLogs { get; set; }

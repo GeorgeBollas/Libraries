@@ -21,7 +21,11 @@ namespace Noter.Application.Libraries.Queries.GetLibraryDetails
 
         public async Task<LibraryDetailsViewModel> Handle(GetLibraryDetailsQuery request, CancellationToken cancellationToken)
         {
-            var entity = await _context.Libraries.Include(l => l.Tags).Where(l => l.Id == request.LibraryId).FirstOrDefaultAsync();
+            var entity = await _context.Libraries
+                .Include(l => l.LibraryTagTypes)
+                .ThenInclude(ltt => ltt.TagType)
+                //.Include(l => l.LibraryTagTypes.Select(ltt => ltt.TagType))
+                .Where(l => l.Id == request.LibraryId).FirstOrDefaultAsync();
 
             if (entity == null)
             {
@@ -34,7 +38,7 @@ namespace Noter.Application.Libraries.Queries.GetLibraryDetails
                 Name = entity.Name,
                 Notes = entity.Notes,
 
-                Tags = entity.Tags.Select(t => new LibraryDetailsTagDto() {  TagId = t.Id, Name = t.Name}).ToList(),
+                TagTypes = entity.LibraryTagTypes.Select(tt => new LibraryDetailsTagTypeDto() { TagTypeId = tt.TagTypeId, Name = tt.TagType.Name }).ToList(),
 
                 IsEditable = entity.EntityStatus == Domain.Enumerations.EntityStatus.Active
             };
@@ -53,7 +57,7 @@ namespace Noter.Application.Libraries.Queries.GetLibraryDetails
             return _context.Items
                 .Where(d => d.LibraryId == libraryId)
                 .OrderByDescending(d => d.Modified)
-                .Select(d => new LibraryDetailsItemDto() {  ItemId = d.Id, Title = d.Title})
+                .Select(d => new LibraryDetailsItemDto() { ItemId = d.Id, Title = d.Title })
                 .Take(maxItemCount)
                 .ToList();
         }

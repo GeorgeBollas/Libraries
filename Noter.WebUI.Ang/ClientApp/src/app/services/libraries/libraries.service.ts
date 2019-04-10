@@ -73,8 +73,7 @@ export class LibrariesService {
     const request = <CreateLibraryCommand>{
       RequestGuid: uuid1(),
       Name: name,
-      Notes: notes,
-      Tags: []
+      Notes: notes
     };
 
     return this.http.post<createLibraryResponse>(librariesUrl, request, )

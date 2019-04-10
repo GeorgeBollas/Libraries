@@ -6,7 +6,7 @@ namespace Noter.Application.Libraries.Queries.GetLibraryDetails
     {
         public LibraryDetailsViewModel()
         {
-            Tags = new List<LibraryDetailsTagDto>();
+            TagTypes = new List<LibraryDetailsTagTypeDto>();
         }
         
         public int LibraryId { get; set; }
@@ -15,7 +15,7 @@ namespace Noter.Application.Libraries.Queries.GetLibraryDetails
 
         public string Notes { get; set; }
 
-        public IEnumerable<LibraryDetailsTagDto> Tags { get; set; }
+        public IEnumerable<LibraryDetailsTagTypeDto> TagTypes { get; set; }
 
         public int ItemCount { get; set; }
 

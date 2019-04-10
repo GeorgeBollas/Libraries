@@ -14,6 +14,12 @@ namespace Noter.Persistance
 
         private readonly Dictionary<int, Item> Items = new Dictionary<int, Item>();
 
+        private readonly Dictionary<int, ItemContentType> ItemContentTypes = new Dictionary<int, ItemContentType>();
+
+
+        private readonly Dictionary<int, TagType> TagTypes = new Dictionary<int, TagType>();
+        private int DocumentTypeId;
+
         private readonly Dictionary<int, Tag> Tags = new Dictionary<int, Tag>();
         private int DotNetCoreId;
 
@@ -34,9 +40,43 @@ namespace Noter.Persistance
 
             SeedNotes(context);
             SeedCategories(context);
+            SeedItemContentTypes(context);
             SeedTags(context);
             SeedItems(context);
             SeedWorkspaces(context);
+
+        }
+        private void SeedItemContentTypes(NoterDbContext context)
+        {
+            var now = DateTime.Now;
+
+            ItemContentTypes.Add(1,
+                new ItemContentType()
+                {
+                    Guid = Guid.NewGuid(),
+                    Name = "Tutorial",
+                    EntityStatus = EntityStatus.Active,
+                    Created = now,
+                    Modified = now,
+                });
+
+            ItemContentTypes.Add(2,
+                new ItemContentType()
+                {
+                    Guid = Guid.NewGuid(),
+                    Name = "Software",
+                    EntityStatus = EntityStatus.Active,
+                    Created = now,
+                    Modified = now,
+                });
+
+
+            foreach (var ict in ItemContentTypes)
+            {
+                context.ItemContentTypes.Add(ict.Value);
+            }
+
+            context.SaveChanges();
 
         }
 
@@ -70,12 +110,14 @@ namespace Noter.Persistance
         {
             var now = DateTime.Now;
 
-            Tags.Add(1, new Tag() { Guid = Guid.NewGuid(), Name = "Visual Studio", LibraryId = ProgrammingCategoryId, EntityStatus = EntityStatus.Active, Created = now, Modified = now });
-            Tags.Add(2, new Tag() { Guid = Guid.NewGuid(), Name = ".Net Core", LibraryId = ProgrammingCategoryId, EntityStatus = EntityStatus.Active, Created = now, Modified = now });
-            Tags.Add(3, new Tag() { Guid = Guid.NewGuid(), Name = "UWP", LibraryId = ProgrammingCategoryId, EntityStatus = EntityStatus.Active, Created = now, Modified = now });
-            Tags.Add(4, new Tag() { Guid = Guid.NewGuid(), Name = "Entity Framework", LibraryId = ProgrammingCategoryId, EntityStatus = EntityStatus.Active, Created = now, Modified = now });
-            Tags.Add(5, new Tag() { Guid = Guid.NewGuid(), Name = "Asp.Net", LibraryId = ProgrammingCategoryId, EntityStatus = EntityStatus.Active, Created = now, Modified = now });
+            TagTypes.Add(1, new TagType() { Guid = Guid.NewGuid(), Name = "Document Types", EntityStatus = EntityStatus.Active, Created = now, Modified = now });
 
+            Tags.Add(1, new Tag() { Guid = Guid.NewGuid(), Name = "Tutorial", EntityStatus = EntityStatus.Active, Created = now, Modified = now, TagType = TagTypes[1] });
+            Tags.Add(2, new Tag() { Guid = Guid.NewGuid(), Name = ".How To", EntityStatus = EntityStatus.Active, Created = now, Modified = now, TagType = TagTypes[1] });
+            Tags.Add(3, new Tag() { Guid = Guid.NewGuid(), Name = "Tip", EntityStatus = EntityStatus.Active, Created = now, Modified = now, TagType = TagTypes[1] });
+            Tags.Add(4, new Tag() { Guid = Guid.NewGuid(), Name = "Software Installer", EntityStatus = EntityStatus.Active, Created = now, Modified = now, TagType = TagTypes[1] });
+
+            context.TagTypes.Add(TagTypes[1]);
 
             foreach (var tag in Tags)
             {
@@ -83,8 +125,6 @@ namespace Noter.Persistance
             }
 
             context.SaveChanges();
-
-            DotNetCoreId = Tags[2].Id;
         }
 
         private void SeedNotes(NoterDbContext context)

@@ -10,13 +10,16 @@ namespace Noter.Domain.Entities
         public int Id { get; set; }
 
         public string Name { get; set; }
+
+        public string Description { get; set; }
+
         public string Notes { get; set; }
 
         public bool IsPinned { get; set; }
 
         public int Sequence { get; set; }
 
-        public ICollection<Tag> Tags { get; set; } = new HashSet<Tag>();
+        public ICollection<LibraryTagType> LibraryTagTypes { get; set; } = new HashSet<LibraryTagType>();
 
         public ICollection<Item> Documents { get; set; }
 

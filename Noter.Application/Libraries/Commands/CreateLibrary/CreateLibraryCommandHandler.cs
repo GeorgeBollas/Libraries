@@ -39,8 +39,6 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
 
                 CreateLibrary(request);
 
-                CreateTags(request.Tags);
-
                 await context.SaveChangesAsync(cancellationToken);
 
                 result.LibraryId = library.Id;
@@ -80,29 +78,6 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
             };
 
             context.Libraries.Add(library);
-        }
-        private void CreateTags(string[] tags)
-        {
-            TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
-
-            foreach (var tagName in tags.Select(t => t.Trim()).Distinct())
-            {
-
-                var name = textInfo.ToTitleCase(tagName.ToLower());
-
-                var tag = new Tag()
-                {
-                    Name = name,
-                    Guid = Guid.NewGuid(),
-                    EntityStatus = Domain.Enumerations.EntityStatus.Active,
-                    Created = DateTime.Now,
-                    Modified = DateTime.Now,
-
-                    Library = library
-                };
-
-                context.Tags.Add(tag);
-            }
         }
     }
 }
