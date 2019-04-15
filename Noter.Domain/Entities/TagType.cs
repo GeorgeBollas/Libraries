@@ -16,5 +16,7 @@ namespace Noter.Domain.Entities
 
         public ICollection<Tag> Tags { get; set; }
 
+        public ICollection<LibraryTagType> LibraryTagTypes { get; set; } = new HashSet<LibraryTagType>();
+
     }
 }

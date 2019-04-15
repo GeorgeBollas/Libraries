@@ -18,6 +18,8 @@ namespace Noter.Domain.Entities
 
         public int Sequence { get; set; }
 
+        public int TagTypeId { get; set; }
+
         public TagType TagType { get; set; }
 
         public ICollection<ItemTag> ItemTags { get; set; }

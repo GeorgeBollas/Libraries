@@ -23,9 +23,11 @@ namespace Noter.Persistance
 
         public DbSet<Library> Libraries { get; set; }
 
-        public DbSet<Note> Notes { get; set; }
+        public DbSet<LibraryTagType> LibraryTagTypes { get; set; }
 
         public DbSet<TagType> TagTypes { get; set; }
+
+        public DbSet<Note> Notes { get; set; }
 
         public DbSet<Tag> Tags { get; set; }
 

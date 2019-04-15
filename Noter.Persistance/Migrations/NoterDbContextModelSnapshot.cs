@@ -83,6 +83,35 @@ namespace Noter.Persistance.Migrations
                     b.ToTable("Items");
                 });
 
+            modelBuilder.Entity("Noter.Domain.Entities.ItemContentType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("EntityStatus");
+
+                    b.Property<Guid>("Guid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<string>("Notes");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ItemContentTypes");
+                });
+
             modelBuilder.Entity("Noter.Domain.Entities.ItemTag", b =>
                 {
                     b.Property<int>("ItemId");
@@ -91,8 +120,6 @@ namespace Noter.Persistance.Migrations
 
                     b.HasKey("ItemId", "TagId")
                         .HasAnnotation("SqlServer:Clustered", false);
-
-                    b.HasIndex("TagId");
 
                     b.ToTable("ItemTags");
                 });
@@ -105,6 +132,8 @@ namespace Noter.Persistance.Migrations
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime");
+
+                    b.Property<string>("Description");
 
                     b.Property<int>("EntityStatus");
 
@@ -132,6 +161,30 @@ namespace Noter.Persistance.Migrations
                     b.HasAlternateKey("Name");
 
                     b.ToTable("Libraries");
+                });
+
+            modelBuilder.Entity("Noter.Domain.Entities.LibraryTagType", b =>
+                {
+                    b.Property<int>("LibraryId");
+
+                    b.Property<int>("TagTypeId");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<int>("EntityStatus");
+
+                    b.Property<Guid>("Guid");
+
+                    b.Property<DateTime>("Modified");
+
+                    b.Property<int>("Sequence");
+
+                    b.HasKey("LibraryId", "TagTypeId")
+                        .HasAnnotation("SqlServer:Clustered", false);
+
+                    b.HasIndex("TagTypeId");
+
+                    b.ToTable("LibraryTagTypes");
                 });
 
             modelBuilder.Entity("Noter.Domain.Entities.Note", b =>
@@ -181,8 +234,6 @@ namespace Noter.Persistance.Migrations
 
                     b.Property<bool>("IsPinned");
 
-                    b.Property<int>("LibraryId");
-
                     b.Property<DateTime>("Modified")
                         .HasColumnType("datetime");
 
@@ -193,11 +244,42 @@ namespace Noter.Persistance.Migrations
 
                     b.Property<int>("Sequence");
 
+                    b.Property<int>("TagTypeId");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("LibraryId");
+                    b.HasIndex("TagTypeId");
 
                     b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("Noter.Domain.Entities.TagType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("EntityStatus");
+
+                    b.Property<Guid>("Guid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<string>("Notes");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TagTypes");
                 });
 
             modelBuilder.Entity("Noter.Domain.Entities.Workspace", b =>
@@ -302,16 +384,29 @@ namespace Noter.Persistance.Migrations
 
                     b.HasOne("Noter.Domain.Entities.Tag", "Tag")
                         .WithMany("ItemTags")
-                        .HasForeignKey("TagId")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Noter.Domain.Entities.LibraryTagType", b =>
+                {
+                    b.HasOne("Noter.Domain.Entities.Library", "Library")
+                        .WithMany("LibraryTagTypes")
+                        .HasForeignKey("LibraryId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Noter.Domain.Entities.TagType", "TagType")
+                        .WithMany("LibraryTagTypes")
+                        .HasForeignKey("TagTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Noter.Domain.Entities.Tag", b =>
                 {
-                    b.HasOne("Noter.Domain.Entities.Library", "Library")
+                    b.HasOne("Noter.Domain.Entities.TagType", "TagType")
                         .WithMany("Tags")
-                        .HasForeignKey("LibraryId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("TagTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Noter.Domain.Entities.WorkspaceItem", b =>
