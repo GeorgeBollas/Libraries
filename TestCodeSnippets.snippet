@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>Entity Command Handler</Title>
+            <Shortcut>noterech</Shortcut>
+        </Header>
+        <Snippet>
+          <Declarations>
+            <Literal>
+              <ID>CommandName</ID>
+              <ToolTip>Name of the command</ToolTip>
+              <Default>CommandName</Default>
+            </Literal>
+          </Declarations>
+          <Imports>
+            <Import>
+              <Namespace>Microsoft.Extensions.Logging</Namespace>
+            </Import>
+            <Import>
+              <Namespace>Noter.Application.Libraries.Commands</Namespace>
+            </Import>
+            <Import>
+              <Namespace>Noter.Domain.Entities</Namespace>
+            </Import>
+            <Import>
+              <Namespace>Noter.Persistance</Namespace>
+            </Import>
+          </Imports>
+          <Code Language="CSharp">
+                <![CDATA[    public class $CommandName$CommandHandler : EntityCommandHandlerBase<$CommandName$Command, $CommandName$CommandResult, Item>
+    {
+        public $CommandName$CommandHandler(NoterDbContext context, ILogger logger):base(context, logger) { }
+
+        public override void BuildEntity()
+        {
+        }
+
+        public override void ProcessResult()
+        {
+        }
+    }]]>
+          </Code>
+        </Snippet>
+    </CodeSnippet>
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>Entity Command</Title>
+            <Shortcut>noterec</Shortcut>
+        </Header>
+        <Snippet>
+          <Declarations>
+            <Literal>
+              <ID>CommandName</ID>
+              <ToolTip>Name of the command</ToolTip>
+              <Default>CommandName</Default>
+            </Literal>
+          </Declarations>
+          <Imports>
+            <Import>
+              <Namespace>Noter.Application.Libraries.Commands</Namespace>
+            </Import>
+          </Imports>
+          <Code Language="CSharp">
+                <![CDATA[    public class $CommandName$Command: CommandRequestBase<$CommandName$CommandResult>
+    {
+    }
+}
+
+    }]]>
+          </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>

@@ -22,6 +22,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{192E4522-0CDE-4BB6-8537-D9CC5E6B2A96}"
 	ProjectSection(SolutionItems) = preProject
 		.filenesting.json = .filenesting.json
+		CommandTemplate.txt = CommandTemplate.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Noter.Infrastructure", "Noter.Infrastructure\Noter.Infrastructure.csproj", "{1D8EA810-2B2E-41B0-8988-9435324FD8BB}"
@@ -30,7 +31,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Noter.WebUI.React", "Noter.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Noter.Api", "Noter.Api\Noter.Api.csproj", "{7CD39444-8AAF-463B-A1D0-8887C178AB4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Noter.WebUI.Ang", "Noter.WebUI.Ang\Noter.WebUI.Ang.csproj", "{A0C24399-CE99-4149-AE78-37B7AD6A9A76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Noter.WebUI.Ang", "Noter.WebUI.Ang\Noter.WebUI.Ang.csproj", "{A0C24399-CE99-4149-AE78-37B7AD6A9A76}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Snippets", "Snippets", "{A9120C50-ACBC-42AA-9424-DC311BF26E24}"
+	ProjectSection(SolutionItems) = preProject
+		TestCodeSnippets.snippet = TestCodeSnippets.snippet
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,6 +92,7 @@ Global
 		{31EB6DB0-4C20-4C29-A8C0-A2AE01E996A3} = {663382D9-68D8-4DBE-B3D8-0DAB9677DEBD}
 		{7CD39444-8AAF-463B-A1D0-8887C178AB4E} = {59CEC147-AE5E-4024-AE45-17C95ABEFB02}
 		{A0C24399-CE99-4149-AE78-37B7AD6A9A76} = {663382D9-68D8-4DBE-B3D8-0DAB9677DEBD}
+		{A9120C50-ACBC-42AA-9424-DC311BF26E24} = {192E4522-0CDE-4BB6-8537-D9CC5E6B2A96}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5528A19F-46BF-4B11-8A61-D0B398C66E0A}

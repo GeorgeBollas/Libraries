@@ -8,6 +8,10 @@ namespace Noter.Application.Infrastructure.Commanding
 
     public abstract class CommandResultBase
     {
+        public CommandResultBase()
+        {
+        }
+
         public CommandResultBase(Guid requestGuid)
         {
             RequestGuid = requestGuid;

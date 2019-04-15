@@ -12,9 +12,8 @@ namespace Noter.Domain.Entities
         {
             ItemTags = new HashSet<ItemTag>();
         }
-
         public int Id { get; set; }
- 
+
         public string Title { get; set; }
         public string Notes { get; set; }
 
