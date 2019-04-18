@@ -5,6 +5,8 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Noter.Application.Exceptions;
 using Noter.Application.Infrastructure.Commanding;
+using Noter.Application.Items.Commands.CreateItem;
+using Noter.Application.Libraries.Commands;
 using Noter.Application.Libraries.Commands.CreateLibrary;
 using Noter.Domain.Entities;
 using Noter.Persistance;

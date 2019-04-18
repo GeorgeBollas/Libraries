@@ -1,0 +1,162 @@
+using Noter.Application.Infrastructure.Commanding;
+
+namespace Noter.Application.Libraries.Commands.CreateLibrary
+{
+    public class CreateLibraryCommand: CommandRequestBase<CreateLibraryCommandResult>
+    {
+
+        public string Name { get; set; }
+
+        public string Notes { get; set; }
+    }
+}
+
+=================================================================================================================================
+
+using Microsoft.Extensions.Logging;
+using Noter.Application.Libraries.Commands;
+using Noter.Domain.Entities;
+using Noter.Persistance;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Noter.Application.Items.Commands.Create
+{
+    public class CreateItemCommandHandler : EntityCommandHandlerBase<CreateItemCommand, CreateItemCommandResult, Item>
+    {
+        public CreateItemCommandHandler(NoterDbContext context, ILogger logger):base(context, logger) { }
+
+        public override void BuildEntity()
+        {
+            entity.Title = request.Title;
+        }
+
+        public override void ProcessResult()
+        {
+            result.ItemId = entity.Id;
+        }
+    }
+}
+
+=================================================================================================================================
+
+using Noter.Application.Infrastructure.Commanding;
+using System;
+
+namespace Noter.Application.Libraries.Commands.CreateLibrary
+{
+    public class CreateLibraryCommandResult: CommandResultBase
+    {
+        public CreateLibraryCommandResult(Guid requestGuid) : base(requestGuid) { }
+
+        public int LibraryId { get; set; }
+
+    }
+}
+
+=================================================================================================================================
+
+using FluentValidation;
+using Noter.Application.Infrastructure.Commanding;
+
+namespace Noter.Application.Libraries.Commands.CreateLibrary
+{
+    public class CreateLibraryCommandValidator : CommandValidatorBase<CreateLibraryCommand>
+    {
+        public CreateLibraryCommandValidator():base() //todo is this called anyway?
+        {
+
+            RuleFor(n => n.Name).MaximumLength(100).NotEmpty().WithMessage("Library name is required");
+
+            // now handled in code by getting distinct list first
+            //RuleFor(l => l).Must(t => t.Tags.Count() == t.Tags.Distinct().Count()).WithMessage("Tags must be unique");
+        }
+    }
+}
+
+
+=================================================================================================================================
+
+        // POST api/libraries
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody]CreateLibraryCommand command)
+        {
+            try
+            {
+                return Ok(await Mediator.Send(command));
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(ex);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+=================================================================================================================================
+
+        // PUT api/libraries/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromBody]UpdateLibraryCommand command)
+        {
+            return Ok(await Mediator.Send(command));
+        }
+
+
+=================================================================================================================================
+
+        // DELETE api/libraries/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await Mediator.Send(new DeleteLibraryCommand { LibraryId = id });
+
+            return NoContent();
+        }
+
+
+=================================================================================================================================
+
+        // GET api/libraries/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            return Ok(await Mediator.Send(new GetLibraryDetailsQuery { LibraryId = id }));
+        }
+
+
+=================================================================================================================================
+
+        // GET api/libraries
+        [HttpGet("pinnedFirst/{pinnedFirst}")]
+        public async Task<ActionResult<LibraryListViewModel>> GetAll(bool pinnedFirst = true)
+        {
+            try
+            {
+                await _hubContext.Clients.All.ReceiveMessage("George", "Get libraries was called");
+
+                var request = new GetLibraryListQuery
+                {
+                    NamePart ="",
+                    PinnedFirst = pinnedFirst,
+                    IncludeInactive = false,
+                };
+
+                return Ok(await Mediator.Send(request));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+
+=================================================================================================================================
+
+
+
+
+=================================================================================================================================

@@ -13,6 +13,7 @@ namespace Noter.Domain.Entities
         public int Sequence { get; set; }
 
         public Library Library { get; set; }
+
         public TagType TagType { get; set; }
     }
 }

@@ -1,9 +1,4 @@
-﻿using MediatR;
-using Noter.Application.Infrastructure;
-using Noter.Application.Infrastructure.Commanding;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Noter.Application.Infrastructure.Commanding;
 
 namespace Noter.Application.Libraries.Commands.CreateLibrary
 {

@@ -26,8 +26,8 @@ namespace Noter.Persistance.Configurations
                 .IsRequired()
                 .HasColumnType("datetime");
 
-            builder.Property(e => e.TagType)
-                .IsRequired();
+            builder.HasOne(dt => dt.TagType).WithMany(t => t.Tags).HasForeignKey(dt => dt.TagTypeId);
+
         }
     }
 }
