@@ -37,6 +37,8 @@ namespace Noter.Persistance
 
         public DbSet<CommandLog> CommandLogs { get; set; }
 
+        public DbSet<AppEvent> AppEvents { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyAllConfigurations();
