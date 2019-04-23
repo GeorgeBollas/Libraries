@@ -30,7 +30,10 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
 
         public async Task<CreateLibraryCommandResult> Handle(CreateLibraryCommand request, CancellationToken cancellationToken)
         {
-            var result = new CreateLibraryCommandResult(request.RequestGuid);
+            var result = new CreateLibraryCommandResult()
+            {
+                RequestGuid= request.RequestGuid
+            };
 
             logger.LogDebug("CreateLibraryCommand {@value1}", request);
 
