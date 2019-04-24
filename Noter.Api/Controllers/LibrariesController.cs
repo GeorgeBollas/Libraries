@@ -4,8 +4,6 @@ using Noter.Api.Hubs;
 using Noter.Application.Exceptions;
 using Noter.Application.Libraries.Commands.CreateLibrary;
 using Noter.Application.Libraries.Commands.DeleteLibrary;
-using Noter.Application.Libraries.Commands.UpdateLibrary;
-using Noter.Application.Libraries.Queries;
 using Noter.Application.Libraries.Queries.GetLibraryDetails;
 using Noter.Application.Libraries.Queries.GetLibraryList;
 using System;
@@ -71,12 +69,12 @@ namespace Noter.Api.Controllers
             }
         }
 
-        // PUT api/libraries/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromBody]UpdateLibraryCommand command)
-        {
-            return Ok(await Mediator.Send(command));
-        }
+        //// PUT api/libraries/5
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> Update([FromBody]UpdateLibraryCommand command)
+        //{
+        //    return Ok(await Mediator.Send(command));
+        //}
 
         // DELETE api/libraries/5
         [HttpDelete("{id}")]

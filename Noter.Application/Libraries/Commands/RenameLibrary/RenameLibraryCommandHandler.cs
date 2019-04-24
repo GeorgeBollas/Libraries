@@ -12,28 +12,24 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Noter.Application.$feature$.Commands.$itemname$
+namespace Noter.Application.Libraries.Commands.RenameLibrary
 {
-    public class $itemname$CommandHandler : IRequestHandler<$itemname$Command, $itemname$CommandResult>
+    public class RenameLibraryCommandHandler : IRequestHandler<RenameLibraryCommand, RenameLibraryCommandResult>
     {
         private readonly NoterDbContext context;
         private readonly ILogger logger;
         private Library library;
 
-        public $itemname$CommandHandler(NoterDbContext context, ILogger<$itemname$CommandHandler> logger)
+        public RenameLibraryCommandHandler(NoterDbContext context, ILogger<RenameLibraryCommandHandler> logger)
         {
             this.context = context;
             this.logger = logger;
         }
 
 
-        public async Task<$itemname$CommandResult> Handle($itemname$Command request, CancellationToken cancellationToken)
+        public async Task<RenameLibraryCommandResult> Handle(RenameLibraryCommand request, CancellationToken cancellationToken)
         {
-            var result = new $itemname$CommandResult()
-                    {
-                        RequestGuid = request.RequestGuid
-                    };
-
+            var result = new RenameLibraryCommandResult(request.RequestGuid);
 
             try
             {
@@ -49,7 +45,7 @@ namespace Noter.Application.$feature$.Commands.$itemname$
             catch (Exception ex)
             {
                 //todo change this to error notifier which calls logger and maybe notifies user/email etc or maybe an array of notifiers
-                logger.LogError(ex, "$itemname$CommandHandler failed:{@value1}", request.RequestGuid);
+                logger.LogError(ex, "RenameLibraryCommandHandler failed:{@value1}", request.RequestGuid);
 
                 throw (ex);
             }

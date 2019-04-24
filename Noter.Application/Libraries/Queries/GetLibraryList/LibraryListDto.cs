@@ -10,7 +10,7 @@ namespace Noter.Application.Libraries.Queries.GetLibraryList
     {
         public int LibraryId { get; set; }
         public string Name { get; set; }
-        public string Notes { get; set; }
+        public string Description { get; set; }
         public bool IsActive { get; set; }
         public bool IsPinned { get; set; }
 
@@ -22,7 +22,7 @@ namespace Noter.Application.Libraries.Queries.GetLibraryList
                 {
                     LibraryId = l.Id,
                     Name = l.Name,
-                    Notes = l.Notes,
+                    Description = l.Description,
                     IsPinned = l.IsPinned,
                     IsActive = l.EntityStatus == Domain.Enumerations.EntityStatus.Active
                 };

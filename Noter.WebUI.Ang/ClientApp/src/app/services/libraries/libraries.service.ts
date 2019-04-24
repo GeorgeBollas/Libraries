@@ -25,7 +25,7 @@ import { Library, CreateLibraryCommand, createLibraryResponse, GetLibraryListQue
 
 const librariesUrl = 'http://localhost:63315/api/libraries';  // URL to web api
 const CACHE_SIZE = 1;
-const REFRESH_INTERVAL = 500000;
+const REFRESH_INTERVAL = 5000;
 
 @Injectable({
   providedIn: 'root'
@@ -68,17 +68,17 @@ export class LibrariesService {
       );
   }
 
-  createLibrary(name: string, notes: string) {
+  createLibrary(name: string, description: string) {
 
-    const request = <CreateLibraryCommand>{
+    const request: CreateLibraryCommand = {
       RequestGuid: uuid1(),
       Name: name,
-      Notes: notes
+      Description: description
     };
 
     return this.http.post<createLibraryResponse>(librariesUrl, request, )
       .pipe(
-        tap(item => this.libraryAdded$.emit(item.LibraryId))
+        tap(item => { this.libraryAdded$.emit(item.LibraryId); this.getLibraries(); })
       );
   }
 }

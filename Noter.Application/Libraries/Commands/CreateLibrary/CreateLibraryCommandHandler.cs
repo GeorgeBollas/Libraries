@@ -72,7 +72,7 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
             {
                 Guid = Guid.NewGuid(),
                 Name = textInfo.ToTitleCase(request.Name.Trim()),
-                Notes = request.Notes,
+                Description = request.Description,
                 EntityStatus = Domain.Enumerations.EntityStatus.Active,
                 Created = DateTime.Now,
                 Modified = DateTime.Now,
