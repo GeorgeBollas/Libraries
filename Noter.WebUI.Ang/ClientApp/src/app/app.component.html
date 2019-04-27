@@ -1,16 +1,7 @@
 <div class="basic-container">
-  <app-nav-menu (leftMenuClicked)="toggledLeft()"  (rightMenuClicked)="toggledRight()"></app-nav-menu>
+  <app-nav-menu (rightMenuClicked)="toggledRight()"></app-nav-menu>
 
   <mat-sidenav-container id="container" class="nav-container" fullscreen>
-    <mat-sidenav id="leftSideNav"
-                 mode="side"
-                 opened
-                 [class.menu-open]="leftNavOpen"
-                 [class.menu-closed]="!leftNavOpen"
-                 role="navigation">
-      <app-library-navigator [isCollapsed]="!leftNavOpen"></app-library-navigator>
-    </mat-sidenav>
-
     <mat-sidenav-content [ngStyle]="{ 'margin-left.px': leftContentMargin, 'margin-right.px': rightContentMargin }" role="main">
       <div>
         <router-outlet></router-outlet>

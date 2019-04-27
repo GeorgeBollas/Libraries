@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Noter.Api.Hubs;
+using Noter.Api.SignalR;
 using Noter.Application.Exceptions;
 using Noter.Application.Libraries.Commands.CreateLibrary;
 using Noter.Application.Libraries.Commands.DeleteLibrary;

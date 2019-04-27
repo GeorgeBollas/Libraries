@@ -4,8 +4,6 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { FormControl, FormGroup, Validators, NgModel } from '@angular/forms';
 
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { CreateLibraryDialogData } from '../create-library-launcher/create-library-launcher.component';
@@ -21,12 +19,11 @@ import { LibrariesService } from '../services/libraries/libraries.service';
 })
 export class CreateLibraryDetailsComponent implements OnInit {
 
-  public Editor = ClassicEditor;
-
   newLibrary: CreateLibrary
   
 
   @ViewChild('name') nameField: NgModel;
+  @ViewChild('description') descrField: NgModel;
 
   panelOpenState: boolean = false;
 
@@ -34,7 +31,6 @@ export class CreateLibraryDetailsComponent implements OnInit {
     private libraryService: LibrariesService,
     public dialogRef: MatDialogRef<CreateLibraryDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: CreateLibraryDialogData) {
-    //this.newLibrary = new CreateLibrary("library " + (new Date()).toISOString(), "");
     this.newLibrary = new CreateLibrary("","");
   }
 
@@ -42,13 +38,10 @@ export class CreateLibraryDetailsComponent implements OnInit {
   }
 
   onCancelClick(): void {
+    console.log('cancel clicked');
     this.dialogRef.close();
   }
 
-
-  //todo
-  // 1. close the dialog (done)
-  // 2. refresh list of libraries
 
   onSubmit() {
     console.log('onSubmit');
@@ -63,6 +56,7 @@ export class CreateLibraryDetailsComponent implements OnInit {
   }
 
   handleError(error: HttpErrorResponse) {
+    console.log('handle error');
 
     //todo: error may not be 400 may be 4xx
 
@@ -74,6 +68,11 @@ export class CreateLibraryDetailsComponent implements OnInit {
       if (failures.Name) {
         var nameError = failures.Name[0];
         this.nameField.control.setErrors({ serverError: nameError });
+      }
+
+      if (failures.Description) {
+        var descrError = failures.Description[0];
+        this.descrField.control.setErrors({ serverError: descrError });
       }
 
       //todo write a generic routine that matches the failure fields to the input controls errors

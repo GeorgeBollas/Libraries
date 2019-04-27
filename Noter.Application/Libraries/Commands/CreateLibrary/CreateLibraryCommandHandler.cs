@@ -19,12 +19,14 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
     {
         private readonly NoterDbContext context;
         private readonly ILogger logger;
+        private readonly IMediator mediator;
         private Library library;
 
-        public CreateLibraryCommandHandler(NoterDbContext context, ILogger<CreateLibraryCommandHandler> logger)
+        public CreateLibraryCommandHandler(NoterDbContext context, ILogger<CreateLibraryCommandHandler> logger, IMediator mediator)
         {
             this.context = context;
             this.logger = logger;
+            this.mediator = mediator;
         }
 
 
@@ -45,6 +47,8 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
                 await context.SaveChangesAsync(cancellationToken);
 
                 result.LibraryId = library.Id;
+
+                await mediator.Publish(new LibraryCreatedEvent() { LibraryId = library.Id }, cancellationToken);
 
                 return result;
             }

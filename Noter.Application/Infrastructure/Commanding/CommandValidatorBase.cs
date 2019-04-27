@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Noter.Application.Infrastructure.Commanding
 {
-    public abstract class CommandValidatorBase<T>: AbstractValidator<T> where  T: IRequest<CommandResultBase>, ILoggedRequest
+    public abstract class CommandValidatorBase<T>: AbstractValidator<T> where  T: IRequest<CommandResultBase>, ILoggedRequest //todo why are we using ILoggedRequest here
     {
         public CommandValidatorBase()
         {

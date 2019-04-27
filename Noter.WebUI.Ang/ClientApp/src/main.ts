@@ -23,11 +23,18 @@ const connection = new signalR.HubConnectionBuilder()
   //.withUrl(getBaseUrl() + "librarieshub")
   .build();
 
-connection.start().catch(err => document.write(err));
 
 connection.on("ReceiveMessage", (username: string, message: string) => {
-  console.log(message);
+  console.log(message + 'haha');
 });
+
+connection.on("LibraryCreated", libraryCreatedEvent => {
+  //todo cause the service to reload
+  console.log('hello');
+  console.log(`Library created  with id ${libraryCreatedEvent.LibraryId}.`);
+});
+
+connection.start().catch(err => document.write(err));
 
 if (environment.production) {
   enableProdMode();
