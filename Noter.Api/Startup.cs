@@ -37,7 +37,7 @@ namespace Noter.Api
         {
             services.AddCors();
  
-            //services.AddTransient(typeof(IRequestPostProcessor<,>), typeof(CommandLoggingPipeline<,>));
+            services.AddTransient(typeof(IRequestPostProcessor<,>), typeof(CommandLoggingPipeline<,>));
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationPipeline<,>));
 
@@ -56,7 +56,6 @@ namespace Noter.Api
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateLibraryCommandValidator>());
 
             services.AddSignalR();
-   //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

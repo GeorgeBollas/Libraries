@@ -23,7 +23,7 @@ namespace Noter.Api.SignalR
         public async Task Handle(LibraryCreatedEvent notification, CancellationToken cancellationToken)
         {
             //return hubContext.Clients.All.SendAsync("LibraryCreated", notification, cancellationToken);
-            await hubContext.Clients.All.ReceiveMessage("George", "Library was created");
+            await hubContext.Clients.All.NotifyLibraryCreated(notification.LibraryId);
         }
     }
 }
