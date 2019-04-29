@@ -25,7 +25,7 @@ import { Library, CreateLibraryCommand, createLibraryResponse, GetLibraryListQue
 
 const librariesUrl = 'http://localhost:63315/api/libraries';  // URL to web api
 const CACHE_SIZE = 1;
-const REFRESH_INTERVAL = 5000;
+const REFRESH_INTERVAL = 60000;
 
 @Injectable({
   providedIn: 'root'
@@ -59,7 +59,7 @@ export class LibrariesService {
 
   }
 
-  private getLibraries(): Observable<Library[]> {
+  public getLibraries(): Observable<Library[]> {
 
     return this.http.get<Library[]>(librariesUrl + '/pinnedFirst/true')
       .pipe(
