@@ -37,7 +37,7 @@ namespace Noter.Persistance
 
         public DbSet<CommandLog> CommandLogs { get; set; }
 
-        public DbSet<AppEvent> AppEvents { get; set; }
+        public DbSet<Quickpick> Quickpicks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

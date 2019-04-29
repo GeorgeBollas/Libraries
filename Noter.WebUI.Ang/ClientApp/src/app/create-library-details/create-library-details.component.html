@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>New library</h2>
+<h2 mat-dialog-title>Create a new library</h2>
 
 <form #createLibraryForm="ngForm" name="createLibraryForm" (ngSubmit)="onSubmit()" novalidate>
   <div mat-dialog-content>
@@ -6,37 +6,20 @@
     <mat-form-field>
       <input matInput #name="ngModel" name="name" placeholder="Name" cdkFocusInitial [(ngModel)]="newLibrary.name" required>
       <mat-error *ngIf="name.invalid && name.errors.required">name is required</mat-error>
-      <mat-error *ngIf="name.invalid  && name.errors?.serverError">{{name.errors?.serverError}}</mat-error>
+      <mat-error *ngIf="name.invalid && name.errors?.serverError">{{name.errors?.serverError}}</mat-error>
     </mat-form-field>
     <br />
-    <!--<mat-form-field>-->
-    <!--<input matInput #description="ngModel" name="description" placeholder="Description" [(ngModel)]="newLibrary.description">-->
 
-    <mat-expansion-panel (opened)="panelOpenState = true"
-                         (closed)="panelOpenState = false">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Description (optional)
-        </mat-panel-title>
-        <mat-panel-description>
-          {{panelOpenState ? '' : 'click to edit'}}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
+    <mat-form-field>
+      <input matInput #description="ngModel" name="description" placeholder="Description" [(ngModel)]="newLibrary.description">
+      <mat-error *ngIf="description.invalid  && description.errors?.serverError">{{description.errors?.serverError}}</mat-error>
+    </mat-form-field>
 
-      <!--to fix bug that causes it to flicker before showing collapsed-->
-      <div *ngIf="panelOpenState == true">
-        <ckeditor [(ngModel)]="newLibrary.description" #description="ngModel" name="description" [editor]="Editor"></ckeditor>
-      </div>
-    </mat-expansion-panel>
-    <br />
-
-
-    <!--</mat-form-field>-->
   </div>
 
   <div mat-dialog-actions align="end">
 
-    <button mat-button (click)="onCancelClick()">Cancel</button>
+    <button mat-button type="button" (click)="onCancelClick()">Cancel</button>
     <button type="submit" mat-button [disabled]="createLibraryForm.form.invalid">Create</button>
     <!--replace with data.Id once implemented-->
   </div>

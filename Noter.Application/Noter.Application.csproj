@@ -38,6 +38,19 @@
   <ItemGroup>
     <Folder Include="ItemContentTypes\Commands\CreateItemContentType\" />
     <Folder Include="ItemContentTypes\Queries\GetItemContentTypeList\" />
+    <Folder Include="Items\Commands\CreateItem\" />
+    <Folder Include="Items\Commands\DeleteItem\" />
+    <Folder Include="Items\Commands\Update\" />
+    <Folder Include="Quickpicks\Queries\ListQuickpicks\" />
+    <Folder Include="Quickpicks\Commands\DeleteQuickpick\" />
+    <Folder Include="Quickpicks\Commands\UpdateQuickpick\" />
+    <Folder Include="Quickpicks\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.SignalR.Core">
+      <HintPath>..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.signalr.core\1.1.0\lib\netstandard2.0\Microsoft.AspNetCore.SignalR.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

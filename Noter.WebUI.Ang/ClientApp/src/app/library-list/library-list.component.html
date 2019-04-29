@@ -1,21 +1,27 @@
+<mat-toolbar>
+  <app-create-library-launcher></app-create-library-launcher>
+  <span class="filler"></span>
+  <span>View settings</span>
+</mat-toolbar>
+
 <div id="navList" class="list">
 
-    <mat-card class="library-card list-item"  *ngFor="let library of libraries$ | async" >
+  <mat-card class="library-card list-item" *ngFor="let library of libraries$ | async">
 
-      <mat-card-header [routerLink]="['/search', library.libraryId]">
-        <mat-icon mat-card-avatar>folder</mat-icon>
-        <mat-card-title>{{ library.name}}</mat-card-title>
-        <mat-card-subtitle>{{ library.notes}}</mat-card-subtitle>
-      </mat-card-header>
+    <mat-card-header [routerLink]="['/search', library.libraryId]">
+      <mat-icon mat-card-avatar>folder</mat-icon>
+      <mat-card-title>{{ library.name}}</mat-card-title>
+      <mat-card-subtitle>{{ library.description}}</mat-card-subtitle>
+    </mat-card-header>
 
-        <mat-card-content [routerLink]="['/search', library.libraryId]" class="list-item-content">
-          image goes here (library default if not supplied)
-        </mat-card-content>
+    <mat-card-content [routerLink]="['/search', library.libraryId]" class="list-item-content">
+      image goes here (library default if not supplied)
+    </mat-card-content>
 
-        <mat-card-actions class="list-item-actions">
-          <button mat-button>Edit</button>
-        </mat-card-actions>
-    </mat-card>
+    <mat-card-actions class="list-item-actions">
+      <button mat-button>Edit</button>
+    </mat-card-actions>
+  </mat-card>
 
 </div>
 

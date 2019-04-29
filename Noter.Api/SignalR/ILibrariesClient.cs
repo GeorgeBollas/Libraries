@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Noter.Api.Hubs
+namespace Noter.Api.SignalR
 {
     public interface ILibrariesClient
     {

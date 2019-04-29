@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Noter.Api.Hubs;
+using Noter.Api.SignalR;
 using Noter.Application.Infrastructure;
 using Noter.Application.Infrastructure.CommandLogging;
 using Noter.Application.Libraries.Commands.CreateLibrary;
@@ -43,7 +43,10 @@ namespace Noter.Api
 
             services.AddSwaggerDocument();
 
-            services.AddMediatR(typeof(CreateLibraryCommandHandler).GetTypeInfo().Assembly);  //point to the assemby to look for handlers
+            services.AddMediatR(
+                typeof(CreateLibraryCommandHandler).GetTypeInfo().Assembly,
+                Assembly.GetExecutingAssembly()
+                );  //point to the assemby to look for handlers
 
             // Add DbContext using SQL Server Provider
             services.AddDbContext<NoterDbContext>(options =>

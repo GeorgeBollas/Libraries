@@ -7,6 +7,6 @@ namespace Noter.Application.Libraries.Commands.CreateLibrary
 
         public string Name { get; set; }
 
-        public string Notes { get; set; }
+        public string Description { get; set; }
     }
 }

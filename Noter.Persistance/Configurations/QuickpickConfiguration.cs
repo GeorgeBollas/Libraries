@@ -7,19 +7,23 @@ using System.Text;
 
 namespace Noter.Persistance.Configurations
 {
-    public class AppEventConfiguration : IEntityTypeConfiguration<AppEvent>
+    public class QuickpickConfiguration : IEntityTypeConfiguration<Quickpick>
     {
-        public void Configure(EntityTypeBuilder<AppEvent> builder)
+        public void Configure(EntityTypeBuilder<Quickpick> builder)
         {
             builder.Property(e => e.Guid)
                 .IsRequired()
                 .HasColumnType("uniqueidentifier");
 
-            builder.Property(e => e.EventCategory)
+            builder.Property(e => e.Name)
                 .IsRequired();
 
-            builder.Property(e => e.EventTime)
+            builder.Property(e => e.Context)
                 .IsRequired();
+
+            builder.Property(e => e.Sequence)
+                .IsRequired()
+                .HasDefaultValue(Library.MaxSeuquence);
 
             builder.Property(e => e.Created)
                 .IsRequired()
@@ -29,6 +33,7 @@ namespace Noter.Persistance.Configurations
                 .IsRequired()
                 .HasColumnType("datetime");
 
+            builder.HasAlternateKey("Name");
         }
     }
 }

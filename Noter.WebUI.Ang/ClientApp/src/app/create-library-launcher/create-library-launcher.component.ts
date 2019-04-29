@@ -12,7 +12,7 @@ export interface CreateLibraryDialogData {
 @Component({
   selector: 'app-create-library-launcher',
   template: `
-      <button mat-mini-fab (click)="openDialog()"><mat-icon>library_add</mat-icon></button>
+      <button mat-button (click)="openDialog()">New</button>
   `,
   styles: []
 })

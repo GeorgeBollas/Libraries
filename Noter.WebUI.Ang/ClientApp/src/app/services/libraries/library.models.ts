@@ -14,7 +14,7 @@ export class Library {
 export interface CreateLibraryCommand {
   RequestGuid: uuid1;
   Name: string;
-  Notes: string;
+  Description: string;
 }
 
 
