@@ -7,15 +7,16 @@ using System.Text;
 
 namespace Noter.Persistance.Configurations
 {
-    public class ItemConfiguration : IEntityTypeConfiguration<Item>
+
+    public class CollectionConfiguration : IEntityTypeConfiguration<Collection>
     {
-        public void Configure(EntityTypeBuilder<Item> builder)
+        public void Configure(EntityTypeBuilder<Collection> builder)
         {
             builder.Property(e => e.Guid)
                 .IsRequired()
                 .HasColumnType("uniqueidentifier");
 
-            builder.Property(e => e.Title)
+            builder.Property(e => e.Name)
                 .IsRequired();
 
             builder.Property(e => e.Created)
@@ -26,7 +27,7 @@ namespace Noter.Persistance.Configurations
                 .IsRequired()
                 .HasColumnType("datetime");
 
-            builder.HasMany(d => d.ItemTags).WithOne(dt => dt.Item).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(d => d.Items).WithOne(dt => dt.Collection).OnDelete(DeleteBehavior.Restrict);
 
         }
     }

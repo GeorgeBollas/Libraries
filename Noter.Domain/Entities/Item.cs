@@ -19,8 +19,6 @@ namespace Noter.Domain.Entities
 
         public int LibraryId { get; set; }
 
-        public ItemType Type { get; set; }
-
         public string Context { get; set; }
 
         public Library Library { get; set; }
