@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -14,11 +13,10 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { LibraryNavigatorComponent } from './library-navigator/library-navigator.component';
 import { SearchComponent } from './search/search.component';
-import { CreateLibraryDetailsComponent } from './create-library-details/create-library-details.component';
-import { CreateLibraryLauncherComponent } from './create-library-launcher/create-library-launcher.component';
-import { LibraryListComponent } from './library-list/library-list.component';
+
+import { LibrariesModule } from './libraries/libraries.module'
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -27,11 +25,7 @@ import { LibraryListComponent } from './library-list/library-list.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    LibraryNavigatorComponent,
     SearchComponent,
-    CreateLibraryDetailsComponent,
-    CreateLibraryLauncherComponent,
-    LibraryListComponent,
   ],
   imports: [
     [BrowserAnimationsModule],
@@ -41,15 +35,10 @@ import { LibraryListComponent } from './library-list/library-list.component';
     FormsModule,
     ReactiveFormsModule,
     NoterMaterialModule,
-    RouterModule.forRoot([
-      { path: '', component: LibraryListComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'search/:id', component: SearchComponent },
-    ])
+    LibrariesModule,
+    AppRoutingModule //note: should be after any modules that define routes to get the right order (if you have a wild card route)
   ],
-  entryComponents: [CreateLibraryDetailsComponent], //any dynamically created components go here as well
-  providers: [],
+  providers: [], //note add the LibrariesService here if neede
   bootstrap: [AppComponent]
 })
 export class AppModule { }
