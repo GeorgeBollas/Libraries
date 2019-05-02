@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Noter.Application.Tests.CommandingTests
 {
-    public class BasicValidatoTests
+    public class BasicValidationTests
         : TestBase
     {
 

@@ -39,7 +39,7 @@ namespace Noter.Application.Tests.Libraries
 
             var logger = new Mock<ILogger<CreateLibraryCommandHandler>>();
 
-            var commandHandler = new CreateLibraryCommandHandler(context.Object, logger.Object);
+            var commandHandler = new CreateLibraryCommandHandler(context.Object, logger.Object, null);
 
             var requestId = Guid.NewGuid();
 
@@ -78,7 +78,7 @@ namespace Noter.Application.Tests.Libraries
 
             var logger = new Mock<ILogger<CreateLibraryCommandHandler>>();
 
-            var commandHandler = new CreateLibraryCommandHandler(context.Object, logger.Object);
+            var commandHandler = new CreateLibraryCommandHandler(context.Object, logger.Object, null);
 
             var requestId = Guid.NewGuid();
 
@@ -115,7 +115,7 @@ namespace Noter.Application.Tests.Libraries
 
             var logger = new Mock<ILogger<CreateLibraryCommandHandler>>();
 
-            var commandHandler = new CreateLibraryCommandHandler(context.Object, logger.Object);
+            var commandHandler = new CreateLibraryCommandHandler(context.Object, logger.Object, null);
 
             var requestId = Guid.NewGuid();
 
@@ -165,7 +165,7 @@ namespace Noter.Application.Tests.Libraries
 
             var logger = new Mock<ILogger<CreateLibraryCommandHandler>>();
 
-            var commandHandler = new CreateLibraryCommandHandler(context.Object, logger.Object);
+            var commandHandler = new CreateLibraryCommandHandler(context.Object, logger.Object, null);
 
             var requestId = Guid.NewGuid();
 
