@@ -19,7 +19,7 @@ namespace Noter.Application.Infrastructure.CommandLogging
         private readonly NoterDbContext context;
         private readonly ILogger logger;
 
-        public CommandLoggingPipeline(NoterDbContext context, ILogger<CommandLoggingPipeline<TRequest, TResponse>> logger, IAppEventLogger appEventLogger)
+        public CommandLoggingPipeline(NoterDbContext context, ILogger<CommandLoggingPipeline<TRequest, TResponse>> logger)
         {
             this.context = context;
             this.logger = logger;

@@ -7,7 +7,9 @@ namespace Noter.Application.Libraries.Commands.RenameLibrary
     {
         public RenameLibraryCommandValidator() : base()
         {
-            //RuleFor(n => n.Title).MaximumLength(100).NotEmpty().WithMessage("Item title is required");
+            RuleFor(n => n.LIbraryId).NotEmpty().WithMessage("Library id is required");
+            RuleFor(n => n.Name).NotEmpty().WithMessage("Library name is required");
+            RuleFor(n => n.Name).MaximumLength(100).WithMessage("Library name maximum 100 character");
         }
     }
 }

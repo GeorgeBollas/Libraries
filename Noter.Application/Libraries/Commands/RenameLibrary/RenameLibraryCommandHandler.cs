@@ -34,18 +34,23 @@ namespace Noter.Application.Libraries.Commands.RenameLibrary
             try
             {
 
-                //setup
+                var lib = context.Libraries.SingleOrDefault(l => l.Id == request.LIbraryId);
 
+                if (lib == null)
+                    throw new ArgumentException($"Library {request.LIbraryId} was not found");
+
+                lib.Name = request.Name;
+                lib.Description = request.Description;
+                
                 await context.SaveChangesAsync(cancellationToken);
 
-                // set result;
 
                 return result;
             }
             catch (Exception ex)
             {
                 //todo change this to error notifier which calls logger and maybe notifies user/email etc or maybe an array of notifiers
-                logger.LogError(ex, "RenameLibraryCommandHandler failed:{@value1}", request.RequestGuid);
+                logger.LogError(ex, $"RenameLibraryCommandHandler failed:{request.RequestGuid}");
 
                 throw (ex);
             }

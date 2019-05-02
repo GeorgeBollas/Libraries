@@ -12,6 +12,8 @@ namespace Noter.Domain.Entities
 
         public string Name { get; set; }
 
+        public string Description { get; set; }
+
         public string Notes { get; set; }
 
         public bool IsPinned { get; set; }
