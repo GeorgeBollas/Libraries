@@ -21,7 +21,7 @@ namespace Noter.Application.Infrastructure
         /// <param name="list">The list ordered list of pinned items</param>
         /// <param name="item">the item to be pinned</param>
         /// <returns>all items that have had their sequence changed, including the new item</returns>
-        public static IEnumerable<T> Pin<T>(List<T> list, T item, int index) where T : IPinnable, IEquatable<T>
+        public static IEnumerable<IPinnable> Pin<IPinnable>(List<IPinnable> list, IPinnable item, int index) where IPinnable : Interfaces.IPinnable, IEquatable<IPinnable>
         {
             list.Remove(item);
 

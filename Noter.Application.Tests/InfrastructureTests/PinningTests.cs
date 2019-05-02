@@ -43,7 +43,7 @@ namespace Noter.Application.Tests.InfrastructureTests
             var item = new Item() {Id=11, IsPinned = true, Sequence = 7 }; // -> 3
             // Act
 
-            var update = PinnableHelper.Pin<Item>(list, item, 3).ToList();
+            var update = PinnableHelper.Pin(list, item, 3).ToList();
 
 
             // Assert
