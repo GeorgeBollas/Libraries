@@ -18,12 +18,6 @@ namespace Noter.Persistance.Configurations
             builder.Property(e => e.Title)
                 .IsRequired();
 
-            builder.OwnsOne(e => e.Type, a =>
-            {
-                a.Property<string>(b => b.BaseType).IsRequired().HasMaxLength(7);
-                a.Property<string>(b => b.Version).IsRequired().HasMaxLength(3);
-            });
-
             builder.Property(e => e.Created)
                 .IsRequired()
                 .HasColumnType("datetime");

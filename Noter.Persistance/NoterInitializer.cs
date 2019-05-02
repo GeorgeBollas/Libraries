@@ -14,9 +14,6 @@ namespace Noter.Persistance
 
         private readonly Dictionary<int, Item> Items = new Dictionary<int, Item>();
 
-        private readonly Dictionary<int, ItemContentType> ItemContentTypes = new Dictionary<int, ItemContentType>();
-
-
         private readonly Dictionary<int, TagType> TagTypes = new Dictionary<int, TagType>();
         private int DocumentTypeId;
 
@@ -40,43 +37,9 @@ namespace Noter.Persistance
 
             SeedNotes(context);
             SeedCategories(context);
-            SeedItemContentTypes(context);
             SeedTags(context);
             SeedItems(context);
             SeedWorkspaces(context);
-
-        }
-        private void SeedItemContentTypes(NoterDbContext context)
-        {
-            var now = DateTime.Now;
-
-            ItemContentTypes.Add(1,
-                new ItemContentType()
-                {
-                    Guid = Guid.NewGuid(),
-                    Name = "Tutorial",
-                    EntityStatus = EntityStatus.Active,
-                    Created = now,
-                    Modified = now,
-                });
-
-            ItemContentTypes.Add(2,
-                new ItemContentType()
-                {
-                    Guid = Guid.NewGuid(),
-                    Name = "Software",
-                    EntityStatus = EntityStatus.Active,
-                    Created = now,
-                    Modified = now,
-                });
-
-
-            foreach (var ict in ItemContentTypes)
-            {
-                context.ItemContentTypes.Add(ict.Value);
-            }
-
-            context.SaveChanges();
 
         }
 
