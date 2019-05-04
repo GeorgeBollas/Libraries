@@ -2,7 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Noter.Application.Exceptions;
+using Noter.Application.Infrastructure;
 using Noter.Domain.Entities;
+using Noter.Infrastructure;
 using Noter.Persistance;
 using System;
 using System.Collections.Generic;
@@ -32,6 +34,10 @@ namespace Noter.Application.Tags.Commands.CreateTag
 
             try
             {
+                var pinned = context.Tags.
+                    Where(t => t.TagTypeId == request.TagTypeId)
+                    .OrderBy(t => t.Sequence)
+                    .ThenBy(t => t.Name);
 
                 //setup
                 var tag = new Tag()
@@ -41,8 +47,9 @@ namespace Noter.Application.Tags.Commands.CreateTag
                     IsPinned = request.IsPinned
                 };
 
-                //todo set the sequence of other Tags
 
+                if (request.IsPinned)
+                    PinnableHelper.Pin(pinned.ToList(), tag);
 
                 await context.SaveChangesAsync(cancellationToken);
 

@@ -2,6 +2,8 @@
 using Noter.Application.Infrastructure;
 using Noter.Application.Infrastructure.Commanding;
 using Noter.Application.Interfaces;
+using Noter.Domain.Infrastructure;
+using Noter.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,5 +67,32 @@ namespace Noter.Application.Tests.InfrastructureTests
 
 
         }
+
+        [Fact]
+        public void Pinning_AddToEndShouldAppendCorrectly()
+        {
+            // Arrange
+            var list = new List<Item>() {
+                new Item () {Id=0, IsPinned = true, Sequence = 0},
+                new Item () {Id=1, IsPinned = true, Sequence = 1},
+                new Item () {Id=2, IsPinned = true, Sequence = 2},
+                new Item () {Id=3, IsPinned = true, Sequence = 3},
+            };
+
+            var item = new Item() { Id = 11, IsPinned = true, Sequence = 7 };
+            // Act
+
+            var update = PinnableHelper.Pin(list, item, 4).ToList();
+
+            // Assert
+
+            Assert.Single(update);
+
+            Assert.Equal(11, update[0].Id);
+            Assert.Equal(4, update[0].Sequence);
+
+
+        }
+
     }
 }

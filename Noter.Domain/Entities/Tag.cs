@@ -1,11 +1,13 @@
 ﻿using Noter.Domain.Enumerations;
+using Noter.Domain.Infrastructure;
+using Noter.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Noter.Domain.Entities
 {
-    public class Tag: Auditable
+    public class Tag: Auditable, IPinnable
     {
 
         public int Id { get; set; }
